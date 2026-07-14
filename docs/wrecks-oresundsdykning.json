@@ -1,0 +1,980 @@
+[
+  {
+    "name": "Activ",
+    "type": "Barque (bark)",
+    "builtYear": 1866,
+    "sunkYear": 1902,
+    "depthMeters": null,
+    "lengthMeters": 44,
+    "positionLatLon": null,
+    "locationText": "nordost om Vens västra fyr, norr om Ålabodarna",
+    "story": "The barque Activ dragged her anchors during an intense storm on Christmas night 1902 and ran aground north of Ålabodarna in the Öresund while en route to Malmö.",
+    "sourceUrl": "https://www.oresundsdykning.se/activ/",
+    "source": "oresundsdykning.se",
+    "positionLatLonVG": null,
+    "depthMetersVG": null,
+    "sourceUrlVG": null,
+    "positionLatLonVD": null,
+    "sourceUrlVD": null,
+    "bestPosition": null,
+    "insideWindow": false,
+    "positionVerified": null
+  },
+  {
+    "name": "Ceylon af Bergkvara",
+    "type": "Sailing ship",
+    "builtYear": 1888,
+    "sunkYear": 1908,
+    "depthMeters": 20,
+    "lengthMeters": 40.8,
+    "positionLatLon": [
+      55.9381,
+      12.63485
+    ],
+    "locationText": "i närheten av Hven",
+    "story": "The sailing ship Ceylon collided with the Wilson steamer Novo near Ven on 19 December 1908 and sank immediately; her crew were transferred to safety. The wreck was later destroyed by the pilot service as a navigation hazard.",
+    "sourceUrl": "https://www.oresundsdykning.se/ceylon/",
+    "source": "oresundsdykning.se",
+    "positionLatLonVG": [
+      55.9381,
+      12.63485
+    ],
+    "depthMetersVG": 20,
+    "sourceUrlVG": "https://www.vragguiden.dk/vrag/1955",
+    "positionLatLonVD": null,
+    "sourceUrlVD": "https://www.vrag.dk/bark-ceylon/",
+    "bestPosition": [
+      55.9381,
+      12.63485
+    ],
+    "insideWindow": true,
+    "positionVerified": true
+  },
+  {
+    "name": "Bjugnfjord",
+    "type": "Coaster (small cargo vessel)",
+    "builtYear": 1976,
+    "sunkYear": 2022,
+    "depthMeters": 16.3,
+    "lengthMeters": 66,
+    "positionLatLon": [
+      56.21917,
+      12.15167
+    ],
+    "locationText": "11 sjömil norr om Gilleleje",
+    "story": "The Norwegian-registered coaster Bjugnfjord, carrying contaminated soil, capsized in rough seas north of Gilleleje on 20 January 2022 and sank the following morning.",
+    "sourceUrl": "https://www.oresundsdykning.se/bjugnfjord/",
+    "source": "oresundsdykning.se",
+    "positionLatLonVG": null,
+    "depthMetersVG": null,
+    "sourceUrlVG": null,
+    "positionLatLonVD": null,
+    "sourceUrlVD": null,
+    "bestPosition": [
+      56.21917,
+      12.15167
+    ],
+    "insideWindow": false,
+    "positionVerified": null
+  },
+  {
+    "name": "Frednäs",
+    "type": "Barque (bark)",
+    "builtYear": null,
+    "sunkYear": 1902,
+    "depthMeters": null,
+    "lengthMeters": null,
+    "positionLatLon": null,
+    "locationText": "utanför nuvarande P-platsen vid campingen",
+    "story": "The Norwegian barque Frednäs, sailing in ballast from Copenhagen to Porsgrunn, ran aground on a sandy bottom during the severe Christmas storm of 1902; the captain and crew were rescued with local help.",
+    "sourceUrl": "https://www.oresundsdykning.se/frednas/",
+    "source": "oresundsdykning.se",
+    "positionLatLonVG": null,
+    "depthMetersVG": null,
+    "sourceUrlVG": null,
+    "positionLatLonVD": null,
+    "sourceUrlVD": null,
+    "bestPosition": null,
+    "insideWindow": false,
+    "positionVerified": null
+  },
+  {
+    "name": "Cementbåten (Betongkasunen)",
+    "type": "Concrete barge / caisson",
+    "builtYear": null,
+    "sunkYear": 1956,
+    "depthMeters": 27,
+    "lengthMeters": 35,
+    "positionLatLon": [
+      55.86637,
+      12.74307
+    ],
+    "locationText": null,
+    "story": "A concrete caisson intended for the Trelleborg harbour expansion began leaking and sank while under tow by the tug Härdig on 24-25 April 1956. Wreck lies 24-27 m deep, standing about 4 m off the bottom.",
+    "sourceUrl": "https://www.oresundsdykning.se/cementbaten/",
+    "source": "oresundsdykning.se",
+    "positionLatLonVG": [
+      55.86578,
+      12.74185
+    ],
+    "depthMetersVG": 27,
+    "sourceUrlVG": "https://www.vragguiden.dk/vrag/1862",
+    "positionLatLonVD": null,
+    "sourceUrlVD": null,
+    "bestPosition": [
+      55.86578,
+      12.74185
+    ],
+    "insideWindow": true,
+    "positionVerified": true
+  },
+  {
+    "name": "Franz",
+    "type": "Cargo steamer",
+    "builtYear": 1881,
+    "sunkYear": 1916,
+    "depthMeters": 21,
+    "lengthMeters": null,
+    "positionLatLon": null,
+    "locationText": "vid Frundlelån",
+    "story": "The cargo steamer Franz ran aground on 1 January 1916 while sailing from Wismar to Gothenburg with a coal cargo; her 15-person crew was rescued. Wreck lies between about 15 and 21 m.",
+    "sourceUrl": "https://www.oresundsdykning.se/franz/",
+    "source": "oresundsdykning.se",
+    "positionLatLonVG": null,
+    "depthMetersVG": null,
+    "sourceUrlVG": null,
+    "positionLatLonVD": null,
+    "sourceUrlVD": null,
+    "bestPosition": null,
+    "insideWindow": false,
+    "positionVerified": null
+  },
+  {
+    "name": "Invandraren / Indfødsretten",
+    "type": null,
+    "builtYear": null,
+    "sunkYear": 1801,
+    "depthMeters": 20,
+    "lengthMeters": 50,
+    "positionLatLon": null,
+    "locationText": null,
+    "story": "A vessel lost on 1 April 1801 (Battle of Copenhagen era); substantial artifacts were recovered from the wreck by the Helgoland diving club between 1977 and 1983. The wreck base is at about 20 m, rising to 10 m.",
+    "sourceUrl": "https://www.oresundsdykning.se/invandraren-indfodsretten/",
+    "source": "oresundsdykning.se",
+    "positionLatLonVG": [
+      55.72502,
+      12.67338
+    ],
+    "depthMetersVG": 20,
+    "sourceUrlVG": "https://www.vragguiden.dk/vrag/1725",
+    "positionLatLonVD": null,
+    "sourceUrlVD": null,
+    "bestPosition": [
+      55.72502,
+      12.67338
+    ],
+    "insideWindow": false,
+    "positionVerified": true
+  },
+  {
+    "name": "Kronprinz Wilhelm",
+    "type": null,
+    "builtYear": null,
+    "sunkYear": 1917,
+    "depthMeters": 42,
+    "lengthMeters": 77,
+    "positionLatLon": null,
+    "locationText": "lite utanför Öresunds området",
+    "story": "The vessel sank in 1917 with 33 fatalities; the page notes it lies slightly outside the Öresund area.",
+    "sourceUrl": "https://www.oresundsdykning.se/kronprins-wilhelm/",
+    "source": "oresundsdykning.se",
+    "positionLatLonVG": [
+      56.49544,
+      12.18807
+    ],
+    "depthMetersVG": 40,
+    "sourceUrlVG": "https://www.vragguiden.dk/vrag/2693",
+    "positionLatLonVD": null,
+    "sourceUrlVD": null,
+    "bestPosition": [
+      56.49544,
+      12.18807
+    ],
+    "insideWindow": false,
+    "positionVerified": true
+  },
+  {
+    "name": "Minos-Hellfrid Bissmark",
+    "type": "Cargo vessel",
+    "builtYear": 1913,
+    "sunkYear": 1939,
+    "depthMeters": 25,
+    "lengthMeters": null,
+    "positionLatLon": null,
+    "locationText": "cirka 9 sjömil utanför Rödby",
+    "story": "The German cargo ship Minos (Hellfrid Bissmark) struck a German minefield on 8 September 1939 while sailing from Hamburg to Malmö; seven of fourteen crew were rescued by German patrol boats.",
+    "sourceUrl": "https://www.oresundsdykning.se/minos-hellfrid-bissmark/",
+    "source": "oresundsdykning.se",
+    "positionLatLonVG": [
+      55.18867,
+      12.63442
+    ],
+    "depthMetersVG": 27,
+    "sourceUrlVG": "https://www.vragguiden.dk/vrag/1143",
+    "positionLatLonVD": null,
+    "sourceUrlVD": null,
+    "bestPosition": [
+      55.18867,
+      12.63442
+    ],
+    "insideWindow": false,
+    "positionVerified": true
+  },
+  {
+    "name": "S/S Bertha",
+    "type": "Steamer",
+    "builtYear": 1906,
+    "sunkYear": null,
+    "depthMeters": 15,
+    "lengthMeters": 71,
+    "positionLatLon": [
+      55.6918,
+      12.67945
+    ],
+    "locationText": null,
+    "story": "The steamer Bertha struck a mine and sank quickly with four fatalities; the wreck was partially demolished in 1943 to reduce hazards to shipping.",
+    "sourceUrl": "https://www.oresundsdykning.se/s-s-bertha/",
+    "source": "oresundsdykning.se",
+    "positionLatLonVG": [
+      55.69071,
+      12.67711
+    ],
+    "depthMetersVG": null,
+    "sourceUrlVG": "https://www.vragguiden.dk/vrag/1680",
+    "positionLatLonVD": null,
+    "sourceUrlVD": null,
+    "bestPosition": [
+      55.69071,
+      12.67711
+    ],
+    "insideWindow": false,
+    "positionVerified": true
+  },
+  {
+    "name": "Sinne Nordfisk",
+    "type": null,
+    "builtYear": null,
+    "sunkYear": 1978,
+    "depthMeters": 22,
+    "lengthMeters": null,
+    "positionLatLon": [
+      55.81808,
+      12.7004
+    ],
+    "locationText": "i Öresund",
+    "story": "The vessel Sinne Nordfisk collided with the German ship Oliver Twist on 28 February 1978 and now rests at 22 m depth in the Öresund.",
+    "sourceUrl": "https://www.oresundsdykning.se/sinne-nordfisk/",
+    "source": "oresundsdykning.se",
+    "positionLatLonVG": [
+      55.81808,
+      12.7004
+    ],
+    "depthMetersVG": 22,
+    "sourceUrlVG": "https://www.vragguiden.dk/vrag/1824",
+    "positionLatLonVD": null,
+    "sourceUrlVD": "https://www.vrag.dk/sinne-nordfisk/",
+    "bestPosition": [
+      55.81808,
+      12.7004
+    ],
+    "insideWindow": false,
+    "positionVerified": true
+  },
+  {
+    "name": "Anemonvraket",
+    "type": "Concrete barge",
+    "builtYear": null,
+    "sunkYear": null,
+    "depthMeters": null,
+    "lengthMeters": 25,
+    "positionLatLon": null,
+    "locationText": null,
+    "story": "A concrete barge, 25 m long and 7 m wide, named for the sea anemones that now cover its structure.",
+    "sourceUrl": "https://www.oresundsdykning.se/anemonvraket/",
+    "source": "oresundsdykning.se",
+    "positionLatLonVG": [
+      55.8305,
+      12.69275
+    ],
+    "depthMetersVG": 25,
+    "sourceUrlVG": "https://www.vragguiden.dk/vrag/1837",
+    "positionLatLonVD": null,
+    "sourceUrlVD": null,
+    "bestPosition": [
+      55.8305,
+      12.69275
+    ],
+    "insideWindow": true,
+    "positionVerified": true
+  },
+  {
+    "name": "Bygdöy",
+    "type": "Steamer",
+    "builtYear": 1921,
+    "sunkYear": 1945,
+    "depthMeters": 31,
+    "lengthMeters": 72,
+    "positionLatLon": [
+      56.4491,
+      12.3427
+    ],
+    "locationText": "Ca 11.21 nm från Mölle hamn, kurs 333 grader",
+    "story": "The steamer Bygdöy struck a naval mine on 17 May 1945 while carrying nickel ore and sank to 31 m; the crew were safely evacuated.",
+    "sourceUrl": "https://www.oresundsdykning.se/bygdoy/",
+    "source": "oresundsdykning.se",
+    "positionLatLonVG": [
+      56.44894,
+      12.33978
+    ],
+    "depthMetersVG": 31,
+    "sourceUrlVG": "https://www.vragguiden.dk/vrag/2639",
+    "positionLatLonVD": null,
+    "sourceUrlVD": null,
+    "bestPosition": [
+      56.44894,
+      12.33978
+    ],
+    "insideWindow": false,
+    "positionVerified": true
+  },
+  {
+    "name": "Eisfish",
+    "type": null,
+    "builtYear": null,
+    "sunkYear": 1944,
+    "depthMeters": null,
+    "lengthMeters": 35,
+    "positionLatLon": null,
+    "locationText": null,
+    "story": "The vessel sank in March 1944 following a collision and remains upright on the seabed (about 35 m long, 10 m wide).",
+    "sourceUrl": "https://www.oresundsdykning.se/eisfish/",
+    "source": "oresundsdykning.se",
+    "positionLatLonVG": [
+      56.26803,
+      12.19142
+    ],
+    "depthMetersVG": 30,
+    "sourceUrlVG": "https://www.vragguiden.dk/vrag/2441",
+    "positionLatLonVD": null,
+    "sourceUrlVD": null,
+    "bestPosition": [
+      56.26803,
+      12.19142
+    ],
+    "insideWindow": false,
+    "positionVerified": true
+  },
+  {
+    "name": "Eidern af Skillinge",
+    "type": "Barque (bark)",
+    "builtYear": null,
+    "sunkYear": 1907,
+    "depthMeters": null,
+    "lengthMeters": null,
+    "positionLatLon": null,
+    "locationText": "strax norr om fyren (Råå)",
+    "story": "The barque Ejdern collided with the steamer Bris on 14 October 1907 in the Öresund off Råå; both vessels sank but were later salvaged and repaired.",
+    "sourceUrl": "https://www.oresundsdykning.se/eidern-af-skillinge/",
+    "source": "oresundsdykning.se",
+    "positionLatLonVG": [
+      56.27073,
+      12.11678
+    ],
+    "depthMetersVG": 31,
+    "sourceUrlVG": "https://www.vragguiden.dk/vrag/2449",
+    "positionLatLonVD": null,
+    "sourceUrlVD": null,
+    "bestPosition": [
+      56.27073,
+      12.11678
+    ],
+    "insideWindow": false,
+    "positionVerified": true
+  },
+  {
+    "name": "Johannes L",
+    "type": "Cargo ship",
+    "builtYear": 1951,
+    "sunkYear": 1979,
+    "depthMeters": 8,
+    "lengthMeters": 48.5,
+    "positionLatLon": null,
+    "locationText": "strax utanför fartygsleden (ca 250 m från land vid Helsingborg)",
+    "story": "On 26 November 1979 Johannes L left Helsingborg with a hull breach from an earlier collision with a dock piling; strong winds caused her to sink in shallow water near shore.",
+    "sourceUrl": "https://www.oresundsdykning.se/johannes-l/",
+    "source": "oresundsdykning.se",
+    "positionLatLonVG": [
+      56.00121,
+      12.72036
+    ],
+    "depthMetersVG": 9,
+    "sourceUrlVG": "https://www.vragguiden.dk/vrag/2045",
+    "positionLatLonVD": null,
+    "sourceUrlVD": "https://www.vrag.dk/m-s-johannes-l/",
+    "bestPosition": [
+      56.00121,
+      12.72036
+    ],
+    "insideWindow": true,
+    "positionVerified": true
+  },
+  {
+    "name": "Kanonvraket (Charlotte Amalie)",
+    "type": "Floating gun battery (armed block ship)",
+    "builtYear": null,
+    "sunkYear": 1801,
+    "depthMeters": 12,
+    "lengthMeters": null,
+    "positionLatLon": null,
+    "locationText": "Utanför Malmö",
+    "story": "Charlotte Amalie was a Danish merchant frigate converted into a heavily armed warship; she sank during or shortly after the Battle of Copenhagen (Slaget på Reden) on 2 April 1801.",
+    "sourceUrl": "https://www.oresundsdykning.se/kanonvraket/",
+    "source": "oresundsdykning.se",
+    "positionLatLonVG": [
+      55.71221,
+      12.72858
+    ],
+    "depthMetersVG": 5,
+    "sourceUrlVG": "https://www.vragguiden.dk/vrag/1715",
+    "positionLatLonVD": null,
+    "sourceUrlVD": null,
+    "bestPosition": [
+      55.71221,
+      12.72858
+    ],
+    "insideWindow": false,
+    "positionVerified": true
+  },
+  {
+    "name": "Livlig",
+    "type": null,
+    "builtYear": null,
+    "sunkYear": 1898,
+    "depthMeters": null,
+    "lengthMeters": null,
+    "positionLatLon": [
+      55.89432,
+      12.66017
+    ],
+    "locationText": "nära Lappegrundes fyr, utanför Ven",
+    "story": "Livlig collided with the ship Cleopatra on 29 August 1898 while sailing from England to Copenhagen; after temporary repairs she sank in rough morning winds with the loss of six of eighteen crew.",
+    "sourceUrl": "https://www.oresundsdykning.se/livlig/",
+    "source": "oresundsdykning.se",
+    "positionLatLonVG": [
+      55.89362,
+      12.65861
+    ],
+    "depthMetersVG": 16,
+    "sourceUrlVG": "https://www.vragguiden.dk/vrag/1899",
+    "positionLatLonVD": null,
+    "sourceUrlVD": "https://www.vrag.dk/brigantine-livlig/",
+    "bestPosition": [
+      55.89362,
+      12.65861
+    ],
+    "insideWindow": true,
+    "positionVerified": true
+  },
+  {
+    "name": "Kalle",
+    "type": "Fishing vessel (shark cutter)",
+    "builtYear": null,
+    "sunkYear": null,
+    "depthMeters": 14,
+    "lengthMeters": 20,
+    "positionLatLon": [
+      55.97997,
+      12.63467
+    ],
+    "locationText": null,
+    "story": "A fishing vessel roughly 20 by 5 m, now overgrown with anemones and mussels, lying with its bow pointing 230 degrees; the circumstances of its sinking are undocumented.",
+    "sourceUrl": "https://www.oresundsdykning.se/kalle/",
+    "source": "oresundsdykning.se",
+    "positionLatLonVG": [
+      55.97962,
+      12.6335
+    ],
+    "depthMetersVG": 17,
+    "sourceUrlVG": "https://www.vragguiden.dk/vrag/2003",
+    "positionLatLonVD": null,
+    "sourceUrlVD": null,
+    "bestPosition": [
+      55.97962,
+      12.6335
+    ],
+    "insideWindow": true,
+    "positionVerified": true
+  },
+  {
+    "name": "S/S Otto",
+    "type": "Steamer",
+    "builtYear": 1867,
+    "sunkYear": 1892,
+    "depthMeters": null,
+    "lengthMeters": 68,
+    "positionLatLon": [
+      56.06867,
+      12.628
+    ],
+    "locationText": null,
+    "story": "Otto sank on 7 August 1892 after colliding with the steamer Thorsa near Lappegrund lighthouse; the impact breached her engine room and she sank immediately.",
+    "sourceUrl": "https://www.oresundsdykning.se/s-s-otto/",
+    "source": "oresundsdykning.se",
+    "positionLatLonVG": [
+      56.06813,
+      12.6268
+    ],
+    "depthMetersVG": 31,
+    "sourceUrlVG": "https://www.vragguiden.dk/vrag/2149",
+    "positionLatLonVD": null,
+    "sourceUrlVD": "https://www.vrag.dk/s-s-otto/",
+    "bestPosition": [
+      56.06813,
+      12.6268
+    ],
+    "insideWindow": true,
+    "positionVerified": true
+  },
+  {
+    "name": "S/S Polaris",
+    "type": "Steamer",
+    "builtYear": 1884,
+    "sunkYear": 1924,
+    "depthMeters": null,
+    "lengthMeters": 78,
+    "positionLatLon": null,
+    "locationText": "lite norr om Helsingborg",
+    "story": "The steamer Polaris collided with S/S Allegro af Stavanger on 16 January 1924 while inbound from Stockholm, was holed on the starboard side, and sank after about two hours.",
+    "sourceUrl": "https://www.oresundsdykning.se/s-s-polaris/",
+    "source": "oresundsdykning.se",
+    "positionLatLonVG": [
+      56.10986,
+      12.57832
+    ],
+    "depthMetersVG": 28,
+    "sourceUrlVG": "https://www.vragguiden.dk/vrag/2248",
+    "positionLatLonVD": null,
+    "sourceUrlVD": "https://www.vrag.dk/s-s-polaris/",
+    "bestPosition": [
+      56.10986,
+      12.57832
+    ],
+    "insideWindow": false,
+    "positionVerified": true
+  },
+  {
+    "name": "Vapper",
+    "type": "Stern trawler / fish factory ship",
+    "builtYear": 1974,
+    "sunkYear": 1994,
+    "depthMeters": null,
+    "lengthMeters": 101.83,
+    "positionLatLon": null,
+    "locationText": null,
+    "story": "The large factory stern trawler Vapper sank in December 1994 when its tow line broke during a delivery to be scrapped in Dubai; it was swamped by heavy seas and sank upright.",
+    "sourceUrl": "https://www.oresundsdykning.se/vapper/",
+    "source": "oresundsdykning.se",
+    "positionLatLonVG": [
+      55.24,
+      12.80107
+    ],
+    "depthMetersVG": 26,
+    "sourceUrlVG": "https://www.vragguiden.dk/vrag/1198",
+    "positionLatLonVD": null,
+    "sourceUrlVD": null,
+    "bestPosition": [
+      55.24,
+      12.80107
+    ],
+    "insideWindow": false,
+    "positionVerified": true
+  },
+  {
+    "name": "Bella Maria",
+    "type": "Motorboat (Bella 760 Dolphin)",
+    "builtYear": null,
+    "sunkYear": 2020,
+    "depthMeters": 14,
+    "lengthMeters": null,
+    "positionLatLon": [
+      55.86688,
+      12.68347
+    ],
+    "locationText": "en sjömil sydväst om Vens sydvästra hörna",
+    "story": "The motorboat Bella Maria lost its propeller on 17 May 2020 and, while being towed to Rungsted harbour, was flooded by heavy seas and sank rapidly.",
+    "sourceUrl": "https://www.oresundsdykning.se/bella-maria/",
+    "source": "oresundsdykning.se",
+    "positionLatLonVG": null,
+    "depthMetersVG": null,
+    "sourceUrlVG": null,
+    "positionLatLonVD": null,
+    "sourceUrlVD": "https://www.vrag.dk/motorbaad-bella-maria/",
+    "bestPosition": [
+      55.86688,
+      12.68347
+    ],
+    "insideWindow": true,
+    "positionVerified": null
+  },
+  {
+    "name": "Betonpram",
+    "type": "Concrete barge",
+    "builtYear": null,
+    "sunkYear": 1979,
+    "depthMeters": null,
+    "lengthMeters": null,
+    "positionLatLon": [
+      55.69945,
+      12.64142
+    ],
+    "locationText": null,
+    "story": "A concrete barge that sank in the Öresund in January 1979, now used as a dive site.",
+    "sourceUrl": "https://www.oresundsdykning.se/betonpram/",
+    "source": "oresundsdykning.se",
+    "positionLatLonVG": [
+      55.69941,
+      12.64131
+    ],
+    "depthMetersVG": null,
+    "sourceUrlVG": "https://www.vragguiden.dk/vrag/1693",
+    "positionLatLonVD": null,
+    "sourceUrlVD": null,
+    "bestPosition": [
+      55.69941,
+      12.64131
+    ],
+    "insideWindow": false,
+    "positionVerified": true
+  },
+  {
+    "name": "Carolina Sophia \"kanske\"",
+    "type": "Schooner",
+    "builtYear": null,
+    "sunkYear": 1858,
+    "depthMeters": null,
+    "lengthMeters": 25,
+    "positionLatLon": null,
+    "locationText": "straxt utanför Rydebäck, vid sjöhusen",
+    "story": "The Swedish schooner Carolina Sophia (possibly also identified as Oline Cecilie), under Captain Höglund, wrecked near Rydebäck during a severe storm in July 1858 while carrying coconut oil and American rosin.",
+    "sourceUrl": "https://www.oresundsdykning.se/carolina-sophia-kanske/",
+    "source": "oresundsdykning.se",
+    "positionLatLonVG": null,
+    "depthMetersVG": null,
+    "sourceUrlVG": null,
+    "positionLatLonVD": null,
+    "sourceUrlVD": null,
+    "bestPosition": null,
+    "insideWindow": false,
+    "positionVerified": null
+  },
+  {
+    "name": "Holmen VI",
+    "type": "Tug boat",
+    "builtYear": null,
+    "sunkYear": null,
+    "depthMeters": 28,
+    "lengthMeters": null,
+    "positionLatLon": [
+      56.35188,
+      12.43633
+    ],
+    "locationText": "Ca 4.59 nm från Mölle hamn, kurs 335 grader",
+    "story": "A Swedish tug that sank while en route to the Åland Sea, where it was to serve as a steam power unit for a salvage operation; it lies upright with its steam engine still visible through the portholes.",
+    "sourceUrl": "https://www.oresundsdykning.se/holmen/",
+    "source": "oresundsdykning.se",
+    "positionLatLonVG": [
+      56.3519,
+      12.43637
+    ],
+    "depthMetersVG": 28,
+    "sourceUrlVG": "https://www.vragguiden.dk/vrag/2541",
+    "positionLatLonVD": null,
+    "sourceUrlVD": null,
+    "bestPosition": [
+      56.3519,
+      12.43637
+    ],
+    "insideWindow": false,
+    "positionVerified": true
+  },
+  {
+    "name": "K7 Bevakningsfartyg",
+    "type": "Patrol / guard vessel",
+    "builtYear": null,
+    "sunkYear": null,
+    "depthMeters": null,
+    "lengthMeters": 30,
+    "positionLatLon": null,
+    "locationText": null,
+    "story": "An exploded steel vessel missing its bow, likely the K7 patrol boat; the circumstances of its sinking are not documented on the source page.",
+    "sourceUrl": "https://www.oresundsdykning.se/k7-bevakningsfartyg/",
+    "source": "oresundsdykning.se",
+    "positionLatLonVG": [
+      55.98642,
+      12.6368
+    ],
+    "depthMetersVG": 14,
+    "sourceUrlVG": "https://www.vragguiden.dk/vrag/2013",
+    "positionLatLonVD": null,
+    "sourceUrlVD": null,
+    "bestPosition": [
+      55.98642,
+      12.6368
+    ],
+    "insideWindow": true,
+    "positionVerified": true
+  },
+  {
+    "name": "Kronborg",
+    "type": "Frigate",
+    "builtYear": 1781,
+    "sunkYear": 1801,
+    "depthMeters": null,
+    "lengthMeters": null,
+    "positionLatLon": null,
+    "locationText": null,
+    "story": "The frigate Kronborg was lost during the Battle of Copenhagen (Slaget på Reden) in 1801; after taking casualties she was set ablaze by the British and sank.",
+    "sourceUrl": "https://www.oresundsdykning.se/kronborg/",
+    "source": "oresundsdykning.se",
+    "positionLatLonVG": [
+      55.66911,
+      12.69732
+    ],
+    "depthMetersVG": null,
+    "sourceUrlVG": "https://www.vragguiden.dk/vrag/1649",
+    "positionLatLonVD": null,
+    "sourceUrlVD": null,
+    "bestPosition": [
+      55.66911,
+      12.69732
+    ],
+    "insideWindow": false,
+    "positionVerified": true
+  },
+  {
+    "name": "Landstigningsbåten",
+    "type": "Landing craft",
+    "builtYear": null,
+    "sunkYear": 1948,
+    "depthMeters": null,
+    "lengthMeters": null,
+    "positionLatLon": null,
+    "locationText": null,
+    "story": "A landing craft that sank in 1948; it had been towed from Gothenburg to Valdemarsvik. Few details of its loss survive.",
+    "sourceUrl": "https://www.oresundsdykning.se/landstigningsbaten/",
+    "source": "oresundsdykning.se",
+    "positionLatLonVG": [
+      55.84327,
+      12.75625
+    ],
+    "depthMetersVG": 32,
+    "sourceUrlVG": "https://www.vragguiden.dk/vrag/1846",
+    "positionLatLonVD": null,
+    "sourceUrlVD": null,
+    "bestPosition": [
+      55.84327,
+      12.75625
+    ],
+    "insideWindow": true,
+    "positionVerified": true
+  },
+  {
+    "name": "S.S. Emil R. Retzlaff",
+    "type": "Steamer",
+    "builtYear": null,
+    "sunkYear": 1904,
+    "depthMeters": null,
+    "lengthMeters": null,
+    "positionLatLon": null,
+    "locationText": null,
+    "story": "The steamer Emil R. Retzlaff collided with the steamship Napoli on 24 May 1904 while carrying iron ore to Stettin; all 17 crew were rescued.",
+    "sourceUrl": "https://www.oresundsdykning.se/s-s-emil-r-retzlaff/",
+    "source": "oresundsdykning.se",
+    "positionLatLonVG": [
+      56.06513,
+      12.6273
+    ],
+    "depthMetersVG": 33,
+    "sourceUrlVG": "https://www.vragguiden.dk/vrag/2139",
+    "positionLatLonVD": null,
+    "sourceUrlVD": "https://www.vrag.dk/s-s-emil-r-retzlaff/",
+    "bestPosition": [
+      56.06513,
+      12.6273
+    ],
+    "insideWindow": true,
+    "positionVerified": true
+  },
+  {
+    "name": "S/S Robert",
+    "type": "Steamer",
+    "builtYear": null,
+    "sunkYear": 1905,
+    "depthMeters": null,
+    "lengthMeters": null,
+    "positionLatLon": null,
+    "locationText": "I farvattnet strax norr om Ven i Öresund",
+    "story": "The steamer Robert (originally SS Hawarden) sank on 30 September 1905 after colliding with the steamer Niord just north of Ven; carrying sulfur ore, she went down in under a minute with only one survivor of her 20 crew.",
+    "sourceUrl": "https://www.oresundsdykning.se/s-s-robert/",
+    "source": "oresundsdykning.se",
+    "positionLatLonVG": [
+      55.92562,
+      12.72076
+    ],
+    "depthMetersVG": 42,
+    "sourceUrlVG": "https://www.vragguiden.dk/vrag/1940",
+    "positionLatLonVD": null,
+    "sourceUrlVD": "https://www.vrag.dk/s-s-robert/",
+    "bestPosition": [
+      55.92562,
+      12.72076
+    ],
+    "insideWindow": true,
+    "positionVerified": true
+  },
+  {
+    "name": "Cimbria (Hjuldamper)",
+    "type": "Paddle steamer",
+    "builtYear": 1852,
+    "sunkYear": 1858,
+    "depthMeters": 22,
+    "lengthMeters": null,
+    "positionLatLon": null,
+    "locationText": null,
+    "story": "A Scottish-built paddle steamer that collided with the steamer Skåne and sank on 14 October 1858 in the Öresund; the uninsured loss ruined her owner.",
+    "sourceUrl": "https://www.vrag.dk/hjuldamper-cimbria/",
+    "source": "vrag.dk",
+    "positionLatLonVG": [
+      56.02535,
+      12.6546
+    ],
+    "depthMetersVG": 20,
+    "sourceUrlVG": "https://www.vragguiden.dk/vrag/2072",
+    "positionLatLonVD": null,
+    "sourceUrlVD": "https://www.vrag.dk/hjuldamper-cimbria/",
+    "bestPosition": [
+      56.02535,
+      12.6546
+    ],
+    "insideWindow": true,
+    "positionVerified": true
+  },
+  {
+    "name": "Leda (M.Gl. Leda)",
+    "type": "Motor galeas",
+    "builtYear": 1872,
+    "sunkYear": 1937,
+    "depthMeters": 20,
+    "lengthMeters": 19.2,
+    "positionLatLon": null,
+    "locationText": "nära Ven",
+    "story": "A Danish motor galeas rammed by the larger steamer C.F. Tietgen in thick fog near Ven while carrying a cargo of bricks to Copenhagen, sinking in 1937.",
+    "sourceUrl": "https://www.vrag.dk/m-gl-leda/",
+    "source": "vrag.dk",
+    "positionLatLonVG": [
+      55.90762,
+      12.62961
+    ],
+    "depthMetersVG": 20,
+    "sourceUrlVG": "https://www.vragguiden.dk/vrag/1918",
+    "positionLatLonVD": null,
+    "sourceUrlVD": "https://www.vrag.dk/m-gl-leda/",
+    "bestPosition": [
+      55.90762,
+      12.62961
+    ],
+    "insideWindow": true,
+    "positionVerified": true
+  },
+  {
+    "name": "S.S. Birgit",
+    "type": "Steamship",
+    "builtYear": 1896,
+    "sunkYear": 1918,
+    "depthMeters": 29,
+    "lengthMeters": 30.04,
+    "positionLatLon": null,
+    "locationText": null,
+    "story": "A Swedish steamship carrying wood pulp from Göteborg to Lübeck that sank in under fifteen minutes after colliding with S.S. Alice on 19 November 1918; all crew were rescued.",
+    "sourceUrl": "https://www.vrag.dk/s-s-birgit/",
+    "source": "vrag.dk",
+    "positionLatLonVG": [
+      56.08097,
+      12.60207
+    ],
+    "depthMetersVG": 30,
+    "sourceUrlVG": "https://www.vragguiden.dk/vrag/2175",
+    "positionLatLonVD": null,
+    "sourceUrlVD": "https://www.vrag.dk/s-s-birgit/",
+    "bestPosition": [
+      56.08097,
+      12.60207
+    ],
+    "insideWindow": true,
+    "positionVerified": true
+  },
+  {
+    "name": "S.S. Union",
+    "type": "Steamship",
+    "builtYear": 1871,
+    "sunkYear": 1883,
+    "depthMeters": 29,
+    "lengthMeters": 44.8,
+    "positionLatLon": null,
+    "locationText": "nära Lappegrundens fyr",
+    "story": "A Norwegian steamship carrying rye from Königsberg to Bergen that sank rapidly after colliding with the English steamer Commodore near Lappegrund lighthouse on 14 June 1883; all 17 crew were rescued.",
+    "sourceUrl": "https://www.vrag.dk/s-s-union/",
+    "source": "vrag.dk",
+    "positionLatLonVG": [
+      56.06613,
+      12.6238
+    ],
+    "depthMetersVG": null,
+    "sourceUrlVG": "https://www.vragguiden.dk/vrag/2143",
+    "positionLatLonVD": null,
+    "sourceUrlVD": "https://www.vrag.dk/s-s-union/",
+    "bestPosition": [
+      56.06613,
+      12.6238
+    ],
+    "insideWindow": true,
+    "positionVerified": false
+  },
+  {
+    "name": "Ane Kirstine (Sk.)",
+    "type": "Schooner",
+    "builtYear": 1878,
+    "sunkYear": 1903,
+    "depthMeters": 23,
+    "lengthMeters": 19,
+    "positionLatLon": null,
+    "locationText": null,
+    "story": "A Danish two-masted schooner that sank in the Öresund on 9 October 1903 after taking on water while carrying refractory bricks; the crew abandoned ship when pumping failed.",
+    "sourceUrl": "https://www.vrag.dk/sk-ane-kirstine/",
+    "source": "vrag.dk",
+    "positionLatLonVG": [
+      55.9977,
+      12.62233
+    ],
+    "depthMetersVG": 20,
+    "sourceUrlVG": "https://www.vragguiden.dk/vrag/2050",
+    "positionLatLonVD": null,
+    "sourceUrlVD": "https://www.vrag.dk/sk-ane-kirstine/",
+    "bestPosition": [
+      55.9977,
+      12.62233
+    ],
+    "insideWindow": true,
+    "positionVerified": false
+  }
+]
