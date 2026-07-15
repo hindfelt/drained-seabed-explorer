@@ -52,13 +52,31 @@ license, and attribution:
    Esri World Imagery export fallback. Already built.
 3. **Places** — OSM Overpass: `place=city|town|village` in bbox, ranked by
    population/coastal proximity. Replaces hand-authored lists.
-4. **Wrecks** — the big generalization. Manual per-region research doesn't
-   scale; instead: **OpenSeaMap/OSM seamarks** (`seamark:type=wreck`, global,
-   coordinates included), **NOAA AWOIS/ENC wreck layers** (US, open), and any
-   other open national wreck registers behind adapters. Plus a **user CSV/URL
-   import** slot for regional passion-sources (like our oresundsdykning.se) —
-   imported entries without charted coordinates automatically get the
-   `approximate` treatment (≈ labels, hollow beacons) we built.
+4. **Wrecks & underwater obstructions** — the big generalization, and the
+   part with a verified answer. **Primary adapter: the UKHO Global Wrecks
+   dataset served by EMODnet Human Activities** — 94,000+ wrecks worldwide
+   under the UK Open Government Licence, quarterly updates, exposed as WFS
+   layer `emodnet:wwshipwrecks` with GeoJSON output and bbox filtering.
+   *Verified live*: a single GET against our Öresund window
+   (`bbox=lonMin,latMin,lonMax,latMax`) returns 39 wrecks — more than our
+   hand-researched 23 — with attributes including category
+   ("Dangerous wreck"…), position + accuracy, depth + method/quality, name,
+   type, flag, length/width/draught, tonnage, cargo, date sunk, circumstances
+   of loss, sonar dimensions and debris-field notes. The `depth_qual` /
+   position-accuracy fields map directly onto our ≈/approximate rendering.
+   Secondary adapters, in priority order: `emodnet:heritageshipwrecks`
+   (same WFS, cultural-heritage wrecks), the ADMIRALTY Data Hub (UKHO's own
+   portal for the same product family, OGL, REST APIs), NOAA AWOIS/ENC wreck
+   layers (US), OpenSeaMap/OSM `seamark:type=wreck`, and national open
+   registers. Optional hazard layers from the same EMODnet WFS: dumped
+   munitions and dredge-spoil sites (points + polygons) as a togglable
+   "obstructions" category. Plus the **user CSV/URL import** slot for regional
+   passion-sources (like our oresundsdykning.se) — imported entries without
+   charted coordinates automatically get the `approximate` treatment
+   (≈ labels, hollow beacons) we built.
+   **Not usable as data**: wrecksite.eu — the largest catalogue anywhere
+   (221k wrecks, 190k positions) but subscription-gated with no API or reuse
+   license; it joins aquamap/i-boating as a human reference-viewer link only.
 5. **Shoals/banks** — named from OSM (`natural=shoal|reef`, seamark
    equivalents); unnamed ones detected as local shallow crests in the grid.
 6. **Auto-tuning** — vertical exaggeration derived from the region's real
@@ -124,6 +142,9 @@ fallbacks, deterministic seeding).
   runtime that boots from a region pack. Prove with 3 diverse regions
   (a Norwegian fjord, a tropical atoll, one of the Great Lakes) — this smokes
   out Öresund assumptions (depth ranges, land ratios, wreck sparsity).
+  The UKHO/EMODnet wreck adapter is verified and trivial (one WFS GET per
+  bbox), so fully automatic wreck population moves INTO P0 — no manual
+  research step remains in the loop.
 - **P1 — Web generator (1–2 sessions)**: map picker UI, server pipeline with
   caching, zip download, attribution assembly.
 - **P2 — Offline polish**: single-file HTML packaging, PWA install, OSM/NOAA
