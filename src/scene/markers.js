@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-import { REEFS, WRECKS, PLACES } from '../data/sites.js';
 
 // Shared with src/ui/overlay.css — keep these three hexes in sync.
 const REEF_ACCENT = '#2fb8a6';
@@ -25,7 +24,15 @@ const STEEL_HULL_PALETTE = ['#b68a67', '#ad7e5b', '#bd8e73', '#9f8266'];
 const CONCRETE_PALETTE = ['#8c8a83', '#78766f', '#96938a'];
 const PATROL_PALETTE = ['#81958e', '#7a8881', '#8b9e9a'];
 
-export function createMarkers(heightmap) {
+/**
+ * Builds the marker layers from loader-provided site records (see
+ * src/pack-loader.js convertSites for the record shapes — positions are
+ * already world [x, z]).
+ * @param heightmap pack-scaled heightmap (for ground heights)
+ * @param sites `{ reefs, wrecks, places }` marker records
+ */
+export function createMarkers(heightmap, sites) {
+  const { reefs = [], wrecks = [], places = [] } = sites;
   const group = new THREE.Group();
   group.name = 'markers';
 
@@ -36,13 +43,13 @@ export function createMarkers(heightmap) {
   const placesGroup = new THREE.Group();
   placesGroup.name = 'places';
 
-  for (const reef of REEFS) {
+  for (const reef of reefs) {
     reefsGroup.add(buildReef(reef, heightmap));
   }
-  for (const wreck of WRECKS) {
+  for (const wreck of wrecks) {
     wrecksGroup.add(buildWreck(wreck, heightmap));
   }
-  for (const place of PLACES) {
+  for (const place of places) {
     placesGroup.add(buildPlace(place, heightmap));
   }
 

@@ -1,7 +1,5 @@
 import * as THREE from 'three';
 
-const SATELLITE_ASSET_URL = new URL('../assets/satellite-land.jpg', import.meta.url).href;
-
 // 1x1 opaque black placeholder so the sampler2D uniform is always bound to a
 // valid texture (avoids WebGL "no texture bound" warnings) before/unless the
 // real satellite image finishes loading. uSatelliteReady gates the blend to
@@ -19,8 +17,9 @@ function createFallbackSatelliteTexture() {
  * only, leaving the seabed/beach/tide bands exactly as painted. Missing or
  * failed asset -> stays on the procedural vertex-color look (mandatory
  * fallback; nothing swaps until the async load actually succeeds).
+ * @param satelliteUrl the region pack's satellite.jpg URL
  */
-export function createTerrainMaterial() {
+export function createTerrainMaterial(satelliteUrl) {
   const material = new THREE.MeshStandardMaterial({
     vertexColors: true,
     roughness: 0.95,
@@ -68,15 +67,15 @@ export function createTerrainMaterial() {
       );
   };
 
-  loadSatelliteTexture(material);
+  if (satelliteUrl) loadSatelliteTexture(material, satelliteUrl);
 
   return material;
 }
 
-function loadSatelliteTexture(material) {
+function loadSatelliteTexture(material, satelliteUrl) {
   const loader = new THREE.TextureLoader();
   loader.load(
-    SATELLITE_ASSET_URL,
+    satelliteUrl,
     (texture) => {
       texture.colorSpace = THREE.SRGBColorSpace;
       texture.anisotropy = 8;
@@ -110,12 +109,28 @@ const DRY_GRASS = new THREE.Color('#b8a468');
 const CLIFF = new THREE.Color('#7a6a55'); // Ven-style glacial till/clay cliff
 const CLIFF_DARK = new THREE.Color('#5f5244'); // deepest tone, steepest faces
 
+// Hand-tuned Öresund sea-band edges — the defaults when a pack's meta caries
+// no colorBands. Packs override these via meta.colorBands (world units).
+const DEFAULT_COLOR_BANDS = {
+  shelfEdge: -22,
+  midEdge: -32,
+  trenchStart: -55,
+  trenchFull: -80,
+  saltMin: -25,
+  saltMax: -5,
+};
+
 /**
  * Writes a 'color' BufferAttribute onto geometry using elevation (world y)
  * and slope (normal.y) already baked into the displaced, normal-computed
  * geometry. Call AFTER displacement + computeVertexNormals().
+ * @param colorBands the pack's `meta.colorBands` (world-unit band edges)
  */
-export function applyTerrainColors(geometry, heightmap) {
+export function applyTerrainColors(geometry, heightmap, colorBands = {}) {
+  const { shelfEdge, midEdge, trenchStart, trenchFull, saltMin, saltMax } = {
+    ...DEFAULT_COLOR_BANDS,
+    ...colorBands,
+  };
   const posAttr = geometry.attributes.position;
   const normalAttr = geometry.attributes.normal;
   const count = posAttr.count;
@@ -136,11 +151,11 @@ export function applyTerrainColors(geometry, heightmap) {
     // into the familiar mud tone through mid-depths (~-30..-60), channel
     // trench darkest toward -80..-95, tidal-flat salt pans on genuinely
     // flat shallow ground, steep rock.
-    const shelfFactor = 1 - smoothstep(-22, -32, y); // shelf dominant through ~-30, handing off to mud
-    const canyonFactor = smoothstep(-55, -80, y);
-    const saltRiseFactor = smoothstep(-4, -9, y);
-    const saltFallFactor = 1 - smoothstep(-21, -27, y);
-    const saltElevFactor = saltRiseFactor * saltFallFactor; // ~-5..-25 shallow-flat band
+    const shelfFactor = 1 - smoothstep(shelfEdge, midEdge, y); // shelf dominant, handing off to mud
+    const canyonFactor = smoothstep(trenchStart, trenchFull, y);
+    const saltRiseFactor = smoothstep(saltMax + 1, saltMax - 4, y);
+    const saltFallFactor = 1 - smoothstep(saltMin + 4, saltMin - 2, y);
+    const saltElevFactor = saltRiseFactor * saltFallFactor; // saltMax..saltMin shallow-flat band
     const saltFlatFactor = smoothstep(0.72, 0.94, ny);
     const saltFactor = saltElevFactor * saltFlatFactor;
     const seaSlopeFactor = (1 - smoothstep(0.62, 0.86, ny)) * 0.9;

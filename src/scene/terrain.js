@@ -4,9 +4,11 @@ import { createTerrainMaterial, applyTerrainColors } from '../materials/terrainM
 /**
  * Builds the displaced, vertex-colored terrain mesh from a heightmap.
  * @param {import('../data/heightmap.js').Heightmap} heightmap
+ * @param {{ colorBands?: object, satelliteUrl?: string }} packLook per-pack
+ *   sea color-band edges (meta.colorBands) and satellite image URL
  * @returns {THREE.Mesh}
  */
-export function createTerrain(heightmap) {
+export function createTerrain(heightmap, { colorBands, satelliteUrl } = {}) {
   const geometry = new THREE.PlaneGeometry(
     heightmap.size,
     heightmap.size,
@@ -25,9 +27,9 @@ export function createTerrain(heightmap) {
   position.needsUpdate = true;
 
   geometry.computeVertexNormals();
-  applyTerrainColors(geometry, heightmap);
+  applyTerrainColors(geometry, heightmap, colorBands);
 
-  const material = createTerrainMaterial();
+  const material = createTerrainMaterial(satelliteUrl);
   const mesh = new THREE.Mesh(geometry, material);
   mesh.name = 'terrain';
   mesh.castShadow = true;
