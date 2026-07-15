@@ -60,14 +60,18 @@ export function findShoals(packGrid, bbox, { count = 4, minProminence = 5 } = {}
       bbox.lonMin + (bbox.lonMax - bbox.lonMin) * col / (nLon - 1),
     ],
     crestMeters: crest,
-    radiusMeters: contiguousCrestCellCount(
+    // Equivalent-circle radius of the crest region: the flood fill counts
+    // AREA cells, so radius = sqrt(count / π) × cell size — a raw
+    // count × cellSize product would be dimensionally wrong and blow up
+    // to region-scale values for broad shoals.
+    radiusMeters: Math.sqrt(contiguousCrestCellCount(
       elevations,
       nLat,
       nLon,
       row,
       col,
       crest - prominence / 2,
-    ) * cellSizeMeters,
+    ) / Math.PI) * cellSizeMeters,
   }));
 }
 
