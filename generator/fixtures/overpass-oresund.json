@@ -1,0 +1,614 @@
+{
+  "version": 0.6,
+  "generator": "Overpass API 0.7.62.11 87bfad18",
+  "osm3s": {
+    "timestamp_osm_base": "2026-07-15T19:41:30Z",
+    "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL."
+  },
+  "elements": [
+
+{
+  "type": "node",
+  "id": 13704765,
+  "lat": 55.9542448,
+  "lon": 12.5304611,
+  "tags": {
+    "name": "Sletten",
+    "place": "village",
+    "wikidata": "Q12336064",
+    "wikipedia": "da:Sletten (Humlebæk)"
+  }
+},
+{
+  "type": "node",
+  "id": 15412058,
+  "lat": 56.0442098,
+  "lon": 12.7037060,
+  "tags": {
+    "capital": "7",
+    "name": "Helsingborg",
+    "name:ar": "هلسينغبورغ",
+    "name:be": "Хельсінгбарг",
+    "name:bg": "Хелсингбори",
+    "name:cv": "Хельсингборг",
+    "name:el": "Χέλσινγκμποργκ",
+    "name:et": "Helsingborg",
+    "name:fa": "هلسینگبوری",
+    "name:he": "הלסינגבורג",
+    "name:hu": "Helsingborg",
+    "name:hy": "Հելսինգբորգ",
+    "name:is": "Helsingjaborg",
+    "name:ja": "ヘルシンボリ",
+    "name:ka": "ჰელსინგბორგი",
+    "name:ko": "헬싱보리",
+    "name:la": "Helsingoburgum",
+    "name:lt": "Helsingborgas",
+    "name:lv": "Helsingborja",
+    "name:mk": "Хелсингборг",
+    "name:ml": "ഹെൽസിങ്ബോർഗ്",
+    "name:mn": "Хелсингборг",
+    "name:nl": "Helsingborg",
+    "name:os": "Хельсингборг",
+    "name:ru": "Хельсингборг",
+    "name:sr": "Хелсингборг",
+    "name:sr-Latn": "Helsingborg",
+    "name:th": "เฮ็ลซิงบอร์ย",
+    "name:tt": "Һелсиңборг",
+    "name:uk": "Гельсінгборг",
+    "name:ur": "ہیلسنگبوری",
+    "name:zh": "赫尔辛堡",
+    "old_name": "Hälsingborg",
+    "place": "city",
+    "population": "93838",
+    "ref:SE:pts:postort": "HELSINGBORG",
+    "ref:SE:scb": "3452",
+    "wikidata": "Q25411",
+    "wikipedia": "sv:Helsingborg"
+  }
+},
+{
+  "type": "node",
+  "id": 21040320,
+  "lat": 56.0348739,
+  "lon": 12.6130073,
+  "tags": {
+    "name": "Helsingør",
+    "name:da": "Helsingør",
+    "name:de": "Helsingör",
+    "name:en": "Elsinore",
+    "name:es": "Elsinor",
+    "name:fr": "Elseneur",
+    "name:ia": "Elsinor",
+    "name:is": "Helsingjaeyri",
+    "name:it": "Elsinore",
+    "name:ja": "ヘルシンゲル",
+    "name:ka": "ჰელსინგერი",
+    "name:ko": "헬싱외르",
+    "name:lmo": "Elsinör",
+    "name:lt": "Helsingioras",
+    "name:mk": "Хелсингер",
+    "name:pt": "Helsingor",
+    "name:ru": "Хельсингёр",
+    "name:sr": "Хелсингер",
+    "name:sv": "Helsingör",
+    "name:th": "เฮลซิงเงอร์",
+    "name:uk": "Гельсінгер",
+    "name:yue": "希星加",
+    "name:zh": "赫爾辛格",
+    "old_name:nl": "Elseneur",
+    "place": "town",
+    "population": "47364",
+    "population:date": "2018-01-01",
+    "source:population": "http://www.statistikbanken.dk/BY1",
+    "wikidata": "Q26881",
+    "wikipedia": "da:Helsingør"
+  }
+},
+{
+  "type": "node",
+  "id": 26559021,
+  "lat": 56.0739418,
+  "lon": 12.5488104,
+  "tags": {
+    "census": "2013",
+    "name": "Hellebæk",
+    "place": "village",
+    "population": "5549",
+    "source": "Statistikbanken Tabel BEF44",
+    "wikidata": "Q1025348",
+    "wikipedia": "da:Hellebæk"
+  }
+},
+{
+  "type": "node",
+  "id": 26559049,
+  "lat": 55.9618789,
+  "lon": 12.5305462,
+  "tags": {
+    "name": "Humlebæk",
+    "place": "town",
+    "population": "9781",
+    "population:date": "2026-01-01",
+    "source:population": "http://www.statistikbanken.dk/BY1",
+    "wikidata": "Q2631512",
+    "wikipedia": "da:Humlebæk"
+  }
+},
+{
+  "type": "node",
+  "id": 26559100,
+  "lat": 55.9350560,
+  "lon": 12.5013529,
+  "tags": {
+    "name": "Nivå",
+    "name:etymology:wikidata": "Q21995145",
+    "place": "town",
+    "population": "7821",
+    "source": "Statistikbanken Tabel BEF44",
+    "wikidata": "Q2926034",
+    "wikipedia": "da:Nivå"
+  }
+},
+{
+  "type": "node",
+  "id": 26559105,
+  "lat": 56.0879176,
+  "lon": 12.4587803,
+  "tags": {
+    "name": "Hornbæk",
+    "place": "village",
+    "wikidata": "Q1257552",
+    "wikipedia": "da:Hornbæk (Helsingør Kommune)"
+  }
+},
+{
+  "type": "node",
+  "id": 26559159,
+  "lat": 55.8832986,
+  "lon": 12.5000112,
+  "tags": {
+    "name": "Hørsholm",
+    "name:da": "Hørsholm",
+    "name:de": "Hirschholm",
+    "name:ka": "ჰერსჰოლმი",
+    "name:lt": "Hiorsholmas",
+    "name:ru": "Хёрсхольм",
+    "name:uk": "Хьорсгольм",
+    "note": "Byen befinder sig i tre kommuner",
+    "place": "town",
+    "population": "47489",
+    "population:date": "2018-01-01",
+    "source:population": "http://www.statistikbanken.dk/BY1",
+    "wikidata": "Q20835",
+    "wikipedia": "da:Hørsholm"
+  }
+},
+{
+  "type": "node",
+  "id": 27699239,
+  "lat": 55.8698007,
+  "lon": 12.8296734,
+  "tags": {
+    "name": "Landskrona",
+    "name:ru": "Ландскруна",
+    "name:sv": "Landskrona",
+    "place": "town",
+    "population": "30499",
+    "ref:SE:pts:postort": "LANDSKRONA",
+    "ref:SE:scb": "3560",
+    "wikidata": "Q54352",
+    "wikipedia": "sv:Landskrona"
+  }
+},
+{
+  "type": "node",
+  "id": 31059001,
+  "lat": 55.8214676,
+  "lon": 12.5728477,
+  "tags": {
+    "name": "Skodsborg",
+    "place": "village",
+    "population": "1169",
+    "population:date": "2011-01-01",
+    "source": "Statistikbanken Tabel BEF44",
+    "wikidata": "Q7061201",
+    "wikipedia": "da:Skodsborg"
+  }
+},
+{
+  "type": "node",
+  "id": 31059003,
+  "lat": 55.8540912,
+  "lon": 12.5653124,
+  "tags": {
+    "name": "Vedbæk",
+    "place": "village",
+    "wikidata": "Q1896694",
+    "wikipedia": "da:Vedbæk"
+  }
+},
+{
+  "type": "node",
+  "id": 122732762,
+  "lat": 56.0842983,
+  "lon": 12.9167304,
+  "tags": {
+    "name": "Bjuv",
+    "name:ru": "Бьюв",
+    "name:sv": "Bjuv",
+    "place": "town",
+    "population": "6832",
+    "ref:SE:pts:postort": "BJUV",
+    "ref:SE:scb": "3352",
+    "wikidata": "Q1760444",
+    "wikipedia": "sv:Bjuv"
+  }
+},
+{
+  "type": "node",
+  "id": 278633606,
+  "lat": 55.8341197,
+  "lon": 12.5161754,
+  "tags": {
+    "name": "Gammel Holte",
+    "place": "village",
+    "wikidata": "Q12313473",
+    "wikipedia": "da:Gammel Holte"
+  }
+},
+{
+  "type": "node",
+  "id": 279402575,
+  "lat": 55.9664444,
+  "lon": 12.7806774,
+  "tags": {
+    "name": "Rydebäck",
+    "place": "village",
+    "ref:SE:pts:postort": "RYDEBÄCK",
+    "ref:SE:scb": "3652"
+  }
+},
+{
+  "type": "node",
+  "id": 279402590,
+  "lat": 55.9416984,
+  "lon": 12.8104863,
+  "tags": {
+    "name": "Glumslöv",
+    "place": "village",
+    "ref:SE:pts:postort": "GLUMSLÖV",
+    "ref:SE:scb": "3428"
+  }
+},
+{
+  "type": "node",
+  "id": 283289836,
+  "lat": 55.8553781,
+  "lon": 12.4822277,
+  "tags": {
+    "name": "Høsterkøb",
+    "place": "village",
+    "population": "298",
+    "population:date": "2011-01-01",
+    "source": "Statistikbanken Tabel BEF44",
+    "wikidata": "Q12317850",
+    "wikipedia": "da:Høsterkøb"
+  }
+},
+{
+  "type": "node",
+  "id": 293063179,
+  "lat": 55.9105061,
+  "lon": 12.4916721,
+  "tags": {
+    "name": "Kokkedal",
+    "name:etymology:wikidata": "Q8698857",
+    "place": "town",
+    "population": "9000",
+    "wikidata": "Q2040882",
+    "wikipedia": "da:Kokkedal"
+  }
+},
+{
+  "type": "node",
+  "id": 344974059,
+  "lat": 55.9899825,
+  "lon": 12.4976071,
+  "tags": {
+    "census": "2013",
+    "name": "Kvistgård",
+    "place": "village",
+    "population": "1058",
+    "source": "Statistikbanken Tabel BEF44",
+    "wikidata": "Q2236093",
+    "wikipedia": "da:Kvistgård"
+  }
+},
+{
+  "type": "node",
+  "id": 366978362,
+  "lat": 55.9324062,
+  "lon": 12.8760237,
+  "tags": {
+    "name": "Härslöv",
+    "place": "village",
+    "ref:SE:pts:postort": "HÄRSLÖV",
+    "ref:SE:scb": "3484"
+  }
+},
+{
+  "type": "node",
+  "id": 367672844,
+  "lat": 55.8515457,
+  "lon": 12.9152096,
+  "tags": {
+    "name": "Häljarp",
+    "place": "village",
+    "ref:SE:pts:postort": "HÄLJARP",
+    "ref:SE:scb": "3476"
+  }
+},
+{
+  "type": "node",
+  "id": 383382943,
+  "lat": 55.9874622,
+  "lon": 12.8019646,
+  "tags": {
+    "name": "Gantofta",
+    "place": "village",
+    "ref:SE:pts:postort": "GANTOFTA",
+    "ref:SE:scb": "3412"
+  }
+},
+{
+  "type": "node",
+  "id": 454516762,
+  "lat": 55.9622674,
+  "lon": 12.8583158,
+  "tags": {
+    "name": "Vallåkra",
+    "place": "village",
+    "ref:SE:pts:postort": "VALLÅKRA",
+    "ref:SE:scb": "3772"
+  }
+},
+{
+  "type": "node",
+  "id": 565488901,
+  "lat": 56.0119640,
+  "lon": 12.8018999,
+  "tags": {
+    "name": "Bårslöv",
+    "place": "village",
+    "ref:SE:scb": "3376"
+  }
+},
+{
+  "type": "node",
+  "id": 578466112,
+  "lat": 56.0317945,
+  "lon": 12.8156993,
+  "tags": {
+    "name": "Påarp",
+    "place": "village",
+    "ref:SE:pts:postort": "PÅARP",
+    "ref:SE:scb": "3644"
+  }
+},
+{
+  "type": "node",
+  "id": 701297609,
+  "lat": 56.0983313,
+  "lon": 12.6388067,
+  "tags": {
+    "name": "Hittarp",
+    "place": "village",
+    "ref:SE:scb": "3456"
+  }
+},
+{
+  "type": "node",
+  "id": 703867395,
+  "lat": 56.0921920,
+  "lon": 12.6558006,
+  "tags": {
+    "name": "Laröd",
+    "place": "village"
+  }
+},
+{
+  "type": "node",
+  "id": 759769919,
+  "lat": 56.0567353,
+  "lon": 12.8774540,
+  "tags": {
+    "name": "Mörarp",
+    "place": "village",
+    "ref:SE:pts:postort": "MÖRARP",
+    "ref:SE:scb": "3620"
+  }
+},
+{
+  "type": "node",
+  "id": 1067769859,
+  "lat": 56.0107273,
+  "lon": 12.5799520,
+  "tags": {
+    "name": "Snekkersten",
+    "name:de": "Snekkersten",
+    "place": "village",
+    "wikidata": "Q3894835",
+    "wikipedia": "da:Snekkersten"
+  }
+},
+{
+  "type": "node",
+  "id": 1089473592,
+  "lat": 56.0208025,
+  "lon": 12.4518018,
+  "tags": {
+    "census": "2013",
+    "name": "Tikøb",
+    "name:etymology:wikidata": "Q172713",
+    "place": "village",
+    "population": "706",
+    "source": "Statistikbanken Tabel BEF44",
+    "wikidata": "Q1993903",
+    "wikipedia": "da:Tikøb"
+  }
+},
+{
+  "type": "node",
+  "id": 1594641238,
+  "lat": 55.9831821,
+  "lon": 12.5378199,
+  "tags": {
+    "name": "Tibberup",
+    "place": "village",
+    "wikidata": "Q12343163",
+    "wikipedia": "da:Tibberup (Helsingør)"
+  }
+},
+{
+  "type": "node",
+  "id": 2000218717,
+  "lat": 56.0989992,
+  "lon": 12.9220395,
+  "tags": {
+    "name": "Gunnarstorp",
+    "place": "village",
+    "ref:SE:scb": "3432"
+  }
+},
+{
+  "type": "node",
+  "id": 2603289659,
+  "lat": 56.0212509,
+  "lon": 12.5199932,
+  "tags": {
+    "census": "2013",
+    "name": "Gurre",
+    "place": "village",
+    "population": "419",
+    "wikidata": "Q2753021",
+    "wikipedia": "da:Gurre"
+  }
+},
+{
+  "type": "node",
+  "id": 2603292979,
+  "lat": 56.0376016,
+  "lon": 12.4449686,
+  "tags": {
+    "census": "2013",
+    "name": "Langesø",
+    "place": "village",
+    "population": "204",
+    "wikidata": "Q2730316",
+    "wikipedia": "da:Langesø (Helsingør Kommune)"
+  }
+},
+{
+  "type": "node",
+  "id": 2603301975,
+  "lat": 56.0761599,
+  "lon": 12.4865893,
+  "tags": {
+    "census": "2013",
+    "name": "Saunte",
+    "place": "village",
+    "population": "1278",
+    "wikidata": "Q12334697",
+    "wikipedia": "da:Saunte"
+  }
+},
+{
+  "type": "node",
+  "id": 3415574724,
+  "lat": 55.9132169,
+  "lon": 12.6896394,
+  "tags": {
+    "landuse": "residential",
+    "name": "Tuna",
+    "note": "största byn på ven, men fortf inte tätort, behålla villageklassning?",
+    "place": "village",
+    "population": "135",
+    "ref:SE:scb": "S3809",
+    "wikidata": "Q10706251"
+  }
+},
+{
+  "type": "node",
+  "id": 4059354661,
+  "lat": 55.8262300,
+  "lon": 12.4597723,
+  "tags": {
+    "name": "Rudegård",
+    "place": "village"
+  }
+},
+{
+  "type": "node",
+  "id": 5648888018,
+  "lat": 55.9209780,
+  "lon": 12.4943888,
+  "tags": {
+    "name": "Ullerød",
+    "place": "village",
+    "wikidata": "Q28836037"
+  }
+},
+{
+  "type": "node",
+  "id": 5648907060,
+  "lat": 56.0837718,
+  "lon": 12.4793845,
+  "tags": {
+    "name": "Stenstrup",
+    "place": "village",
+    "wikidata": "Q772425"
+  }
+},
+{
+  "type": "node",
+  "id": 10310406174,
+  "lat": 55.8427623,
+  "lon": 12.5351671,
+  "tags": {
+    "name": "Trørød",
+    "place": "village",
+    "population": "8576",
+    "source": "geonames.org",
+    "wikidata": "Q3432926",
+    "wikipedia": "da:Trørød"
+  }
+},
+{
+  "type": "node",
+  "id": 10310406175,
+  "lat": 55.8606611,
+  "lon": 12.4965439,
+  "tags": {
+    "name": "Brådebæk",
+    "note": "Er en bydel i Hørsholm",
+    "place": "village",
+    "wikidata": "Q12304511",
+    "wikipedia": "da:Brådebæk"
+  }
+},
+{
+  "type": "node",
+  "id": 10310406177,
+  "lat": 55.8614119,
+  "lon": 12.4573927,
+  "tags": {
+    "name": "Ravnsnæs",
+    "place": "village",
+    "population": "615",
+    "wikidata": "Q7296818",
+    "wikipedia": "da:Ravnsnæs"
+  }
+}
+
+  ]
+}
