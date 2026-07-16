@@ -1,0 +1,71 @@
+{
+  "name": "Gibraltar",
+  "slug": "gibraltar",
+  "bbox": {
+    "lonMin": -5.873828124999989,
+    "latMin": 35.9781759582205,
+    "lonMax": -5.373828124999989,
+    "latMax": 36.377525282509424
+  },
+  "grid": {
+    "nLat": 256,
+    "nLon": 256
+  },
+  "scale": {
+    "seaFactor": 0.09387336122257892,
+    "landFactor": 0.04693668061128946,
+    "landCeiling": 33.75
+  },
+  "colorBands": {
+    "shelfEdge": -12,
+    "midEdge": -21.9,
+    "trenchStart": -45,
+    "trenchFull": -70,
+    "saltMin": -2.8686257548307936,
+    "saltMax": -0.956208584943598
+  },
+  "stats": {
+    "minMeters": -958.7384411068977,
+    "maxMeters": 762.6693181770222,
+    "seaPercentiles": {
+      "p25": -30.55846427006192,
+      "p50": -85.59988110890792,
+      "p75": -241.40797782570004
+    }
+  },
+  "attributions": [
+    "Bathymetry © GEBCO Compilation Group",
+    "Bathymetry © EMODnet Bathymetry Consortium",
+    "Wrecks © UK Hydrographic Office via EMODnet Human Activities, OGL",
+    "© OpenStreetMap contributors",
+    "Sentinel-2 cloudless 2023 — https://s2maps.eu by EOX IT Services GmbH (Contains modified Copernicus Sentinel data 2023)"
+  ],
+  "sources": [
+    {
+      "name": "gebco-2020",
+      "license": "GEBCO grid — free to use",
+      "attribution": "Bathymetry © GEBCO Compilation Group"
+    },
+    {
+      "name": "emodnet-dtm-2024",
+      "license": "EMODnet — free reuse with attribution",
+      "attribution": "Bathymetry © EMODnet Bathymetry Consortium"
+    },
+    {
+      "name": "ukho-global-wrecks",
+      "license": "Open Government Licence",
+      "attribution": "Wrecks © UK Hydrographic Office via EMODnet Human Activities, OGL"
+    },
+    {
+      "name": "openstreetmap-overpass",
+      "license": "Open Database License (ODbL) 1.0",
+      "attribution": "© OpenStreetMap contributors"
+    },
+    {
+      "name": "eox-sentinel-2-cloudless",
+      "license": "CC BY-NC-SA 4.0 (non-commercial, share-alike) — https://cloudless.eox.at; Esri fallback subject to Esri terms of use",
+      "attribution": "Sentinel-2 cloudless 2023 — https://s2maps.eu by EOX IT Services GmbH (Contains modified Copernicus Sentinel data 2023)"
+    }
+  ],
+  "generatedAt": "2026-07-16"
+}

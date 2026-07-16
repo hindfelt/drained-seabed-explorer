@@ -135,7 +135,11 @@ export function createSlippyMap(container, { center = [30, 0], zoom = 3 } = {}) 
   let pointer = null; // { px, py, drawing }
 
   container.addEventListener('pointerdown', (event) => {
-    container.setPointerCapture(event.pointerId);
+    try {
+      container.setPointerCapture(event.pointerId);
+    } catch {
+      // synthetic events (tests) have no active pointer to capture
+    }
     const rect = container.getBoundingClientRect();
     const px = event.clientX - rect.left;
     const py = event.clientY - rect.top;

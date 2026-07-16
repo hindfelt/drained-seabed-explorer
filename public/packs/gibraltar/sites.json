@@ -1,0 +1,1056 @@
+{
+  "wrecks": [
+    {
+      "id": "wwshipwrecks.3243",
+      "name": null,
+      "latLon": [
+        36.1297778,
+        -5.3827222
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": 103,
+      "lengthMeters": null,
+      "category": "Non-dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.3254",
+      "name": null,
+      "latLon": [
+        36.1297778,
+        -5.3768889
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": 61,
+      "lengthMeters": null,
+      "category": "Non-dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.3255",
+      "name": null,
+      "latLon": [
+        36.1288056,
+        -5.3805833
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": 85,
+      "lengthMeters": null,
+      "category": "Non-dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.3260",
+      "name": null,
+      "latLon": [
+        36.1278333,
+        -5.378
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": null,
+      "lengthMeters": null,
+      "category": "Non-dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.3262",
+      "name": null,
+      "latLon": [
+        36.1275556,
+        -5.3793889
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": 87,
+      "lengthMeters": null,
+      "category": "Non-dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.3264",
+      "name": null,
+      "latLon": [
+        36.1491167,
+        -5.3873333
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": null,
+      "lengthMeters": null,
+      "category": "Non-dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.3265",
+      "name": null,
+      "latLon": [
+        36.1492167,
+        -5.3874
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": null,
+      "lengthMeters": null,
+      "category": "Non-dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.3275",
+      "name": null,
+      "latLon": [
+        36.1281111,
+        -5.3838333
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": null,
+      "lengthMeters": null,
+      "category": "Non-dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.3276",
+      "name": null,
+      "latLon": [
+        36.1306111,
+        -5.3835555
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": 113,
+      "lengthMeters": null,
+      "category": "Non-dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.3936",
+      "name": "YVETTE",
+      "latLon": [
+        36.0775,
+        -5.4219444
+      ],
+      "type": "motor vessel",
+      "sunkYear": null,
+      "depthMeters": null,
+      "lengthMeters": 66.6,
+      "category": "Wreck showing any portion of hull or superstructure",
+      "story": "VESSEL, ON PASSAGE FROM ST LOUIS DU RHONE TO CASABLANCA. RAN AGROUND AFTER HER HOLD FLOODED. BROKE UP DUE TO HEAVY SWELL. ALL CREW SAFE. (LLOYDS VOL.214). REPORTED TO BE SAL",
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.3942",
+      "name": "ISSA SEGUNDA",
+      "latLon": [
+        36.1252778,
+        -5.4244444
+      ],
+      "type": "auxiliary ship",
+      "sunkYear": null,
+      "depthMeters": null,
+      "lengthMeters": null,
+      "category": "Dangerous wreck",
+      "story": null,
+      "approximate": true
+    },
+    {
+      "id": "wwshipwrecks.3946",
+      "name": "MARIA VICTORIA",
+      "latLon": [
+        36.0200556,
+        -5.713
+      ],
+      "type": "steam ship",
+      "sunkYear": null,
+      "depthMeters": null,
+      "lengthMeters": 111,
+      "category": "Wreck showing any portion of hull or superstructure",
+      "story": "VESSEL, BUILT 1920 BY CAMPBELTOWN SHIPBUILDING CO., LTD.. OWNED AT TIME OF LOSS BY CIA. NAVIERA ORION. ON PASSAGE FROM SAGUNTO TO BILBAO. BROKE IN TWO WHEN SHE RAN AGROUND DURING BAD WEATH",
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.3947",
+      "name": "DIMITRIOS (PROBABLY)",
+      "latLon": [
+        36.017,
+        -5.7096667
+      ],
+      "type": "bulk carrier",
+      "sunkYear": null,
+      "depthMeters": null,
+      "lengthMeters": 158.5,
+      "category": "Wreck showing any portion of hull or superstructure",
+      "story": "VESSEL, BUILT 1969 BY LITHGOWS LTD., PORT GLASGOW. OWNED AT TIME OF LOSS BY WHITE WATER BAY SHIPPING CO.. ON PASSAGE FROM ROTTERDAM TO BOMBAY. RAN AGROUND ON LOS CABEZOS SHOAL, OFF TARIFA",
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.11030",
+      "name": "FIONA SHELL",
+      "latLon": [
+        36.1603333,
+        -5.3741
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": 11.9,
+      "lengthMeters": null,
+      "category": "Dangerous wreck",
+      "story": "VESSEL, OIL STORAGE HULK, SUNK IN GIBRALTAR HBR BY ITALIAN ONE-MAN SUBMARINE 'SCIRE'. ONE CREW MEMBER LOST. (LLOYDS WW2SL & AXIS SUBMARINE SUCCESSES).",
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.16039",
+      "name": null,
+      "latLon": [
+        36.1166667,
+        -5.7111111
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": null,
+      "lengthMeters": null,
+      "category": "Dangerous wreck",
+      "story": null,
+      "approximate": true
+    },
+    {
+      "id": "wwshipwrecks.17376",
+      "name": "MARAZUL",
+      "latLon": [
+        36.1353333,
+        -5.4446667
+      ],
+      "type": "fishing vessel",
+      "sunkYear": null,
+      "depthMeters": null,
+      "lengthMeters": null,
+      "category": "Wreck showing any portion of hull or superstructure",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.17397",
+      "name": "PAGAO (POSSIBLY)",
+      "latLon": [
+        36.1333333,
+        -5.4333333
+      ],
+      "type": "steam ship",
+      "sunkYear": null,
+      "depthMeters": null,
+      "lengthMeters": null,
+      "category": "Wreck showing any portion of hull or superstructure",
+      "story": null,
+      "approximate": true
+    },
+    {
+      "id": "wwshipwrecks.17733",
+      "name": null,
+      "latLon": [
+        36.1283889,
+        -5.3788333
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": 74,
+      "lengthMeters": null,
+      "category": "Non-dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.20733",
+      "name": "PAGAO",
+      "latLon": [
+        36.1716667,
+        -5.3952778
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": 18.3,
+      "lengthMeters": null,
+      "category": "Dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.20751",
+      "name": "PETRO KARPOFF",
+      "latLon": [
+        36.0253333,
+        -5.7046667
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": null,
+      "lengthMeters": null,
+      "category": "Dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.20755",
+      "name": null,
+      "latLon": [
+        36.0744,
+        -5.8142
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": 20,
+      "lengthMeters": null,
+      "category": "Dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.20759",
+      "name": "JACS",
+      "latLon": [
+        36.0153333,
+        -5.7096667
+      ],
+      "type": "schooner",
+      "sunkYear": null,
+      "depthMeters": null,
+      "lengthMeters": 11.6,
+      "category": "Dangerous wreck",
+      "story": "22.7.89 VESSEL, OWNED AT TIME OF LOSS BY MR. COLIN HEAD OF GLOUCESTER. HIT SUBMERGED OBJECT, LATER REPORTED AS REMAINS OF 35000 TONNE BULK CARRIER, WAS HOLED AND SANK QUICKLY. OF THREE CREW",
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.20760",
+      "name": null,
+      "latLon": [
+        36.007,
+        -5.6285555
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": null,
+      "lengthMeters": null,
+      "category": "Non-dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.20764",
+      "name": "PETRA",
+      "latLon": [
+        36.0028333,
+        -5.6055
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": null,
+      "lengthMeters": null,
+      "category": "Non-dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.20767",
+      "name": "MERCURIO",
+      "latLon": [
+        36.05,
+        -5.4233333
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": null,
+      "lengthMeters": null,
+      "category": "Non-dangerous wreck",
+      "story": null,
+      "approximate": true
+    },
+    {
+      "id": "wwshipwrecks.20768",
+      "name": null,
+      "latLon": [
+        36.13905,
+        -5.4458167
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": null,
+      "lengthMeters": null,
+      "category": "Dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.20769",
+      "name": null,
+      "latLon": [
+        36.1372222,
+        -5.4383333
+      ],
+      "type": "fishing vessel",
+      "sunkYear": null,
+      "depthMeters": null,
+      "lengthMeters": null,
+      "category": "Wreck showing any portion of hull or superstructure",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.20770",
+      "name": null,
+      "latLon": [
+        36.077,
+        -5.4221667
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": null,
+      "lengthMeters": null,
+      "category": "Dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.20772",
+      "name": "GUTENFERD",
+      "latLon": [
+        36.0291667,
+        -5.5236111
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": 20,
+      "lengthMeters": null,
+      "category": "Dangerous wreck",
+      "story": null,
+      "approximate": true
+    },
+    {
+      "id": "wwshipwrecks.20773",
+      "name": "REGENT LION",
+      "latLon": [
+        36.0551945,
+        -5.4332778
+      ],
+      "type": "tanker",
+      "sunkYear": null,
+      "depthMeters": null,
+      "lengthMeters": null,
+      "category": "Wreck showing any portion of hull or superstructure",
+      "story": "TORPEDOED BY GERMAN SUBMARINE U-300. TOWED INTO TANGIERS BUT DECLARED A TOTAL LOSS. (AXIS SUBMARINE SUCCESSES). ON PASSAGE NEW YORK FOR BIZERTA, TORPEDOED. GROUNDED ON LA PE",
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.20774",
+      "name": null,
+      "latLon": [
+        36.1213889,
+        -5.4345
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": null,
+      "lengthMeters": null,
+      "category": "Wreck showing any portion of hull or superstructure",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.20856",
+      "name": "LAVORO",
+      "latLon": [
+        36.1716667,
+        -5.3822222
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": null,
+      "lengthMeters": null,
+      "category": "Wreck showing any portion of hull or superstructure",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.20859",
+      "name": "HENDRIK",
+      "latLon": [
+        36.0197778,
+        -5.7060556
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": null,
+      "lengthMeters": null,
+      "category": "Dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.20866",
+      "name": "CAMPONAVIA",
+      "latLon": [
+        36.1775556,
+        -5.3963333
+      ],
+      "type": "tanker",
+      "sunkYear": null,
+      "depthMeters": null,
+      "lengthMeters": 123.4,
+      "category": "Dangerous wreck",
+      "story": "VESSEL, BUILT 1973 BY S.A. JULIANA CONSTRUCCIONES GIJONESA, GIJON. OWNED AT TIME OF LOSS BY COMPANIA ARRENDATARIA DEL MONOPOLIO DE PETROLEOS S.A. [CAMPSA]. SANK ALONGSIDE C.E.P.S.A. REFINE",
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.20888",
+      "name": "PETRAGEN ONE",
+      "latLon": [
+        36.177,
+        -5.3963333
+      ],
+      "type": "tanker",
+      "sunkYear": null,
+      "depthMeters": null,
+      "lengthMeters": 183.5,
+      "category": "Dangerous wreck",
+      "story": "VESSEL, BUILT 1982 BY KOREA SHIPBUILDING & ENGINEERING CORPORATION. OWNED AT TIME OF LOSS BY WELLIS LTD., INC.. BROKE IN TWO AND SANK ALONGSIDE C.E.P.S.A. REFINERY JETTY FOLLOWING AN EXPLO",
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.43104",
+      "name": "EUGENIO DUTRUS",
+      "latLon": [
+        36.0191667,
+        -5.6036111
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": null,
+      "lengthMeters": null,
+      "category": "Wreck showing any portion of hull or superstructure",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.43444",
+      "name": null,
+      "latLon": [
+        36.0125,
+        -5.6266667
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": null,
+      "lengthMeters": null,
+      "category": "Non-dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.43937",
+      "name": null,
+      "latLon": [
+        36.1324167,
+        -5.4455278
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": null,
+      "lengthMeters": null,
+      "category": "Wreck showing any portion of hull or superstructure",
+      "story": null,
+      "approximate": true
+    },
+    {
+      "id": "wwshipwrecks.43944",
+      "name": null,
+      "latLon": [
+        36.0541667,
+        -5.4291667
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": null,
+      "lengthMeters": null,
+      "category": "Wreck showing any portion of hull or superstructure",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.43965",
+      "name": "OAKMOOR",
+      "latLon": [
+        36.0222222,
+        -5.7166667
+      ],
+      "type": "steam ship",
+      "sunkYear": null,
+      "depthMeters": null,
+      "lengthMeters": 95,
+      "category": "Dangerous wreck",
+      "story": "VESSEL, BUILT 1909 BY J BULMER & CO..OWNED AT TIME OF LOSS BY WALTER RUNCIMAN & CO.. ON PASSAGE FROM TAGANROG TO LIVERPOOL. WRECKED ON CABEZOS SHOALS NR GIBRALTAR. (MSD).",
+      "approximate": true
+    },
+    {
+      "id": "wwshipwrecks.43973",
+      "name": null,
+      "latLon": [
+        36.1254445,
+        -5.4329167
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": null,
+      "lengthMeters": null,
+      "category": "Wreck showing any portion of hull or superstructure",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.50668",
+      "name": "DYNA",
+      "latLon": [
+        36.06055,
+        -5.4424
+      ],
+      "type": "motor vessel",
+      "sunkYear": null,
+      "depthMeters": null,
+      "lengthMeters": 109.7,
+      "category": "Wreck showing any portion of hull or superstructure",
+      "story": "VESSEL, BUILT 1967 BY SETODA ZOSENSHO, SETODA. OWNED AT TIME OF LOSS BY SEAROSE MARITIME, INC.. ON PASSAGE FROM BUENOS AIRES TO EL DJAZAIR. GROUNDED ON LA PERLA REEF DUE ENGINE FAILURE, WH",
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.50669",
+      "name": "SANTA IRENE",
+      "latLon": [
+        36.0196833,
+        -5.70255
+      ],
+      "type": "steam ship",
+      "sunkYear": null,
+      "depthMeters": null,
+      "lengthMeters": 134.4,
+      "category": "Dangerous wreck",
+      "story": "EX-OCEAN WANDERER. RAN AGROUND ON LOS CABEZOS & BROKE IN TWO. (LL).",
+      "approximate": true
+    },
+    {
+      "id": "wwshipwrecks.50672",
+      "name": "RIBEL",
+      "latLon": [
+        36.0207167,
+        -5.5542667
+      ],
+      "type": "fishing vessel",
+      "sunkYear": null,
+      "depthMeters": null,
+      "lengthMeters": null,
+      "category": "Dangerous wreck",
+      "story": null,
+      "approximate": true
+    },
+    {
+      "id": "wwshipwrecks.50674",
+      "name": null,
+      "latLon": [
+        36.0198833,
+        -5.6224167
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": null,
+      "lengthMeters": null,
+      "category": "Dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.50681",
+      "name": null,
+      "latLon": [
+        36.0814167,
+        -5.4233667
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": 9,
+      "lengthMeters": null,
+      "category": "Dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.50682",
+      "name": "PUERTO DE PAJARES",
+      "latLon": [
+        36.0182333,
+        -5.6330667
+      ],
+      "type": "motor vessel",
+      "sunkYear": null,
+      "depthMeters": null,
+      "lengthMeters": 46.9,
+      "category": "Dangerous wreck",
+      "story": "VESSEL, BUILT 1953 BY ASTILLEROS DE T. RUIZ DE VELASCO, BILBAO. OWNED AT TIME OF LOSS BY ARMADORES DE CABOTAJE. SANK FOLLOWING A COLLISION WITH GREEK MV 'NEDA'. (MSD & LLOYDS VOL.232).",
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.50684",
+      "name": "ALECOS",
+      "latLon": [
+        36.0225833,
+        -5.7098667
+      ],
+      "type": "bulk carrier",
+      "sunkYear": null,
+      "depthMeters": null,
+      "lengthMeters": 154.2,
+      "category": "Dangerous wreck",
+      "story": "BUILT IN 1958 BY SIR JOHN LAING & SONS LTD, SUNDERLAND. OWNED AT TIME OF LOSS BY CIA. ALECOS, S.A.. PASSAGE MELILLA, SPANISH MOROCCO FOR SZCZECIN. STRUCK A WRECK ON LOS CABEZOS, 5M W OF TA",
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.50685",
+      "name": "CASTILLO SAN MARCOS",
+      "latLon": [
+        36.06735,
+        -5.7436667
+      ],
+      "type": "trawler",
+      "sunkYear": null,
+      "depthMeters": null,
+      "lengthMeters": null,
+      "category": "Dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.50686",
+      "name": null,
+      "latLon": [
+        36.1341,
+        -5.8507
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": null,
+      "lengthMeters": null,
+      "category": "Wreck showing any portion of hull or superstructure",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.50824",
+      "name": null,
+      "latLon": [
+        36.1210333,
+        -5.3812167
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": 188,
+      "lengthMeters": null,
+      "category": "Non-dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.50834",
+      "name": "CITOS (POSSIBLY)",
+      "latLon": [
+        36.0156,
+        -5.6259167
+      ],
+      "type": "steam ship",
+      "sunkYear": null,
+      "depthMeters": 8.9,
+      "lengthMeters": null,
+      "category": "Dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.50836",
+      "name": "ZURICH",
+      "latLon": [
+        36.0503333,
+        -5.4624444
+      ],
+      "type": "steam ship",
+      "sunkYear": null,
+      "depthMeters": null,
+      "lengthMeters": null,
+      "category": "Wreck showing any portion of hull or superstructure",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.50841",
+      "name": null,
+      "latLon": [
+        35.9986667,
+        -5.6111667
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": 0.5,
+      "lengthMeters": null,
+      "category": "Dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.50842",
+      "name": null,
+      "latLon": [
+        36.0743333,
+        -5.8141667
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": 20,
+      "lengthMeters": null,
+      "category": "Dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.52193",
+      "name": null,
+      "latLon": [
+        36.1480333,
+        -5.3757667
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": 56.81,
+      "lengthMeters": null,
+      "category": "Distributed remains of wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.52210",
+      "name": null,
+      "latLon": [
+        36.1484017,
+        -5.3768317
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": 63.994,
+      "lengthMeters": null,
+      "category": "Non-dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.52211",
+      "name": null,
+      "latLon": [
+        36.12325,
+        -5.3783
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": 121,
+      "lengthMeters": null,
+      "category": "Non-dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.52213",
+      "name": null,
+      "latLon": [
+        36.1401167,
+        -5.3845833
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": null,
+      "lengthMeters": null,
+      "category": "Non-dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.52214",
+      "name": null,
+      "latLon": [
+        36.1284717,
+        -5.3832233
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": 104,
+      "lengthMeters": null,
+      "category": "Non-dangerous wreck",
+      "story": null,
+      "approximate": false
+    }
+  ],
+  "places": [
+    {
+      "id": "place-267816660",
+      "name": "Algeciras",
+      "latLon": [
+        36.1311725,
+        -5.4473991
+      ],
+      "kind": "city"
+    },
+    {
+      "id": "place-4897912856",
+      "name": "Los Barrios",
+      "latLon": [
+        36.1853519,
+        -5.4933701
+      ],
+      "kind": "town"
+    },
+    {
+      "id": "place-1470839002",
+      "name": "San Roque",
+      "latLon": [
+        36.2100586,
+        -5.3868293
+      ],
+      "kind": "town"
+    },
+    {
+      "id": "place-2245273211",
+      "name": "Tarifa",
+      "latLon": [
+        36.0129082,
+        -5.6050213
+      ],
+      "kind": "town"
+    },
+    {
+      "id": "place-1470838093",
+      "name": "Benalup-Casas Viejas",
+      "latLon": [
+        36.3449297,
+        -5.8137236
+      ],
+      "kind": "village"
+    },
+    {
+      "id": "place-345561474",
+      "name": "Campamento",
+      "latLon": [
+        36.1760545,
+        -5.374695
+      ],
+      "kind": "village"
+    },
+    {
+      "id": "place-362412762",
+      "name": "Castellar Nuevo de la Frontera",
+      "latLon": [
+        36.2867039,
+        -5.4196952
+      ],
+      "kind": "village"
+    },
+    {
+      "id": "place-1560708467",
+      "name": "Estación de San Roque",
+      "latLon": [
+        36.214747,
+        -5.432099
+      ],
+      "kind": "village"
+    },
+    {
+      "id": "place-7130247280",
+      "name": "Facinas",
+      "latLon": [
+        36.1435531,
+        -5.7001565
+      ],
+      "kind": "village"
+    },
+    {
+      "id": "place-1560751633",
+      "name": "Los Cortijillos",
+      "latLon": [
+        36.1874426,
+        -5.4384545
+      ],
+      "kind": "village"
+    },
+    {
+      "id": "place-1560751670",
+      "name": "Palmones",
+      "latLon": [
+        36.1752407,
+        -5.4356606
+      ],
+      "kind": "village"
+    },
+    {
+      "id": "place-1560709530",
+      "name": "Puente Mayorga",
+      "latLon": [
+        36.1811753,
+        -5.3860788
+      ],
+      "kind": "village"
+    }
+  ],
+  "shoals": [
+    {
+      "id": "shoal-18-135",
+      "name": null,
+      "latLon": [
+        36.00636532228795,
+        -5.6091222426470475
+      ],
+      "crestMeters": -0.40993932,
+      "radiusMeters": 784.8331452156731
+    },
+    {
+      "id": "shoal-51-226",
+      "name": null,
+      "latLon": [
+        36.05804582307828,
+        -5.430690870098028
+      ],
+      "crestMeters": -15.118277952867695,
+      "radiusMeters": 1235.0068328925022
+    },
+    {
+      "id": "shoal-25-82",
+      "name": null,
+      "latLon": [
+        36.017327852758626,
+        -5.713043811274498
+      ],
+      "crestMeters": -17.869586507374386,
+      "radiusMeters": 1319.2195005969659
+    },
+    {
+      "id": "shoal-27-74",
+      "name": null,
+      "latLon": [
+        36.02046000432168,
+        -5.728730085784302
+      ],
+      "crestMeters": -19.162309523758132,
+      "radiusMeters": 1419.1904218060488
+    }
+  ]
+}

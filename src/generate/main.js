@@ -4,6 +4,9 @@ import { createSlippyMap } from './slippy-map.js';
 
 const map = createSlippyMap(document.getElementById('map'), { center: [30, 0], zoom: 3 });
 
+// Dev/debug handle, mirroring window.__viz in the explorer.
+window.__picker = { map };
+
 const drawToggle = document.getElementById('draw-toggle');
 const clearButton = document.getElementById('clear-bbox');
 const readout = document.getElementById('bbox-readout');
