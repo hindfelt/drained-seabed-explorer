@@ -98,13 +98,14 @@ export async function assemblePack({
   if (regionalCoverage) sources.push(selected.bathyEmodnet.meta);
   if (wreckResult.succeeded) sources.push(selected.wrecks.meta);
   if (placeResult.succeeded) sources.push(selected.places.meta);
-  sources.push(selected.imagery.meta);
-  if (
-    typeof imagery.attribution === 'string'
-    && imagery.attribution !== selected.imagery.meta?.attribution
-  ) {
-    sources.push({ attribution: imagery.attribution });
-  }
+  // Credit the imagery source that actually served the pack (EOX or the
+  // Esri fallback), not the adapter's combined-sources blurb.
+  sources.push({
+    ...selected.imagery.meta,
+    attribution: typeof imagery.attribution === 'string'
+      ? imagery.attribution
+      : selected.imagery.meta?.attribution,
+  });
 
   const meta = buildMeta({ name, slug, bbox, packGrid, sources, now });
   // Persist warnings into the pack so the engine can surface data-quality

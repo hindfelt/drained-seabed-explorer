@@ -19,6 +19,10 @@ test('normalizes the 39 Öresund wrecks', async () => {
     assert.ok(x.latLon[0] > 55.8 && x.latLon[0] < 56.11, 'lat in range (coords flipped)');
     assert.equal(typeof x.approximate, 'boolean');
   }
+  // Only the whole-minute position fixes are estimates; decimal-minute
+  // charted positions must NOT be hedged with ≈ (position_m is 'n/a' for
+  // every feature in this dataset and carries no signal).
+  assert.equal(w.filter((x) => x.approximate).length, 4);
 });
 
 test('caps to max, preferring named wrecks, and reports dropped', async () => {

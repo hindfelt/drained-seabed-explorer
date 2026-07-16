@@ -1,10 +1,12 @@
-# Drained Seabed Explorer — Öresund, drained
+# Drained Seabed Explorer
 
-An interactive 3D visualization of the Öresund strait with all its water removed.
-Orbit between the Swedish and Danish coasts, past Helsingborg and Helsingør at the
-narrows, over the tilted cliff-edged island of Ven, down the old shipping channel,
-and among the real shipwrecks of the sound — stranded on a seabed of cracked mud,
-salt flats and boulder shoals.
+An interactive 3D visualization of real seabeds with all their water removed —
+an engine that renders any "region pack", plus a zero-dependency generator that
+builds packs for any bounding box on Earth from open data. The first region is
+the Öresund strait: orbit between the Swedish and Danish coasts, past
+Helsingborg and Helsingør at the narrows, over the tilted cliff-edged island of
+Ven, down the old shipping channel, and among the real shipwrecks of the sound
+— stranded on a seabed of cracked mud, salt flats and boulder shoals.
 
 ![Demo tour — orbit, wreck close-ups, marker toggles, and the water refilling to its former sea level](media/demo.gif)
 
@@ -18,7 +20,28 @@ rises exactly when the toggles are clicked).*
 npm install && npm run dev
 ```
 
-Then open the URL Vite prints (default: http://localhost:5173).
+Then open the URL Vite prints (default: http://localhost:5173). The app boots
+the default region from `public/packs/index.json`; switch regions with the
+`?region=<slug>` query parameter, e.g. `http://localhost:5173/?region=oresund`.
+
+## Generate a new region
+
+Any bounding box on Earth, straight from open data (GEBCO + EMODnet bathymetry,
+UKHO wrecks via EMODnet WFS, OpenStreetMap places, Sentinel-2 imagery):
+
+```sh
+npm run generate -- --bbox <lonMin,latMin,lonMax,latMax> --name "<Name>" --slug <slug>
+# the Öresund pack was generated with:
+npm run generate -- --bbox 12.44,55.82,12.94,56.10 --name "Öresund" --slug oresund
+```
+
+The generator writes `public/packs/<slug>/` (bathymetry grid, satellite image,
+normalized wrecks/places/shoals, and auto-tuned exaggeration + color bands in
+`meta.json`), validates the pack, updates `public/packs/index.json`, and prints
+a report. Data-quality caveats (e.g. GEBCO-only bathymetry outside Europe) are
+written into the pack and surfaced in the app's credits line. Keep bboxes
+roughly square and modest (≈0.2–0.5°) — the world maps onto a fixed 1200×1200
+scene. Generator tests never hit the network: `npm test`.
 
 ## Controls
 
@@ -31,50 +54,53 @@ Then open the URL Vite prints (default: http://localhost:5173).
 
 ## What's in the scene
 
-- **Real bathymetry**: EMODnet Bathymetry DTM 2024 (~115 m) merged with GEBCO
-  2020 for land, covering lat 55.82–56.10 / lon 12.44–12.94 (≈31×31 km of the
-  northern sound). Vertical exaggeration: seabed ×1.8 world-units/m, land ×0.9
-  with smooth tanh compression. Everything is authored in real WGS84
-  coordinates and projected via `geoToWorld`. Rebuild the grid with
-  `node scripts/build-bathymetry.mjs`.
-- **Real shoals** straight out of the depth grid — Disken, Lappegrund,
-  Grollegrund (the boulder-reef reserve north of Helsingborg), Lundåkragrund.
-- **Satellite imagery on land**: Sentinel-2 cloudless (EOX, 4096²) draped over
-  everything above the waterline via a shader blend, while the seabed keeps its
-  drained-mud look. Refetch with `node scripts/build-satellite.mjs`.
+- **Real bathymetry**: EMODnet Bathymetry DTM 2024 (~115 m, Europe) merged with
+  GEBCO 2020 (global, land + gap fill), resampled onto a 256×256 pack grid and
+  stored as little-endian Int16 decimeters. Per-region vertical exaggeration
+  and color bands are auto-tuned by the generator from the depth distribution
+  (`meta.json`), with smooth tanh land compression.
+- **Real shoals** detected straight out of the depth grid — local crests that
+  stand proud of their surroundings, shallowest first.
+- **Satellite imagery on land**: Sentinel-2 cloudless (EOX, 4096², Esri
+  fallback) draped over everything above the waterline via a shader blend,
+  while the seabed keeps its drained-mud look.
 - **Type-specific wreck models**: curved-hull steamers with funnels and derricks,
-  Cimbria's paddle boxes, skeletal pre-1910 wooden sailing ships with exposed rib
-  frames, trawlers, a patrol boat, a landing craft, and the Cementbåten concrete
-  caisson — all rust-streaked via deterministic vertex weathering.
-- **23 real wrecks** of the sound, cross-referenced from
-  [oresundsdykning.se](https://www.oresundsdykning.se/vrak2/),
-  [vragguiden.dk](https://www.vragguiden.dk/) (verified WGS84 positions), and
-  [vrag.dk](https://www.vrag.dk/vrag-i-oeresund/) — from the 1858 paddle steamer
-  Cimbria to S/S Robert north of Ven — 17 at charted coordinates, 2 clamped to
-  the map edge, 4 placed from historical location descriptions (marked
-  approximate in `sites.js`). Each has a name label, beacon, and low-poly
-  stranded hull. Full harvested dataset: `docs/wrecks-oresundsdykning.json`.
-- **Labeled places**: Helsingborg, Helsingør, Landskrona, Råå, Snekkersten,
-  Borstahusen, and Ven's villages Kyrkbacken and Sankt Ibb.
+  paddle-steamer boxes, skeletal pre-1910 wooden sailing ships with exposed rib
+  frames, trawlers, patrol boats, landing craft, and concrete caissons — all
+  rust-streaked via deterministic vertex weathering.
+- **Real charted wrecks** from the UK Hydrographic Office global dataset (via
+  EMODnet Human Activities WFS) — 39 in the Öresund window, each with a name
+  label (where known), beacon, and low-poly stranded hull. Estimated positions
+  (whole-minute fixes) are honestly flagged with ≈.
+- **Labeled places** from OpenStreetMap — cities, towns, and villages inside
+  the window, prioritized city > town > village.
 
 ## Tech
 
 - [Three.js](https://threejs.org/) — WebGL, PCF soft shadow maps, ACES tone mapping
 - [Vite](https://vite.dev/) — dev server and bundling
-- Procedural seeded bathymetry at 512×512 grid resolution (~75 ms generation),
-  fully deterministic, no binary assets
+- Generator: Node ≥ 20 built-ins only, zero npm dependencies, adapters per
+  source, offline `node:test` suite with recorded fixtures
+- Runtime terrain at 512×512 world resolution, seeded fBm detail, fully
+  deterministic
 
 ## Project layout
 
 ```
 drained-seabed/
 ├── index.html                     canvas + UI overlay root
-├── package.json                   three + vite only
+├── package.json                   three + vite only (runtime deps)
+├── generator/
+│   ├── cli.mjs                    npm run generate — pack assembler CLI
+│   ├── adapters/                  bathy (GEBCO/EMODnet), wrecks, places, imagery
+│   ├── lib/                       codec, grids, shoals, meta, pack assembly
+│   └── fixtures/                  recorded API responses (tests run offline)
+├── public/packs/<slug>/           generated region packs (meta, bathymetry,
+│                                  satellite, sites) + index.json
 └── src/
-    ├── main.js                    integration glue
-    ├── data/
-    │   ├── heightmap.js           procedural Öresund bathymetry + coasts + Ven
-    │   └── sites.js               REEFS (shoals), WRECKS (real), PLACES data
+    ├── main.js                    async boot from ?region= pack
+    ├── pack-loader.js             pack fetch/validate/decode + site conversion
+    ├── data/heightmap.js          pack grid → world heightmap (tanh land)
     ├── scene/
     │   ├── setup.js               renderer, sun/sky, shadows, OrbitControls
     │   ├── terrain.js             displaced terrain mesh
@@ -82,7 +108,7 @@ drained-seabed/
     ├── materials/
     │   └── terrainMaterial.js     seabed + land + cliff vertex-color material
     └── ui/
-        ├── overlay.js             toggle panel (shoals / wrecks / place names)
+        ├── overlay.js             toggle panel, pack credits + warnings
         └── overlay.css            overlay + base page styles
 ```
 

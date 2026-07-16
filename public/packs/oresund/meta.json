@@ -1,0 +1,44 @@
+{
+  "name": "Öresund",
+  "slug": "oresund",
+  "bbox": {
+    "lonMin": 12.44,
+    "latMin": 55.82,
+    "lonMax": 12.94,
+    "latMax": 56.1
+  },
+  "grid": {
+    "nLat": 256,
+    "nLon": 256
+  },
+  "scale": {
+    "seaFactor": 1.7585476230145478,
+    "landFactor": 0.8792738115072739,
+    "landCeiling": 33.75
+  },
+  "colorBands": {
+    "shelfEdge": -24.40003898580995,
+    "midEdge": -31.55695801766375,
+    "trenchStart": -48.256435758655954,
+    "trenchFull": -73.25643575865595,
+    "saltMin": -13.150079446522389,
+    "saltMax": -4.383359815507463
+  },
+  "stats": {
+    "minMeters": -51.17859694110511,
+    "maxMeters": 92.00591695500606,
+    "seaPercentiles": {
+      "p25": -7.47780684152311,
+      "p50": -13.875108451133539,
+      "p75": -19.600767265925278
+    }
+  },
+  "attributions": [
+    "Bathymetry © GEBCO Compilation Group",
+    "Bathymetry © EMODnet Bathymetry Consortium",
+    "Wrecks © UK Hydrographic Office via EMODnet Human Activities, OGL",
+    "© OpenStreetMap contributors",
+    "Sentinel-2 cloudless by EOX"
+  ],
+  "generatedAt": "2026-07-15"
+}

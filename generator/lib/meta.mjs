@@ -40,9 +40,11 @@ export function buildMeta({ name, slug, bbox, packGrid, sources = [], now } = {}
   }
   seaElevations.sort((a, b) => a - b);
 
-  const p25 = percentile(seaElevations, 0.25);
+  // Sea-DEPTH percentiles: p25 is the shallow quartile, p75 the deep one
+  // (elevations are negative, so depth-q maps to elevation-(1-q)).
+  const p25 = percentile(seaElevations, 0.75);
   const p50 = percentile(seaElevations, 0.5);
-  const p75 = percentile(seaElevations, 0.75);
+  const p75 = percentile(seaElevations, 0.25);
 
   const seaFactor = Math.min(3.5, 90 / Math.max(10, Math.abs(minMeters)));
   const landFactor = seaFactor / 2;
@@ -60,10 +62,13 @@ export function buildMeta({ name, slug, bbox, packGrid, sources = [], now } = {}
   const saltMin = Math.min(saltEndpointA, saltEndpointB);
   const saltMax = Math.max(saltEndpointA, saltEndpointB);
 
-  // Land height is the observed maximum under land exaggeration. A 10-unit
-  // floor avoids a degenerate tanh ceiling; 120 limits extreme terrain packs.
-  // For Öresund: 38.9 * 0.9 = 35.01, close to the hand-tuned 33.5 baseline.
-  const landCeiling = clamp(maxMeters * landFactor, 10, 120);
+  // Land ceiling keyed to the world-unit sea depth, not raw land height: the
+  // drained look wants land subordinate to the depth drama, and the proven
+  // Öresund tuning (ceiling 33.5 against a -90 world sea floor) is 37.5% of
+  // |sea min|. Since seaFactor normalizes the deepest point toward -90 world
+  // units for any region, this stays visually consistent everywhere. A
+  // 10-unit floor avoids a degenerate tanh ceiling for near-flat regions.
+  const landCeiling = clamp(0.375 * Math.abs(minMeters * seaFactor), 10, 120);
 
   const seenAttributions = new Set();
   const attributions = [];

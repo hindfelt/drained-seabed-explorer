@@ -10,7 +10,16 @@ export const meta = {
 
 export async function fetchPlaces(bbox, { fetchImpl = fetch, max = 12 } = {}) {
   const query = `[out:json][timeout:25];node["place"~"^(city|town|village)$"](${bbox.latMin},${bbox.lonMin},${bbox.latMax},${bbox.lonMax});out body;`;
-  const response = await fetchImpl(OVERPASS_URL, { method: 'POST', body: query });
+  // Overpass 406es a bare text/plain body — it wants a form-encoded `data`
+  // field and a self-identifying User-Agent.
+  const response = await fetchImpl(OVERPASS_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'User-Agent': 'drained-seabed/1.0',
+    },
+    body: `data=${encodeURIComponent(query)}`,
+  });
 
   if (!response.ok) {
     throw new Error(`Overpass places request ${response.status ?? 'error'} for ${OVERPASS_URL}`);

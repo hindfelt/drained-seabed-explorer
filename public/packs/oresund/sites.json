@@ -1,0 +1,741 @@
+{
+  "wrecks": [
+    {
+      "id": "wwshipwrecks.843",
+      "name": "SALLY",
+      "latLon": [
+        56.0416667,
+        12.6333333
+      ],
+      "type": "steam ship",
+      "sunkYear": null,
+      "depthMeters": null,
+      "lengthMeters": null,
+      "category": "Dangerous wreck",
+      "story": null,
+      "approximate": true
+    },
+    {
+      "id": "wwshipwrecks.44123",
+      "name": null,
+      "latLon": [
+        55.9764169,
+        12.5598193
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": 4.8,
+      "lengthMeters": null,
+      "category": "Dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.4766",
+      "name": "DAN",
+      "latLon": [
+        56.0333333,
+        12.6333333
+      ],
+      "type": "ferry",
+      "sunkYear": null,
+      "depthMeters": null,
+      "lengthMeters": null,
+      "category": "Dangerous wreck",
+      "story": null,
+      "approximate": true
+    },
+    {
+      "id": "wwshipwrecks.4778",
+      "name": null,
+      "latLon": [
+        56.0983333,
+        12.5166667
+      ],
+      "type": "cutter",
+      "sunkYear": null,
+      "depthMeters": null,
+      "lengthMeters": null,
+      "category": "Dangerous wreck",
+      "story": null,
+      "approximate": true
+    },
+    {
+      "id": "wwshipwrecks.4779",
+      "name": "BREDERODE",
+      "latLon": [
+        56.0133333,
+        12.6033333
+      ],
+      "type": "battleship",
+      "sunkYear": 1658,
+      "depthMeters": null,
+      "lengthMeters": null,
+      "category": "Dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.14280",
+      "name": null,
+      "latLon": [
+        56.0652724,
+        12.6282479
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": 21,
+      "lengthMeters": null,
+      "category": "Dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.14282",
+      "name": null,
+      "latLon": [
+        56.0708167,
+        12.6684833
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": 0.9,
+      "lengthMeters": null,
+      "category": "Dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.44137",
+      "name": null,
+      "latLon": [
+        55.9066,
+        12.6289167
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": 14,
+      "lengthMeters": null,
+      "category": "Dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.44100",
+      "name": null,
+      "latLon": [
+        56.0826667,
+        12.5488333
+      ],
+      "type": "sailing vessel",
+      "sunkYear": null,
+      "depthMeters": null,
+      "lengthMeters": null,
+      "category": "Dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.44122",
+      "name": "CEYLON",
+      "latLon": [
+        55.9378,
+        12.6346667
+      ],
+      "type": "barque",
+      "sunkYear": 1908,
+      "depthMeters": 13.4,
+      "lengthMeters": null,
+      "category": "Dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.44114",
+      "name": null,
+      "latLon": [
+        55.985947,
+        12.6376525
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": 12.1,
+      "lengthMeters": null,
+      "category": "Dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.44115",
+      "name": null,
+      "latLon": [
+        55.889757,
+        12.6394725
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": 10.8,
+      "lengthMeters": null,
+      "category": "Dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.44119",
+      "name": "JYLLAND",
+      "latLon": [
+        56.0069671,
+        12.6035515
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": 7,
+      "lengthMeters": null,
+      "category": "Dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.44120",
+      "name": null,
+      "latLon": [
+        55.9657967,
+        12.628869
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": 18,
+      "lengthMeters": null,
+      "category": "Dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.44121",
+      "name": null,
+      "latLon": [
+        56.035,
+        12.63
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": 13.7,
+      "lengthMeters": null,
+      "category": "Dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.44124",
+      "name": null,
+      "latLon": [
+        56.0064995,
+        12.5862049
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": null,
+      "lengthMeters": null,
+      "category": "Dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.44125",
+      "name": null,
+      "latLon": [
+        55.9978333,
+        12.6221667
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": 21,
+      "lengthMeters": null,
+      "category": "Dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.44127",
+      "name": null,
+      "latLon": [
+        55.9054295,
+        12.6473152
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": 13.8,
+      "lengthMeters": null,
+      "category": "Dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.44128",
+      "name": null,
+      "latLon": [
+        55.83065,
+        12.6921
+      ],
+      "type": "barge",
+      "sunkYear": null,
+      "depthMeters": 20.5,
+      "lengthMeters": null,
+      "category": "Dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.44129",
+      "name": null,
+      "latLon": [
+        56.0279195,
+        12.6478836
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": 13.4,
+      "lengthMeters": null,
+      "category": "Dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.44133",
+      "name": null,
+      "latLon": [
+        56.0261389,
+        12.6105
+      ],
+      "type": "cutter",
+      "sunkYear": null,
+      "depthMeters": 7,
+      "lengthMeters": 10,
+      "category": "Dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.44135",
+      "name": null,
+      "latLon": [
+        55.9180556,
+        12.645
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": 19.9,
+      "lengthMeters": null,
+      "category": "Dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.44136",
+      "name": "LIVLIG",
+      "latLon": [
+        55.8935264,
+        12.6590868
+      ],
+      "type": "schooner",
+      "sunkYear": null,
+      "depthMeters": 13.3,
+      "lengthMeters": null,
+      "category": "Dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.44138",
+      "name": "ERNTE",
+      "latLon": [
+        55.865793,
+        12.6021329
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": 10.2,
+      "lengthMeters": null,
+      "category": "Dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.44150",
+      "name": "FREMAD",
+      "latLon": [
+        55.9868667,
+        12.6248333
+      ],
+      "type": "steam ship",
+      "sunkYear": null,
+      "depthMeters": 17.9,
+      "lengthMeters": null,
+      "category": "Dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.47347",
+      "name": null,
+      "latLon": [
+        55.8791667,
+        12.6841667
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": null,
+      "lengthMeters": null,
+      "category": "Dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.57731",
+      "name": null,
+      "latLon": [
+        55.8433333,
+        12.7561667
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": 27,
+      "lengthMeters": null,
+      "category": "Dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.57732",
+      "name": null,
+      "latLon": [
+        55.9008047,
+        12.6725214
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": 13.5,
+      "lengthMeters": null,
+      "category": "Dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.57881",
+      "name": "LITZLAFF OR RETZLAFF",
+      "latLon": [
+        56.0678833,
+        12.6262667
+      ],
+      "type": "steam ship",
+      "sunkYear": null,
+      "depthMeters": 17.6,
+      "lengthMeters": null,
+      "category": "Dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.57883",
+      "name": null,
+      "latLon": [
+        55.8775871,
+        12.7166797
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": 13.6,
+      "lengthMeters": null,
+      "category": "Dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.57888",
+      "name": null,
+      "latLon": [
+        55.8657,
+        12.7419
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": 24,
+      "lengthMeters": null,
+      "category": "Dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.57890",
+      "name": null,
+      "latLon": [
+        55.9254833,
+        12.7199
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": 29,
+      "lengthMeters": null,
+      "category": "Dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.57891",
+      "name": "TVA BRODER (HG 108)",
+      "latLon": [
+        55.9483333,
+        12.7116667
+      ],
+      "type": "fishing vessel",
+      "sunkYear": null,
+      "depthMeters": null,
+      "lengthMeters": null,
+      "category": "Dangerous wreck",
+      "story": "24.9.77 SANK IMMEDIATELY AFTER COLLISION WITH DANISH MV VOLO. 1 CREW MISSING. (LL, 5 & 24.9.77)",
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.57920",
+      "name": "JOHANNES L (POSSIBLY)",
+      "latLon": [
+        56.0019444,
+        12.7280556
+      ],
+      "type": "motor vessel",
+      "sunkYear": null,
+      "depthMeters": null,
+      "lengthMeters": 48.5,
+      "category": "Dangerous wreck",
+      "story": "28.11.79 SANK OFF HELSINGBORG RAA. (LL, 28.11.79)",
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.57923",
+      "name": "JOHANNES L",
+      "latLon": [
+        55.9833333,
+        12.75
+      ],
+      "type": "motor vessel",
+      "sunkYear": null,
+      "depthMeters": null,
+      "lengthMeters": 48.5,
+      "category": "Dangerous wreck",
+      "story": "28.11.79 VESSEL SANK E OF HELSINGBORG RAA. (LL, 28.11.79).",
+      "approximate": true
+    },
+    {
+      "id": "wwshipwrecks.57927",
+      "name": null,
+      "latLon": [
+        56.085899,
+        12.6395231
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": null,
+      "lengthMeters": null,
+      "category": "Distributed remains of wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.58231",
+      "name": null,
+      "latLon": [
+        56.00135,
+        12.7208
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": 1.6,
+      "lengthMeters": null,
+      "category": "Dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.58587",
+      "name": null,
+      "latLon": [
+        56.0808333,
+        12.6019444
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": 24,
+      "lengthMeters": null,
+      "category": "Dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.58588",
+      "name": "INEZ",
+      "latLon": [
+        55.9911111,
+        12.7163889
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": 14,
+      "lengthMeters": null,
+      "category": "Dangerous wreck",
+      "story": null,
+      "approximate": false
+    }
+  ],
+  "places": [
+    {
+      "id": "place-15412058",
+      "name": "Helsingborg",
+      "latLon": [
+        56.0442098,
+        12.703706
+      ],
+      "kind": "city"
+    },
+    {
+      "id": "place-122732762",
+      "name": "Bjuv",
+      "latLon": [
+        56.0842983,
+        12.9167304
+      ],
+      "kind": "town"
+    },
+    {
+      "id": "place-21040320",
+      "name": "Helsingør",
+      "latLon": [
+        56.0348739,
+        12.6130073
+      ],
+      "kind": "town"
+    },
+    {
+      "id": "place-26559159",
+      "name": "Hørsholm",
+      "latLon": [
+        55.8832986,
+        12.5000112
+      ],
+      "kind": "town"
+    },
+    {
+      "id": "place-26559049",
+      "name": "Humlebæk",
+      "latLon": [
+        55.9618789,
+        12.5305462
+      ],
+      "kind": "town"
+    },
+    {
+      "id": "place-293063179",
+      "name": "Kokkedal",
+      "latLon": [
+        55.9105061,
+        12.4916721
+      ],
+      "kind": "town"
+    },
+    {
+      "id": "place-27699239",
+      "name": "Landskrona",
+      "latLon": [
+        55.8698007,
+        12.8296734
+      ],
+      "kind": "town"
+    },
+    {
+      "id": "place-26559100",
+      "name": "Nivå",
+      "latLon": [
+        55.935056,
+        12.5013529
+      ],
+      "kind": "town"
+    },
+    {
+      "id": "place-565488901",
+      "name": "Bårslöv",
+      "latLon": [
+        56.011964,
+        12.8018999
+      ],
+      "kind": "village"
+    },
+    {
+      "id": "place-10310406175",
+      "name": "Brådebæk",
+      "latLon": [
+        55.8606611,
+        12.4965439
+      ],
+      "kind": "village"
+    },
+    {
+      "id": "place-278633606",
+      "name": "Gammel Holte",
+      "latLon": [
+        55.8341197,
+        12.5161754
+      ],
+      "kind": "village"
+    },
+    {
+      "id": "place-383382943",
+      "name": "Gantofta",
+      "latLon": [
+        55.9874622,
+        12.8019646
+      ],
+      "kind": "village"
+    }
+  ],
+  "shoals": [
+    {
+      "id": "shoal-7-185",
+      "name": null,
+      "latLon": [
+        55.8276862745098,
+        12.802745098039216
+      ],
+      "crestMeters": -2.8072043129999904,
+      "radiusMeters": 1065.924533385065
+    },
+    {
+      "id": "shoal-194-128",
+      "name": null,
+      "latLon": [
+        56.03301960784314,
+        12.690980392156863
+      ],
+      "crestMeters": -3.206802,
+      "radiusMeters": 572.7327965787381
+    },
+    {
+      "id": "shoal-42-168",
+      "name": null,
+      "latLon": [
+        55.86611764705882,
+        12.769411764705882
+      ],
+      "crestMeters": -3.387753586715262,
+      "radiusMeters": 1132.946467612144
+    },
+    {
+      "id": "shoal-174-134",
+      "name": null,
+      "latLon": [
+        56.01105882352941,
+        12.702745098039216
+      ],
+      "crestMeters": -3.8878946,
+      "radiusMeters": 729.6868486858706
+    }
+  ]
+}

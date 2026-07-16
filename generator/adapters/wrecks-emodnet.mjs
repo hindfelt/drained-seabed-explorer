@@ -76,8 +76,17 @@ function parseSunkYear(value) {
   return match ? Number(match[1]) : null;
 }
 
+// UKHO's position_m (position method) is 'n/a' across entire regions, so it
+// carries no signal. The charted `position` text does: fixes recorded with
+// decimal minutes on BOTH axes ('55 58.585 N,12 33.589 E') are surveyed
+// positions; whole-minute entries ('56 2 N,12 38 E', ~1 nm) are estimates.
 function positionIsApproximate(properties) {
-  if (nullableText(properties.position_m) === null) return true;
+  const text = nullableText(properties.position);
+  if (text === null) return true;
+  const parts = text.split(',');
+  const precise = parts.length === 2
+    && parts.every((part) => /\d+\s+\d+\.\d+\s+[NSEW]/.test(part.trim()));
+  if (!precise) return true;
 
   return Object.entries(properties).some(
     ([key, value]) =>

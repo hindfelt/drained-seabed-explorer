@@ -12,11 +12,12 @@ function examplePackGrid() {
   return {
     nLat: 2,
     nLon: 5,
-    // With linear interpolation at (n - 1) * q, the sea quartiles are
-    // p25 = exampleP25, p50 = -10, and p75 = -8.
+    // 9 sea cells sorted ascending; depth-percentiles read from the far end
+    // (depth-p25 = elevation index 6, p50 = index 4, p75 = index 2), giving
+    // depth quartiles p25 = exampleP25 (shallow), p50 = -12, p75 = -20.
     elevations: new Float64Array([
-      -50.3, -20, exampleP25, -10.2, -10,
-      -9, -8, -5, -1, 38.9,
+      -50.3, -30, -20, -15, -12,
+      -11, exampleP25, -6, -1, 38.9,
     ]),
   };
 }
@@ -52,8 +53,8 @@ test('buildMeta derives Öresund-like exaggeration and color bands from grid sta
   assert.equal(result.stats.maxMeters, 38.9);
   assert.deepEqual(result.stats.seaPercentiles, {
     p25: exampleP25,
-    p50: -10,
-    p75: -8,
+    p50: -12,
+    p75: -20,
   });
 
   const reference = {

@@ -116,6 +116,13 @@ function estimateCellSizeMeters(bbox, nLat, nLon) {
   return Math.sqrt(latitudeSpacing * longitudeSpacing);
 }
 
+// The crest region is measured within a bounded window: on broad shallow
+// shelves the above-threshold region is connected to half the map, and an
+// unbounded fill would return shelf-sized "shoals". ±12 cells (~1.5 km on a
+// 256² grid over ~30 km) matches the scale of real named banks like Disken
+// and Lundåkragrund while still letting narrow crests read as small.
+const CREST_FILL_MAX_CELLS = 12;
+
 function contiguousCrestCellCount(elevations, nLat, nLon, startRow, startCol, threshold) {
   const visited = new Uint8Array(nLat * nLon);
   const stack = [[startRow, startCol]];
@@ -137,6 +144,8 @@ function contiguousCrestCellCount(elevations, nLat, nLon, startRow, startCol, th
         const nextRow = row + rowOffset;
         const nextCol = col + colOffset;
         if (nextRow < 0 || nextRow >= nLat || nextCol < 0 || nextCol >= nLon) continue;
+        if (Math.abs(nextRow - startRow) > CREST_FILL_MAX_CELLS) continue;
+        if (Math.abs(nextCol - startCol) > CREST_FILL_MAX_CELLS) continue;
         if (!visited[nextRow * nLon + nextCol]) stack.push([nextRow, nextCol]);
       }
     }

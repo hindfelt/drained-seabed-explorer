@@ -9,7 +9,8 @@ const query = '[out:json][timeout:25];node["place"~"^(city|town|village)$"](55.8
 const fakeFetch = async (url, options) => {
   assert.equal(url, 'https://overpass-api.de/api/interpreter');
   assert.equal(options.method, 'POST');
-  assert.equal(options.body, query);
+  assert.equal(options.headers['Content-Type'], 'application/x-www-form-urlencoded');
+  assert.equal(options.body, `data=${encodeURIComponent(query)}`);
   return { ok: true, json: async () => fixture };
 };
 
