@@ -82,6 +82,25 @@ export async function assemblePack({
   ]);
 
   const packGrid = mergeToPackGrid({ fine, coarse, bbox });
+
+  // The Int16-decimeter codec can only carry ±3276.7 m. Clamp BEFORE stats
+  // and encoding so meta.json always describes exactly what the binary
+  // holds — and say so, instead of silently corrupting abyssal regions.
+  let deepestClipped = 0;
+  for (let i = 0; i < packGrid.elevations.length; i++) {
+    const m = packGrid.elevations[i];
+    if (m < -3276.7) {
+      deepestClipped = Math.min(deepestClipped, m);
+      packGrid.elevations[i] = -3276.7;
+    } else if (m > 3276.7) {
+      packGrid.elevations[i] = 3276.7;
+    }
+  }
+  if (deepestClipped < 0) {
+    warnings.push(
+      `depths below 3276.7 m clipped by pack encoding (deepest was ${Math.round(-deepestClipped)} m)`
+    );
+  }
   const wrecks = wreckResult.records;
   const places = placeResult.records;
   const shoals = findShoals(packGrid, bbox);

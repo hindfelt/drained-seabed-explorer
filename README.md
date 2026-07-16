@@ -112,6 +112,22 @@ drained-seabed/
         └── overlay.css            overlay + base page styles
 ```
 
+## Data licensing
+
+The committed region packs redistribute open data whose licenses travel with
+each pack (`meta.json` → `sources`, surfaced in the app's credits line):
+
+- **Satellite imagery**: Sentinel-2 cloudless 2023 — https://s2maps.eu by EOX
+  IT Services GmbH (Contains modified Copernicus Sentinel data 2023),
+  **CC BY-NC-SA 4.0 — non-commercial use only, share-alike**. This makes the
+  committed packs non-commercial; regenerate with different imagery for
+  commercial use. Esri World Imagery (fallback) is subject to Esri's terms.
+- **Wrecks**: © UK Hydrographic Office via EMODnet Human Activities, Open
+  Government Licence.
+- **Places**: © OpenStreetMap contributors, ODbL.
+- **Bathymetry**: © GEBCO Compilation Group; © EMODnet Bathymetry Consortium
+  (free reuse with attribution).
+
 Design doc: `docs/superpowers/specs/2026-07-11-drained-seabed-design.md`
 
 ## Recreate this for any region on Earth

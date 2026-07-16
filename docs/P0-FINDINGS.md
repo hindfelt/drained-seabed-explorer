@@ -98,11 +98,32 @@ honestly labeled, but finding #2 above matters more than raw resolution.
 - Task 8 passed a Codex adversarial review (4 findings, all addressed:
   NaN-nodata fabrication guard, pack schema validation, shoal radius, plus
   the accepted boot-sequencing note).
-- Tasks 9–10 could **not** get their Codex adversarial review: the codex
-  runtime wedged (two runs stalled with zero activity) and was declared
-  broken mid-execution. Both tasks were verified by tests (19/19),
-  `validatePack`, clean builds, and browser gates instead — a re-review once
-  the runtime recovers is recommended.
+- Tasks 9–10 initially could **not** get their Codex adversarial review: the
+  runtime's broker socket was orphaned (stale session record pointing at a
+  dead process) and every companion call queued forever. After the broker was
+  repaired, the review ran post-hoc against the committed diff and returned
+  five findings; four were fixed and regenerated into all packs:
+  1. **EOX licensing** (high, fixed): packs now carry structured per-source
+     `{name, license, attribution}` records; imagery uses EOX's exact linked,
+     year-specific attribution; README documents CC BY-NC-SA 4.0
+     (non-commercial) and the other source licenses.
+  2. **Mesa land ceiling** (high, deferred to P1 — see "wrong" list): the
+     reviewer quantified it — 89.1% of Geiranger's land cells reach ≥90% of
+     the ceiling. Real fix needs land-relief-aware tuning, not a constant.
+  3. **Codec clipping** (high, fixed): grids are clamped to the Int16 range
+     (±3276.7 m) BEFORE stats/encoding, so meta always describes the binary,
+     with an explicit warning when clipping occurred. The "any bbox" claim is
+     hereby narrowed: depths beyond 3276.7 m are clipped-with-warning, and
+     regions shallower than ~25.7 m normalize shallower than −90 by design
+     (the 3.5× cap).
+  4. **False wreck-position certainty** (medium, fixed): explicit uncertainty
+     language in UKHO survey narratives ('…APPROX.') now overrides
+     precise-looking coordinates — Öresund goes from 4 to 7 honest ≈ flags,
+     with per-record test assertions.
+  5. **Unreachable trench bands** (medium, fixed): trench band edges are now
+     bounded to the reachable normalized depth range (Geiranger's trenchFull
+     moved from −117 to −88.2, above the −89.4 floor), with a fjord-regime
+     regression test.
 - Snyk scans were clean through Task 8 + the shoal fix; the auth token
   expired before the Task 9/10 commits (interactive re-auth required), so
   the final ~40-line generator diff and pack data are unscanned. Re-scan

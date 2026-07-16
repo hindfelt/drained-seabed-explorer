@@ -73,7 +73,7 @@
       "lengthMeters": null,
       "category": "Dangerous wreck",
       "story": null,
-      "approximate": false
+      "approximate": true
     },
     {
       "id": "wwshipwrecks.14280",
@@ -133,7 +133,7 @@
       "lengthMeters": null,
       "category": "Dangerous wreck",
       "story": null,
-      "approximate": false
+      "approximate": true
     },
     {
       "id": "wwshipwrecks.44122",
@@ -508,7 +508,7 @@
       "lengthMeters": 48.5,
       "category": "Dangerous wreck",
       "story": "28.11.79 SANK OFF HELSINGBORG RAA. (LL, 28.11.79)",
-      "approximate": false
+      "approximate": true
     },
     {
       "id": "wwshipwrecks.57923",

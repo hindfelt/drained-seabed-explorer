@@ -1,13 +1,15 @@
 export const meta = {
   name: 'eox-sentinel-2-cloudless',
   coverage: 'global',
-  license: 'EOX Sentinel-2 cloudless (CC BY-NC-SA 4.0); Esri fallback subject to Esri terms of use',
-  attribution: 'Sentinel-2 cloudless by EOX; Esri World Imagery (fallback)',
+  license: 'CC BY-NC-SA 4.0 (non-commercial, share-alike) — https://cloudless.eox.at; Esri fallback subject to Esri terms of use',
+  attribution: 'Sentinel-2 cloudless 2023 by EOX (https://s2maps.eu)',
 };
 
 const EOX_SOURCE = {
   name: 'EOX Sentinel-2 cloudless 2023',
-  attribution: 'Sentinel-2 cloudless by EOX',
+  // EOX's required attribution form: year-specific, linked, with the
+  // Copernicus notice. CC BY-NC-SA 4.0 — non-commercial use only.
+  attribution: 'Sentinel-2 cloudless 2023 — https://s2maps.eu by EOX IT Services GmbH (Contains modified Copernicus Sentinel data 2023)',
   url(bbox, size) {
     const bboxString = bboxToString(bbox);
     return 'https://tiles.maps.eox.at/wms?service=WMS&request=GetMap&version=1.1.1'

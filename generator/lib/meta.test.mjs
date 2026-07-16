@@ -74,6 +74,42 @@ test('buildMeta derives Öresund-like exaggeration and color bands from grid sta
   }
 });
 
+test('trench bands stay reachable when depth percentiles skew deep (fjord regime)', () => {
+  // Fjord-like: most sea cells near the deep floor, so p75·f·1.4 lands
+  // BELOW the world sea floor without the reachability bounds.
+  const grid = {
+    nLat: 2,
+    nLon: 5,
+    elevations: new Float64Array([
+      -400, -390, -380, -370, -350,
+      -300, -250, -100, -20, 1200,
+    ]),
+  };
+  const m = buildMeta({ name: 'Fjord', slug: 'fjord', bbox, packGrid: grid, now: '2026-07-16' });
+  const seaMinWorld = m.stats.minMeters * m.scale.seaFactor;
+  const { trenchStart, trenchFull } = m.colorBands;
+  assert.ok(trenchStart <= -45, 'trenchStart at most -45');
+  assert.ok(trenchStart >= 0.85 * seaMinWorld, 'trenchStart reachable');
+  assert.ok(trenchFull < trenchStart, 'bands ordered');
+  assert.ok(trenchFull >= 0.98 * seaMinWorld, 'trenchFull saturates above the deepest point');
+});
+
+test('buildMeta records structured per-source license metadata', () => {
+  const result = buildMeta({
+    name: 'Öresund',
+    slug: 'oresund',
+    bbox,
+    packGrid: examplePackGrid(),
+    sources: [
+      { name: 'eox', license: 'CC BY-NC-SA 4.0', attribution: 'Imagery © Example' },
+    ],
+    now: '2026-07-16',
+  });
+  assert.deepEqual(result.sources, [
+    { name: 'eox', license: 'CC BY-NC-SA 4.0', attribution: 'Imagery © Example' },
+  ]);
+});
+
 test('buildMeta deduplicates source attributions and honors an injected date', () => {
   const result = buildMeta({
     name: 'Öresund',

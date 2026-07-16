@@ -48,14 +48,19 @@ export function buildMeta({ name, slug, bbox, packGrid, sources = [], now } = {}
 
   const seaFactor = Math.min(3.5, 90 / Math.max(10, Math.abs(minMeters)));
   const landFactor = seaFactor / 2;
+  const seaMinWorld = minMeters * seaFactor; // deepest point in world units (≈ -90)
   const shelfEdge = clamp(p50 * seaFactor, -30, -12);
-  const trenchStart = Math.min(p75 * seaFactor * 1.4, -45);
+  // Trench bands must stay REACHABLE: without the lower bound, deep-skewed
+  // percentile distributions (fjords) push trenchStart below the world sea
+  // floor and the canyon color never renders.
+  const trenchStart = Math.min(-45, Math.max(p75 * seaFactor * 1.4, 0.85 * seaMinWorld));
 
   // Thirty percent of the shelf-to-trench interval gives -31.9 for the
   // hand-tuned -22/-55 baseline, keeping this transition shelf-weighted.
   const midEdge = shelfEdge + (trenchStart - shelfEdge) * 0.3;
-  // Preserve a 25-world-unit full-trench transition from the baseline.
-  const trenchFull = trenchStart - 25;
+  // A 25-world-unit full-trench transition from the baseline, floored just
+  // above the deepest reachable point so the band always saturates.
+  const trenchFull = Math.max(trenchStart - 25, 0.98 * seaMinWorld);
 
   const saltEndpointA = p25 * seaFactor;
   const saltEndpointB = (p25 / 3) * seaFactor;
@@ -72,11 +77,19 @@ export function buildMeta({ name, slug, bbox, packGrid, sources = [], now } = {}
 
   const seenAttributions = new Set();
   const attributions = [];
+  const sourceRecords = [];
   for (const source of sources) {
     const attribution = source?.attribution;
     if (typeof attribution === 'string' && !seenAttributions.has(attribution)) {
       seenAttributions.add(attribution);
       attributions.push(attribution);
+      // Structured license record per source actually used — packs are
+      // redistributed, so the license terms must travel with the data.
+      sourceRecords.push({
+        name: source.name ?? null,
+        license: source.license ?? null,
+        attribution,
+      });
     }
   }
 
@@ -100,6 +113,7 @@ export function buildMeta({ name, slug, bbox, packGrid, sources = [], now } = {}
       seaPercentiles: { p25, p50, p75 },
     },
     attributions,
+    sources: sourceRecords,
     generatedAt: dateOnly(now),
   };
 }

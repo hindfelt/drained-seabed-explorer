@@ -77,21 +77,29 @@ function parseSunkYear(value) {
 }
 
 // UKHO's position_m (position method) is 'n/a' across entire regions, so it
-// carries no signal. The charted `position` text does: fixes recorded with
-// decimal minutes on BOTH axes ('55 58.585 N,12 33.589 E') are surveyed
-// positions; whole-minute entries ('56 2 N,12 38 E', ~1 nm) are estimates.
+// carries no signal. Two signals do:
+// 1. Explicit uncertainty language in the survey/position history fields
+//    ('REPD SUNK IN 560500N, 123300E APPROX.') — authoritative, overrides
+//    any precise-looking coordinate formatting.
+// 2. The charted `position` text precision: fixes recorded with decimal
+//    minutes on BOTH axes ('55 58.585 N,12 33.589 E') are surveyed
+//    positions; whole-minute entries ('56 2 N,12 38 E', ~1 nm) are estimates.
+const UNCERTAIN_POSITION_PATTERN =
+  /\bAPPROX\b|\bAPPROXIMATE\b|POSN\s+DOUBTFUL|POSITION\s+DOUBTFUL|\bUNVERIFIED\b|\bun[-\s]?surveyed\b|\bnot\s+surveyed\b/i;
+
 function positionIsApproximate(properties) {
+  const uncertaintyDeclared = Object.entries(properties).some(
+    ([key, value]) =>
+      /(qual|accu|survey|position|original)/i.test(key)
+      && UNCERTAIN_POSITION_PATTERN.test(String(value ?? '')),
+  );
+  if (uncertaintyDeclared) return true;
+
   const text = nullableText(properties.position);
   if (text === null) return true;
   const parts = text.split(',');
-  const precise = parts.length === 2
-    && parts.every((part) => /\d+\s+\d+\.\d+\s+[NSEW]/.test(part.trim()));
-  if (!precise) return true;
-
-  return Object.entries(properties).some(
-    ([key, value]) =>
-      /(qual|accu|survey)/i.test(key) && /\bun[-\s]?surveyed\b|\bnot\s+surveyed\b/i.test(String(value ?? '')),
-  );
+  return !(parts.length === 2
+    && parts.every((part) => /\d+\s+\d+\.\d+\s+[NSEW]/.test(part.trim())));
 }
 
 function compareWreckPriority(a, b) {
