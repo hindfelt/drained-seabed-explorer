@@ -30,6 +30,8 @@ html, body {
 }
 #map:active { cursor: grabbing; }
 #map.slippy--draw { cursor: crosshair; }
+#map.slippy--space-pan { cursor: grab; }
+#map.slippy--space-pan:active { cursor: grabbing; }
 
 .slippy__tiles { position: absolute; inset: 0; }
 

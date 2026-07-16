@@ -141,6 +141,25 @@ export function createSlippyMap(container, { center = [30, 0], zoom = 3 } = {}) 
 
   // --- pointer interaction -------------------------------------------------
   let pointer = null; // { px, py, drawing }
+  let spaceHeld = false; // hold space to pan without leaving draw mode
+
+  function onKeyDown(event) {
+    if (event.code !== 'Space') return;
+    const tag = event.target?.tagName;
+    if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || tag === 'BUTTON') return;
+    event.preventDefault(); // keep the page from scrolling
+    spaceHeld = true;
+    container.classList.add('slippy--space-pan');
+  }
+
+  function onKeyUp(event) {
+    if (event.code !== 'Space') return;
+    spaceHeld = false;
+    container.classList.remove('slippy--space-pan');
+  }
+
+  window.addEventListener('keydown', onKeyDown);
+  window.addEventListener('keyup', onKeyUp);
 
   container.addEventListener('pointerdown', (event) => {
     try {
@@ -151,8 +170,11 @@ export function createSlippyMap(container, { center = [30, 0], zoom = 3 } = {}) 
     const rect = container.getBoundingClientRect();
     const px = event.clientX - rect.left;
     const py = event.clientY - rect.top;
-    pointer = { px, py, drawing: state.drawMode };
-    if (state.drawMode) {
+    // Space overrides draw mode for this gesture (Figma-style temporary pan);
+    // the choice is fixed at pointerdown and holds for the whole drag.
+    const drawing = state.drawMode && !spaceHeld;
+    pointer = { px, py, drawing };
+    if (drawing) {
       const world = screenToWorld(px, py);
       // Clamp BOTH endpoints into Web Mercator's 0..1 — blank space beyond
       // the poles must never serialize into a bbox.
@@ -223,6 +245,8 @@ export function createSlippyMap(container, { center = [30, 0], zoom = 3 } = {}) 
     },
     destroy() {
       resizeObserver.disconnect();
+      window.removeEventListener('keydown', onKeyDown);
+      window.removeEventListener('keyup', onKeyUp);
       container.replaceChildren();
     },
   };
