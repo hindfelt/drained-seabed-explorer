@@ -28,6 +28,12 @@ export function initOverlay({ meta, counts, onToggleReefs, onToggleWrecks, onTog
       <p class="panel__subtitle">${escapeHtml(meta.name)}, drained.</p>
     </header>
 
+    <div class="panel__region">
+      <label class="panel__region-label" for="region-select">Region</label>
+      <select id="region-select" class="region-select" aria-label="Switch region"></select>
+      <a class="region-new" href="generate.html">+ new region</a>
+    </div>
+
     <div class="panel__divider" aria-hidden="true"></div>
 
     <div class="panel__toggles" role="group" aria-label="Marker layers">
@@ -67,6 +73,26 @@ export function initOverlay({ meta, counts, onToggleReefs, onToggleWrecks, onTog
   const wrecksInput = panel.querySelector('#toggle-wrecks');
   const placesInput = panel.querySelector('#toggle-places');
   const waterInput = panel.querySelector('#toggle-water');
+
+  const regionSelect = panel.querySelector('#region-select');
+  const currentSlug = new URLSearchParams(location.search).get('region');
+  fetch('packs/index.json')
+    .then((r) => (r.ok ? r.json() : null))
+    .then((index) => {
+      if (!index || !Array.isArray(index.packs)) return;
+      const active = currentSlug ?? index.default;
+      for (const slug of index.packs) {
+        const option = document.createElement('option');
+        option.value = slug;
+        option.textContent = slug;
+        option.selected = slug === active;
+        regionSelect.appendChild(option);
+      }
+      regionSelect.addEventListener('change', () => {
+        location.search = `?region=${encodeURIComponent(regionSelect.value)}`;
+      });
+    })
+    .catch(() => {});
 
   reefsInput.addEventListener('change', () => onToggleReefs(reefsInput.checked));
   wrecksInput.addEventListener('change', () => onToggleWrecks(wrecksInput.checked));

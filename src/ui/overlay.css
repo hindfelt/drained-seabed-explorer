@@ -325,3 +325,39 @@ body {
     margin: 8px 0;
   }
 }
+
+/* Region switcher row */
+.panel__region {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 12px 0;
+  font-size: 11px;
+}
+
+.panel__region-label {
+  color: var(--text-dim, #b9b1a0);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 10px;
+}
+
+.region-select {
+  flex: 1;
+  font: inherit;
+  font-size: 12px;
+  padding: 4px 6px;
+  color: #f1ead9;
+  background: rgba(12, 14, 12, 0.8);
+  border: 1px solid rgba(241, 234, 217, 0.2);
+  border-radius: 5px;
+}
+.region-select:focus { outline: none; border-color: var(--accent-reef); }
+
+.region-new {
+  color: var(--accent-reef);
+  text-decoration: none;
+  font-size: 11px;
+  white-space: nowrap;
+}
+.region-new:hover { text-decoration: underline; }
