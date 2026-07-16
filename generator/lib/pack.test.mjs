@@ -50,6 +50,7 @@ test('assembles and validates a fixture-backed GEBCO-only pack', async (t) => {
   const outDir = await mkdtemp(join(tmpdir(), 'drained-seabed-pack-'));
   t.after(() => rm(outDir, { recursive: true, force: true }));
 
+  const stages = [];
   const report = await assemblePack({
     bbox,
     name: 'Öresund',
@@ -57,6 +58,7 @@ test('assembles and validates a fixture-backed GEBCO-only pack', async (t) => {
     outDir,
     now: '2026-07-15T12:00:00.000Z',
     fetchImpl: fixtureFetch,
+    onProgress: (stage) => stages.push(stage),
     adapters: {
       bathyGebco,
       bathyEmodnet: { ...bathyEmodnet, covers: () => false },
@@ -65,6 +67,10 @@ test('assembles and validates a fixture-backed GEBCO-only pack', async (t) => {
       imagery,
     },
   });
+
+  assert.deepEqual([...stages].sort(), ['assembling', 'bathymetry', 'imagery', 'places', 'validating', 'wrecks']);
+  assert.ok(stages.indexOf('assembling') > stages.indexOf('bathymetry'), 'assembling follows fetches');
+  assert.equal(stages[stages.length - 1], 'validating');
 
   assert.deepEqual(await readdir(outDir).then((files) => files.sort()), [
     'bathymetry.bin',

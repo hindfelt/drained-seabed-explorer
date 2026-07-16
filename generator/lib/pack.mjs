@@ -30,6 +30,7 @@ export async function assemblePack({
   fetchImpl,
   outDir = path.join('public', 'packs', slug ?? ''),
   now,
+  onProgress = () => {},
 } = {}) {
   assertBBox(bbox, 'bbox');
   if (typeof name !== 'string' || name.trim() === '') {
@@ -55,7 +56,9 @@ export async function assemblePack({
 
   if (!regionalCoverage) warnings.push(GEBCO_ONLY_WARNING);
 
-  const coarsePromise = selected.bathyGebco.fetchGrid(bbox, { fetchImpl });
+  const stage = (label) => (value) => { onProgress(label); return value; };
+  const coarsePromise = selected.bathyGebco.fetchGrid(bbox, { fetchImpl })
+    .then(stage('bathymetry'));
   const finePromise = regionalCoverage
     ? selected.bathyEmodnet.fetchGrid(bbox, { fetchImpl })
     : Promise.resolve(null);
@@ -63,18 +66,19 @@ export async function assemblePack({
     () => selected.wrecks.fetchWrecks(bbox, { fetchImpl }),
     'wrecks',
     warnings,
-  );
+  ).then(stage('wrecks'));
   // The public Overpass instance is flaky (406/504 bursts) — retry with
   // fixed backoff before degrading to a warning.
   const placesPromise = fetchOptionalSites(
     () => withRetry(() => selected.places.fetchPlaces(bbox, { fetchImpl })),
     'places',
     warnings,
-  );
+  ).then(stage('places'));
   // Imagery is intentionally required for P0. The adapter already tries its
   // fallback source, so a total failure rejects assembly rather than creating
   // a pack that validatePack would have to treat specially.
-  const imageryPromise = selected.imagery.fetchImagery(bbox, { fetchImpl });
+  const imageryPromise = selected.imagery.fetchImagery(bbox, { fetchImpl })
+    .then(stage('imagery'));
 
   const [coarse, fine, wreckResult, placeResult, imagery] = await Promise.all([
     coarsePromise,
@@ -84,6 +88,7 @@ export async function assemblePack({
     imageryPromise,
   ]);
 
+  onProgress('assembling');
   const packGrid = mergeToPackGrid({ fine, coarse, bbox });
 
   // The Int16-decimeter codec can only carry ±3276.7 m. Clamp BEFORE stats
@@ -151,6 +156,7 @@ export async function assemblePack({
     writeJson(path.join(outDir, 'sites.json'), sites),
   ]);
 
+  onProgress('validating');
   await validatePack(outDir);
 
   return {
