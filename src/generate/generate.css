@@ -1,0 +1,162 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..600&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+  --accent: #2fb8a6;
+  --accent-warm: #e0703a;
+  --ink: #f1ead9;
+  --ink-dim: #b9b1a0;
+  --panel-bg: linear-gradient(165deg, rgba(24, 27, 24, 0.94), rgba(14, 16, 14, 0.94));
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  background: #0c0e0c;
+  font-family: 'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace;
+  color: var(--ink);
+}
+
+/* --- map ------------------------------------------------------------- */
+
+#map {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: #1a2028;
+  touch-action: none;
+  cursor: grab;
+}
+#map:active { cursor: grabbing; }
+#map.slippy--draw { cursor: crosshair; }
+
+.slippy__tiles { position: absolute; inset: 0; }
+
+.slippy__tile {
+  position: absolute;
+  top: 0;
+  left: 0;
+  will-change: transform;
+  user-select: none;
+  /* mute the raw OSM cartography toward the app's expedition palette */
+  filter: saturate(0.55) brightness(0.9) sepia(0.12);
+}
+
+.slippy__selection {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 2px solid var(--accent);
+  background: rgba(47, 184, 166, 0.14);
+  box-shadow: 0 0 0 9999px rgba(10, 12, 10, 0.25);
+  pointer-events: none;
+}
+
+.slippy__attribution {
+  position: absolute;
+  right: 8px;
+  bottom: 6px;
+  font-size: 10px;
+  color: #dcd5c6;
+  background: rgba(14, 16, 14, 0.7);
+  padding: 2px 7px;
+  border-radius: 4px;
+}
+.slippy__attribution a { color: inherit; }
+
+/* --- panel ------------------------------------------------------------ */
+
+.picker {
+  position: fixed;
+  top: 18px;
+  right: 18px;
+  width: 340px;
+  max-height: calc(100vh - 36px);
+  overflow-y: auto;
+  padding: 20px 22px;
+  background: var(--panel-bg);
+  border: 1px solid rgba(241, 234, 217, 0.14);
+  border-top: 2px solid var(--accent);
+  border-radius: 10px;
+  backdrop-filter: blur(6px);
+}
+
+.picker__eyebrow {
+  margin: 0 0 6px;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent-warm);
+}
+
+.picker__title {
+  margin: 0 0 8px;
+  font-family: 'Fraunces', Georgia, 'Times New Roman', serif;
+  font-style: italic;
+  font-weight: 500;
+  font-size: 22px;
+}
+
+.picker__hint { margin: 0 0 14px; font-size: 11.5px; line-height: 1.55; color: var(--ink-dim); }
+
+.picker__controls { display: flex; gap: 8px; margin-bottom: 14px; }
+
+.picker__button {
+  font: inherit;
+  font-size: 12px;
+  padding: 8px 12px;
+  color: var(--ink);
+  background: rgba(47, 184, 166, 0.14);
+  border: 1px solid rgba(47, 184, 166, 0.5);
+  border-radius: 6px;
+  cursor: pointer;
+}
+.picker__button:hover:not(:disabled) { background: rgba(47, 184, 166, 0.28); }
+.picker__button:disabled { opacity: 0.4; cursor: default; }
+.picker__button--active { background: rgba(47, 184, 166, 0.4); }
+.picker__button--ghost { background: transparent; border-color: rgba(241, 234, 217, 0.25); }
+.picker__button--primary { width: 100%; background: rgba(47, 184, 166, 0.32); font-weight: 600; }
+
+.picker__readout { margin: 0 0 10px; font-size: 11.5px; }
+.picker__readout div { display: flex; gap: 10px; margin-bottom: 4px; }
+.picker__readout dt { color: var(--ink-dim); min-width: 40px; }
+.picker__readout dd { margin: 0; }
+
+.picker__warnings { margin: 0 0 12px; padding: 0 0 0 16px; font-size: 11px; color: var(--accent-warm); }
+.picker__warnings:empty { display: none; }
+.picker__warnings li { margin-bottom: 4px; line-height: 1.4; }
+
+.picker__form { display: grid; gap: 10px; margin-bottom: 14px; }
+.picker__form label { display: grid; gap: 4px; font-size: 11px; color: var(--ink-dim); }
+.picker__form input {
+  font: inherit;
+  font-size: 12.5px;
+  padding: 7px 9px;
+  color: var(--ink);
+  background: rgba(12, 14, 12, 0.8);
+  border: 1px solid rgba(241, 234, 217, 0.2);
+  border-radius: 6px;
+}
+.picker__form input:focus { outline: none; border-color: var(--accent); }
+
+.picker__log {
+  margin: 0 0 10px;
+  padding: 10px 12px;
+  max-height: 180px;
+  overflow-y: auto;
+  font-size: 11px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  background: rgba(12, 14, 12, 0.85);
+  border: 1px solid rgba(241, 234, 217, 0.12);
+  border-radius: 6px;
+}
+.picker__log-error { color: var(--accent-warm); }
+
+.picker__result { margin: 0 0 12px; font-size: 13px; }
+.picker__result a { color: var(--accent); }
+
+.picker__footer { font-size: 11px; }
+.picker__footer a { color: var(--ink-dim); text-decoration: none; }
+.picker__footer a:hover { color: var(--ink); }

@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>New Region — Drained Seabed Explorer</title>
+    <link rel="stylesheet" href="/src/generate/generate.css" />
+  </head>
+  <body>
+    <div id="map"></div>
+    <aside id="picker-panel" class="picker">
+      <header class="picker__header">
+        <p class="picker__eyebrow">Bathymetric Survey &middot; New Region</p>
+        <h1 class="picker__title">Pick an area to drain</h1>
+        <p class="picker__hint">Pan and zoom, then <strong>Draw area</strong> and drag a box over your waters. Keep it roughly square, ~0.15&ndash;1.0&deg; across.</p>
+      </header>
+
+      <div class="picker__controls">
+        <button id="draw-toggle" class="picker__button" type="button">Draw area</button>
+        <button id="clear-bbox" class="picker__button picker__button--ghost" type="button" disabled>Clear</button>
+      </div>
+
+      <dl id="bbox-readout" class="picker__readout" hidden>
+        <div><dt>bbox</dt><dd id="bbox-coords"></dd></div>
+        <div><dt>span</dt><dd id="bbox-span"></dd></div>
+      </dl>
+      <ul id="bbox-warnings" class="picker__warnings"></ul>
+
+      <form id="generate-form" class="picker__form" hidden>
+        <label>Name <input id="region-name" type="text" autocomplete="off" placeholder="Gibraltar" required /></label>
+        <label>Slug <input id="region-slug" type="text" autocomplete="off" pattern="[a-z0-9]+(-[a-z0-9]+)*" required /></label>
+        <button id="generate-button" class="picker__button picker__button--primary" type="submit">Generate region</button>
+      </form>
+
+      <pre id="progress-log" class="picker__log" hidden></pre>
+      <p id="result-line" class="picker__result" hidden></p>
+
+      <footer class="picker__footer">
+        <a href="/">&larr; back to the explorer</a>
+      </footer>
+    </aside>
+    <script type="module" src="/src/generate/main.js"></script>
+  </body>
+</html>
