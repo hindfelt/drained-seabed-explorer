@@ -1,0 +1,46 @@
+{
+  "wrecks": [],
+  "places": [
+    {
+      "id": "place-85999901",
+      "name": "Geiranger",
+      "latLon": [
+        62.1006277,
+        7.2058959
+      ],
+      "kind": "village"
+    }
+  ],
+  "shoals": [
+    {
+      "id": "shoal-160-42",
+      "name": null,
+      "latLon": [
+        62.17549019607843,
+        7.015882352941176
+      ],
+      "crestMeters": -79.57895,
+      "radiusMeters": 326.42550669179957
+    },
+    {
+      "id": "shoal-210-49",
+      "name": null,
+      "latLon": [
+        62.21470588235294,
+        7.02686274509804
+      ],
+      "crestMeters": -136.9112523341173,
+      "radiusMeters": 521.5858259536391
+    },
+    {
+      "id": "shoal-222-47",
+      "name": null,
+      "latLon": [
+        62.224117647058826,
+        7.023725490196078
+      ],
+      "crestMeters": -227.32253801960206,
+      "radiusMeters": 95.22810751659054
+    }
+  ]
+}

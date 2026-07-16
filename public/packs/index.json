@@ -1,6 +1,8 @@
 {
   "default": "oresund",
   "packs": [
+    "bora-bora",
+    "geiranger",
     "oresund"
   ]
 }

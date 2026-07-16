@@ -1,0 +1,47 @@
+{
+  "name": "Geirangerfjord",
+  "slug": "geiranger",
+  "bbox": {
+    "lonMin": 6.95,
+    "latMin": 62.05,
+    "lonMax": 7.35,
+    "latMax": 62.25
+  },
+  "grid": {
+    "nLat": 256,
+    "nLon": 256
+  },
+  "scale": {
+    "seaFactor": 0.22114017866546565,
+    "landFactor": 0.11057008933273282,
+    "landCeiling": 33.75
+  },
+  "colorBands": {
+    "shelfEdge": -30,
+    "midEdge": -48.61436409082353,
+    "trenchStart": -92.04788030274511,
+    "trenchFull": -117.04788030274511,
+    "saltMin": -24.510092677608263,
+    "saltMax": -8.170030892536088
+  },
+  "stats": {
+    "minMeters": -406.98167353906933,
+    "maxMeters": 1741.7243944632264,
+    "seaPercentiles": {
+      "p25": -110.83509485034111,
+      "p50": -183.19572248663917,
+      "p75": -297.3158759629773
+    }
+  },
+  "attributions": [
+    "Bathymetry © GEBCO Compilation Group",
+    "Bathymetry © EMODnet Bathymetry Consortium",
+    "Wrecks © UK Hydrographic Office via EMODnet Human Activities, OGL",
+    "© OpenStreetMap contributors",
+    "Sentinel-2 cloudless by EOX"
+  ],
+  "generatedAt": "2026-07-16",
+  "warnings": [
+    "no charted wrecks in this area"
+  ]
+}

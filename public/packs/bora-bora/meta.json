@@ -1,0 +1,46 @@
+{
+  "name": "Bora Bora",
+  "slug": "bora-bora",
+  "bbox": {
+    "lonMin": -151.85,
+    "latMin": -16.6,
+    "lonMax": -151.65,
+    "latMax": -16.42
+  },
+  "grid": {
+    "nLat": 256,
+    "nLon": 256
+  },
+  "scale": {
+    "seaFactor": 0.04054518164241357,
+    "landFactor": 0.020272590821206787,
+    "landCeiling": 33.75
+  },
+  "colorBands": {
+    "shelfEdge": -30,
+    "midEdge": -45.2358732777411,
+    "trenchStart": -80.78624425913699,
+    "trenchFull": -105.78624425913699,
+    "saltMin": -16.92894059415835,
+    "saltMax": -5.642980198052784
+  },
+  "stats": {
+    "minMeters": -2219.7458823529514,
+    "maxMeters": 375.6053979239012,
+    "seaPercentiles": {
+      "p25": -417.5327352942303,
+      "p50": -1012.9179065742233,
+      "p75": -1423.213754325231
+    }
+  },
+  "attributions": [
+    "Bathymetry © GEBCO Compilation Group",
+    "Wrecks © UK Hydrographic Office via EMODnet Human Activities, OGL",
+    "© OpenStreetMap contributors",
+    "Sentinel-2 cloudless by EOX"
+  ],
+  "generatedAt": "2026-07-16",
+  "warnings": [
+    "bathymetry is GEBCO-only (~450 m) — small features will be smooth"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "nLat": 256,
+  "nLon": 256,
+  "bbox": {
+    "lonMin": -151.85,
+    "latMin": -16.6,
+    "lonMax": -151.65,
+    "latMax": -16.42
+  },
+  "encoding": "int16-decimeters-le",
+  "nodata": -32768
+}

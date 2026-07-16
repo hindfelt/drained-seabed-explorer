@@ -1,0 +1,153 @@
+{
+  "wrecks": [
+    {
+      "id": "wwshipwrecks.23544",
+      "name": null,
+      "latLon": [
+        -16.5172222,
+        -151.7344444
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": null,
+      "lengthMeters": null,
+      "category": "Wreck showing any portion of hull or superstructure",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.23560",
+      "name": null,
+      "latLon": [
+        -16.52,
+        -151.7363889
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": 14,
+      "lengthMeters": null,
+      "category": "Dangerous wreck",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.23562",
+      "name": null,
+      "latLon": [
+        -16.52,
+        -151.735
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": null,
+      "lengthMeters": null,
+      "category": "Wreck showing any portion of hull or superstructure",
+      "story": null,
+      "approximate": false
+    },
+    {
+      "id": "wwshipwrecks.23584",
+      "name": null,
+      "latLon": [
+        -16.5195833,
+        -151.735
+      ],
+      "type": null,
+      "sunkYear": null,
+      "depthMeters": 2,
+      "lengthMeters": null,
+      "category": "Dangerous wreck",
+      "story": null,
+      "approximate": false
+    }
+  ],
+  "places": [
+    {
+      "id": "place-269261093",
+      "name": "Vaitape",
+      "latLon": [
+        -16.5065205,
+        -151.7514299
+      ],
+      "kind": "town"
+    },
+    {
+      "id": "place-2237920654",
+      "name": "Anau",
+      "latLon": [
+        -16.5058767,
+        -151.7236865
+      ],
+      "kind": "village"
+    },
+    {
+      "id": "place-2237915389",
+      "name": "Fa’anui",
+      "latLon": [
+        -16.4853845,
+        -151.7419684
+      ],
+      "kind": "village"
+    },
+    {
+      "id": "place-2284990095",
+      "name": "Hitia’a",
+      "latLon": [
+        -16.4712179,
+        -151.7477304
+      ],
+      "kind": "village"
+    },
+    {
+      "id": "place-8118299539",
+      "name": "Tevairoa",
+      "latLon": [
+        -16.476512,
+        -151.7737091
+      ],
+      "kind": "village"
+    }
+  ],
+  "shoals": [
+    {
+      "id": "shoal-198-156",
+      "name": null,
+      "latLon": [
+        -16.46023529411765,
+        -151.72764705882352
+      ],
+      "crestMeters": -1.141183391003648,
+      "radiusMeters": 796.5038837713953
+    },
+    {
+      "id": "shoal-209-146",
+      "name": null,
+      "latLon": [
+        -16.452470588235297,
+        -151.73549019607844
+      ],
+      "crestMeters": -1.2178961937847874,
+      "radiusMeters": 801.7440974186185
+    },
+    {
+      "id": "shoal-133-93",
+      "name": null,
+      "latLon": [
+        -16.506117647058826,
+        -151.77705882352942
+      ],
+      "crestMeters": -2.0729411764687122,
+      "radiusMeters": 521.7209298916997
+    },
+    {
+      "id": "shoal-180-178",
+      "name": null,
+      "latLon": [
+        -16.47294117647059,
+        -151.71039215686275
+      ],
+      "crestMeters": -3.013148788931103,
+      "radiusMeters": 661.5150460268953
+    }
+  ]
+}
