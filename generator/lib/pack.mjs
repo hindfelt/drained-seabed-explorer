@@ -9,6 +9,7 @@ import * as imageryDefault from '../adapters/imagery-eox.mjs';
 import { encodeBathy } from './bathy-codec.mjs';
 import { mergeToPackGrid } from './grid.mjs';
 import { buildMeta } from './meta.mjs';
+import { withRetry } from './retry.mjs';
 import { findShoals } from './shoals.mjs';
 
 const REQUIRED_FILES = [
@@ -63,8 +64,10 @@ export async function assemblePack({
     'wrecks',
     warnings,
   );
+  // The public Overpass instance is flaky (406/504 bursts) — retry with
+  // fixed backoff before degrading to a warning.
   const placesPromise = fetchOptionalSites(
-    () => selected.places.fetchPlaces(bbox, { fetchImpl }),
+    () => withRetry(() => selected.places.fetchPlaces(bbox, { fetchImpl })),
     'places',
     warnings,
   );
