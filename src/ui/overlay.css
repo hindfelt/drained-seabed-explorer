@@ -361,3 +361,5 @@ body {
   white-space: nowrap;
 }
 .region-new:hover { text-decoration: underline; }
+
+.panel__credits a { color: inherit; text-decoration: underline; }

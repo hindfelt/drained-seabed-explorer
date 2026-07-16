@@ -3,10 +3,15 @@ import assert from 'node:assert/strict';
 import { PassThrough } from 'node:stream';
 import { handleGenerate, __resetBusyForTests } from './dev-api.mjs';
 
-function makeReq(body) {
+function makeReq(body, headers = {}) {
   const req = new PassThrough();
   req.method = 'POST';
-  req.end(JSON.stringify(body));
+  req.headers = {
+    host: '127.0.0.1:5173',
+    'content-type': 'application/json',
+    ...headers,
+  };
+  req.end(typeof body === 'string' ? body : JSON.stringify(body));
   return req;
 }
 
@@ -59,6 +64,44 @@ test('streams an error line when generation throws', async () => {
     cwd: '/tmp',
   });
   assert.match(res.lines().at(-1).error, /ERDDAP down/);
+});
+
+test('403s non-loopback hosts, cross-origin requests, and non-JSON content types', async () => {
+  __resetBusyForTests();
+  const noop = { assemble: async () => { throw new Error('must not be called'); }, updateIndex: async () => {}, cwd: '/tmp' };
+
+  const rebound = makeRes();
+  await handleGenerate(makeReq(goodBody, { host: 'evil.example.com' }), rebound, noop);
+  assert.equal(rebound.statusCode, 403);
+  assert.match(rebound.lines()[0].error, /rebinding/);
+
+  const crossOrigin = makeRes();
+  await handleGenerate(makeReq(goodBody, { origin: 'https://evil.example.com' }), crossOrigin, noop);
+  assert.equal(crossOrigin.statusCode, 403);
+  assert.match(crossOrigin.lines()[0].error, /cross-origin/);
+
+  const textPlain = makeRes();
+  await handleGenerate(makeReq(goodBody, { 'content-type': 'text/plain' }), textPlain, noop);
+  assert.equal(textPlain.statusCode, 403);
+  assert.match(textPlain.lines()[0].error, /application\/json/);
+
+  const sameOrigin = makeRes();
+  await handleGenerate(makeReq(goodBody, { origin: 'http://localhost:5173' }), sameOrigin, {
+    assemble: async () => ({ warnings: [] }), updateIndex: async () => {}, cwd: '/tmp',
+  });
+  assert.equal(sameOrigin.statusCode, 200);
+});
+
+test('rejects oversized bodies before parsing', async () => {
+  __resetBusyForTests();
+  const res = makeRes();
+  await handleGenerate(makeReq(`{"pad":"${'x'.repeat(70 * 1024)}"}`), res, {
+    assemble: async () => { throw new Error('must not be called'); },
+    updateIndex: async () => {},
+    cwd: '/tmp',
+  });
+  assert.equal(res.statusCode, 400);
+  assert.match(res.lines()[0].error, /too large/);
 });
 
 test('409s when a generation is already in flight', async () => {

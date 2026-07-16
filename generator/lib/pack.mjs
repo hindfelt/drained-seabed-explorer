@@ -1,4 +1,4 @@
-import { access, mkdir, readFile, stat, writeFile } from 'node:fs/promises';
+import { access, mkdir, readFile, rename, rm, stat, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 
 import * as bathyGebcoDefault from '../adapters/bathy-gebco.mjs';
@@ -147,17 +147,44 @@ export async function assemblePack({
   };
   const sites = { wrecks, places, shoals };
 
-  await mkdir(outDir, { recursive: true });
-  await Promise.all([
-    writeJson(path.join(outDir, 'meta.json'), meta),
-    writeJson(path.join(outDir, 'bathymetry.json'), bathymetry),
-    writeFile(path.join(outDir, 'bathymetry.bin'), encodeBathy(packGrid.elevations)),
-    writeFile(path.join(outDir, 'satellite.jpg'), imagery.jpeg),
-    writeJson(path.join(outDir, 'sites.json'), sites),
-  ]);
+  // Publish transactionally: write + validate in a staging directory, then
+  // swap it in. A failed regeneration must never leave an already-indexed
+  // pack half-replaced.
+  const stagingDir = `${outDir}.staging`;
+  const previousDir = `${outDir}.previous`;
+  await rm(stagingDir, { recursive: true, force: true });
+  await mkdir(stagingDir, { recursive: true });
+  try {
+    await Promise.all([
+      writeJson(path.join(stagingDir, 'meta.json'), meta),
+      writeJson(path.join(stagingDir, 'bathymetry.json'), bathymetry),
+      writeFile(path.join(stagingDir, 'bathymetry.bin'), encodeBathy(packGrid.elevations)),
+      writeFile(path.join(stagingDir, 'satellite.jpg'), imagery.jpeg),
+      writeJson(path.join(stagingDir, 'sites.json'), sites),
+    ]);
 
-  onProgress('validating');
-  await validatePack(outDir);
+    onProgress('validating');
+    await validatePack(stagingDir);
+
+    await rm(previousDir, { recursive: true, force: true });
+    let hadPrevious = true;
+    try {
+      await rename(outDir, previousDir);
+    } catch (error) {
+      if (error.code !== 'ENOENT') throw error;
+      hadPrevious = false;
+    }
+    try {
+      await rename(stagingDir, outDir);
+    } catch (error) {
+      if (hadPrevious) await rename(previousDir, outDir); // roll back
+      throw error;
+    }
+    if (hadPrevious) await rm(previousDir, { recursive: true, force: true });
+  } catch (error) {
+    await rm(stagingDir, { recursive: true, force: true });
+    throw error;
+  }
 
   return {
     wreckCount: wrecks.length,

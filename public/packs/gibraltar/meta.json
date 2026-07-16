@@ -2,18 +2,18 @@
   "name": "Gibraltar",
   "slug": "gibraltar",
   "bbox": {
-    "lonMin": -5.873828124999989,
-    "latMin": 35.9781759582205,
-    "lonMax": -5.373828124999989,
-    "latMax": 36.377525282509424
+    "lonMin": -5.8738,
+    "latMin": 35.9782,
+    "lonMax": -5.3738,
+    "latMax": 36.3775
   },
   "grid": {
     "nLat": 256,
     "nLon": 256
   },
   "scale": {
-    "seaFactor": 0.09387336122257892,
-    "landFactor": 0.04693668061128946,
+    "seaFactor": 0.09387252958526007,
+    "landFactor": 0.046936264792630036,
     "landCeiling": 33.75
   },
   "colorBands": {
@@ -21,16 +21,16 @@
     "midEdge": -21.9,
     "trenchStart": -45,
     "trenchFull": -70,
-    "saltMin": -2.8686257548307936,
-    "saltMax": -0.956208584943598
+    "saltMin": -2.865980839568958,
+    "saltMax": -0.9553269465229859
   },
   "stats": {
-    "minMeters": -958.7384411068977,
-    "maxMeters": 762.6693181770222,
+    "minMeters": -958.7469347809273,
+    "maxMeters": 762.7212918587877,
     "seaPercentiles": {
-      "p25": -30.55846427006192,
-      "p50": -85.59988110890792,
-      "p75": -241.40797782570004
+      "p25": -30.530559389751186,
+      "p50": -85.50018418052426,
+      "p75": -241.44863426332773
     }
   },
   "attributions": [
@@ -63,7 +63,7 @@
     },
     {
       "name": "eox-sentinel-2-cloudless",
-      "license": "CC BY-NC-SA 4.0 (non-commercial, share-alike) — https://cloudless.eox.at; Esri fallback subject to Esri terms of use",
+      "license": "CC BY-NC-SA 4.0 (non-commercial, share-alike) — https://creativecommons.org/licenses/by-nc-sa/4.0/ — source https://cloudless.eox.at, unmodified except cropping; Esri fallback subject to Esri terms of use",
       "attribution": "Sentinel-2 cloudless 2023 — https://s2maps.eu by EOX IT Services GmbH (Contains modified Copernicus Sentinel data 2023)"
     }
   ],

@@ -1,16 +1,6 @@
 {
   "wrecks": [],
-  "places": [
-    {
-      "id": "place-85999901",
-      "name": "Geiranger",
-      "latLon": [
-        62.1006277,
-        7.2058959
-      ],
-      "kind": "village"
-    }
-  ],
+  "places": [],
   "shoals": [
     {
       "id": "shoal-160-42",

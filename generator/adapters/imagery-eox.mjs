@@ -1,7 +1,7 @@
 export const meta = {
   name: 'eox-sentinel-2-cloudless',
   coverage: 'global',
-  license: 'CC BY-NC-SA 4.0 (non-commercial, share-alike) — https://cloudless.eox.at; Esri fallback subject to Esri terms of use',
+  license: 'CC BY-NC-SA 4.0 (non-commercial, share-alike) — https://creativecommons.org/licenses/by-nc-sa/4.0/ — source https://cloudless.eox.at, unmodified except cropping; Esri fallback subject to Esri terms of use',
   attribution: 'Sentinel-2 cloudless 2023 by EOX (https://s2maps.eu)',
 };
 

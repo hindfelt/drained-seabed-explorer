@@ -9,12 +9,6 @@ export function initOverlay({ meta, counts, onToggleReefs, onToggleWrecks, onTog
   const root = document.getElementById('overlay-root');
   if (!root) return;
 
-  // Credits are the honest part of the panel: every attribution of a source
-  // actually used in this pack, plus any generation warnings (e.g. coarse
-  // GEBCO-only bathymetry) so data-quality caveats stay visible.
-  const creditsParts = [...(meta.attributions ?? [])];
-  if (Array.isArray(meta.warnings)) creditsParts.push(...meta.warnings);
-  const creditsText = creditsParts.join(' · ') || 'Open data';
 
   const panel = document.createElement('section');
   panel.className = 'panel';
@@ -64,10 +58,53 @@ export function initOverlay({ meta, counts, onToggleReefs, onToggleWrecks, onTog
       <span class="panel__footer-dot" aria-hidden="true">&middot;</span>
       <span>Right-drag to pan</span>
     </footer>
-    <p class="panel__credits">${escapeHtml(creditsText)}</p>
+    <p class="panel__credits"></p>
   `;
 
   root.appendChild(panel);
+
+  // Credits are the honest part of the panel: every attribution of a source
+  // actually used in this pack — with its license linked when the pack
+  // carries one (CC BY-NC-SA requires the license URI to travel with the
+  // imagery) — plus any generation warnings (e.g. coarse GEBCO-only
+  // bathymetry) so data-quality caveats stay visible. Built with DOM APIs:
+  // pack fields are data, never markup.
+  const creditsEl = panel.querySelector('.panel__credits');
+  const sources = Array.isArray(meta.sources) && meta.sources.length > 0
+    ? meta.sources
+    : (meta.attributions ?? []).map((attribution) => ({ attribution, license: null }));
+  const parts = [];
+  for (const source of sources) {
+    const span = document.createElement('span');
+    span.textContent = source.attribution ?? '';
+    const licenseUrl = typeof source.license === 'string'
+      ? source.license.match(/https?:\/\/\S+?(?=[,;\s]|$)/)?.[0]
+      : null;
+    if (licenseUrl) {
+      span.append(' (');
+      const link = document.createElement('a');
+      link.href = licenseUrl;
+      link.target = '_blank';
+      link.rel = 'noopener';
+      link.textContent = 'license';
+      link.title = source.license;
+      span.append(link, ')');
+    }
+    parts.push(span);
+  }
+  for (const warning of meta.warnings ?? []) {
+    const span = document.createElement('span');
+    span.textContent = warning;
+    parts.push(span);
+  }
+  if (parts.length === 0) {
+    creditsEl.textContent = 'Open data';
+  } else {
+    parts.forEach((part, i) => {
+      if (i > 0) creditsEl.append(' · ');
+      creditsEl.append(part);
+    });
+  }
 
   const reefsInput = panel.querySelector('#toggle-reefs');
   const wrecksInput = panel.querySelector('#toggle-wrecks');

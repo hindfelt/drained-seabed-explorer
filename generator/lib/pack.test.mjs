@@ -124,3 +124,32 @@ test('assembles and validates a fixture-backed GEBCO-only pack', async (t) => {
   await truncate(binPath, binStat.size - 2);
   await assert.rejects(async () => validatePack(outDir), /bin length/);
 });
+
+test('a failed regeneration leaves the existing pack untouched', async (t) => {
+  const outDir = await mkdtemp(join(tmpdir(), 'drained-seabed-pack-'));
+  t.after(() => rm(outDir, { recursive: true, force: true }));
+
+  const adapters = {
+    bathyGebco,
+    bathyEmodnet: { ...bathyEmodnet, covers: () => false },
+    wrecks,
+    places,
+    imagery,
+  };
+  const base = { bbox, name: 'Öresund', slug: 'oresund', outDir, now: '2026-07-15T12:00:00.000Z', fetchImpl: fixtureFetch };
+
+  await assemblePack({ ...base, adapters });
+  const goodMeta = await readFile(join(outDir, 'meta.json'), 'utf8');
+
+  await assert.rejects(
+    () => assemblePack({
+      ...base,
+      adapters: { ...adapters, imagery: { ...imagery, fetchImagery: async () => { throw new Error('imagery outage'); } } },
+    }),
+    /imagery outage/,
+  );
+
+  assert.equal(await readFile(join(outDir, 'meta.json'), 'utf8'), goodMeta,
+    'original pack survives a failed regeneration');
+  await validatePack(outDir);
+});

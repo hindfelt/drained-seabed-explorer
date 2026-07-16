@@ -39,7 +39,14 @@ map.onBBoxChange((bbox) => {
   readout.hidden = !bbox;
   form.hidden = !bbox;
   warningsEl.replaceChildren();
-  if (!bbox) return;
+  if (!bbox) {
+    if (drawMode) {
+      const li = document.createElement('li');
+      li.textContent = 'selection rejected — draw a larger box that does not cross the ±180° seam';
+      warningsEl.appendChild(li);
+    }
+    return;
+  }
 
   const format = (v) => v.toFixed(4);
   coordsEl.textContent =

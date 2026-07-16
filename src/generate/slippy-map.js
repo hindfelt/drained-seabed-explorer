@@ -117,11 +117,19 @@ export function createSlippyMap(container, { center = [30, 0], zoom = 3 } = {}) 
 
   function getBBox() {
     if (!state.rect) return null;
-    const x0 = Math.min(state.rect.x0, state.rect.x1);
+    let x0 = Math.min(state.rect.x0, state.rect.x1);
     const y0 = Math.min(state.rect.y0, state.rect.y1);
-    const x1 = Math.max(state.rect.x0, state.rect.x1);
+    let x1 = Math.max(state.rect.x0, state.rect.x1);
     const y1 = Math.max(state.rect.y0, state.rect.y1);
     if (x1 - x0 < 1e-6 || y1 - y0 < 1e-6) return null;
+    // Canonicalize longitude onto one world copy (panning across repeated
+    // copies leaves raw x outside 0..1). A selection that still crosses the
+    // ±180° seam after shifting has no single-bbox representation — reject
+    // it rather than serialize a >180° monster.
+    const shift = Math.floor(x0);
+    x0 -= shift;
+    x1 -= shift;
+    if (x1 > 1) return null;
     // Larger world y = further south, so latMin comes from y1 (bottom edge).
     return {
       lonMin: worldToLon(x0),
@@ -146,7 +154,9 @@ export function createSlippyMap(container, { center = [30, 0], zoom = 3 } = {}) 
     pointer = { px, py, drawing: state.drawMode };
     if (state.drawMode) {
       const world = screenToWorld(px, py);
-      state.rect = { x0: world.x, y0: world.y, x1: world.x, y1: world.y };
+      // Clamp BOTH endpoints into Web Mercator's 0..1 — blank space beyond
+      // the poles must never serialize into a bbox.
+      state.rect = { x0: world.x, y0: clamp(world.y, 0, 1), x1: world.x, y1: clamp(world.y, 0, 1) };
       render();
     }
   });
