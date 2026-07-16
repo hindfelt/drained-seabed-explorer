@@ -1,4 +1,3 @@
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import process from 'node:process';
 
@@ -7,7 +6,9 @@ import * as bathyGebco from './adapters/bathy-gebco.mjs';
 import * as imagery from './adapters/imagery-eox.mjs';
 import * as places from './adapters/places-overpass.mjs';
 import * as wrecks from './adapters/wrecks-emodnet.mjs';
+import { parseBbox, validateSlug, validateName } from './lib/bbox-args.mjs';
 import { assemblePack, validatePack } from './lib/pack.mjs';
+import { updatePackIndex } from './lib/pack-index.mjs';
 
 const USAGE = `Usage:
   npm run generate -- --bbox <lonMin,latMin,lonMax,latMax> --name <name> --slug <slug>
@@ -51,66 +52,10 @@ function parseArgs(argv) {
     if (!values.has(key)) throw new Error(`missing required option: --${key}`);
   }
 
-  const name = values.get('name').trim();
-  if (name.length === 0) throw new Error('--name must not be empty');
-
-  const slug = values.get('slug');
-  if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) {
-    throw new Error('--slug must contain only lowercase letters, numbers, and single hyphens');
-  }
-
+  const name = validateName(values.get('name'));
+  const slug = validateSlug(values.get('slug'));
   const bbox = parseBbox(values.get('bbox'));
   return { bbox, name, slug };
-}
-
-function parseBbox(value) {
-  const parts = value.split(',');
-  if (parts.length !== 4) {
-    throw new Error('--bbox must be lonMin,latMin,lonMax,latMax');
-  }
-
-  const numbers = parts.map(Number);
-  if (numbers.some((number) => !Number.isFinite(number))) {
-    throw new Error('--bbox coordinates must be finite numbers');
-  }
-
-  const [lonMin, latMin, lonMax, latMax] = numbers;
-  if (lonMin < -180 || lonMax > 180 || latMin < -90 || latMax > 90) {
-    throw new Error('--bbox coordinates must be within WGS84 longitude/latitude ranges');
-  }
-  if (lonMin >= lonMax || latMin >= latMax) {
-    throw new Error('--bbox minima must be less than maxima');
-  }
-
-  return { lonMin, latMin, lonMax, latMax };
-}
-
-async function updatePackIndex(packsDir, slug) {
-  await mkdir(packsDir, { recursive: true });
-
-  const indexPath = path.join(packsDir, 'index.json');
-  let existing = {};
-  try {
-    existing = JSON.parse(await readFile(indexPath, 'utf8'));
-  } catch (error) {
-    if (error.code !== 'ENOENT') {
-      throw new Error(`could not read existing pack index: ${error.message}`, { cause: error });
-    }
-  }
-  if (existing === null || Array.isArray(existing) || typeof existing !== 'object') {
-    throw new Error('could not read existing pack index: root must be a JSON object');
-  }
-
-  const existingPacks = Array.isArray(existing.packs)
-    ? existing.packs.filter((entry) => typeof entry === 'string' && entry.length > 0)
-    : [];
-  const existingDefault = typeof existing.default === 'string' && existing.default.length > 0
-    ? existing.default
-    : null;
-  const defaultSlug = existingDefault ?? existingPacks[0] ?? slug;
-  const packs = [...new Set([...existingPacks, defaultSlug, slug])].sort();
-
-  await writeFile(indexPath, `${JSON.stringify({ default: defaultSlug, packs }, null, 2)}\n`);
 }
 
 async function main() {
