@@ -21,7 +21,7 @@ function createFallbackSatelliteTexture() {
  * - Optional Sentinel-2 satellite drape over land (uSatelliteBlend, toggleable)
  * - Optional subtle anti-aliased bathymetric depth contour lines (uContours)
  */
-export function createTerrainMaterial() {
+export function createTerrainMaterial({ satelliteUrl = SATELLITE_ASSET_URL, seaExaggeration = 2.15 } = {}) {
   const material = new THREE.MeshStandardMaterial({
     vertexColors: true,
     roughness: 0.88,
@@ -33,7 +33,8 @@ export function createTerrainMaterial() {
     uSatelliteReady: { value: 0 },
     uSatelliteBlend: { value: 0 }, // 0 = unified sculpted mineral diorama, 1 = satellite drape on land
     uContours: { value: 0 }, // subtle optional contour overlay (off by default for pure diorama look)
-    uWaterLevel: { value: -125 },
+    uWaterLevel: { value: -135 },
+    uSeaExaggeration: { value: seaExaggeration },
   };
   material.userData.satelliteUniforms = terrainUniforms;
   material.userData.terrainUniforms = terrainUniforms;
@@ -44,6 +45,7 @@ export function createTerrainMaterial() {
     shader.uniforms.uSatelliteBlend = terrainUniforms.uSatelliteBlend;
     shader.uniforms.uContours = terrainUniforms.uContours;
     shader.uniforms.uWaterLevel = terrainUniforms.uWaterLevel;
+    shader.uniforms.uSeaExaggeration = terrainUniforms.uSeaExaggeration;
 
     shader.vertexShader = shader.vertexShader
       .replace(
@@ -77,6 +79,7 @@ export function createTerrainMaterial() {
         uniform float uSatelliteBlend;
         uniform float uContours;
         uniform float uWaterLevel;
+        uniform float uSeaExaggeration;
 
         float tHash21(vec2 p) {
           p = fract(p * vec2(123.34, 456.21));
@@ -210,13 +213,15 @@ export function createTerrainMaterial() {
 
           // Optional subtle anti-aliased bathymetric contour hairlines
           if (uContours > 0.5 && vTerrainBaseY < 1.2) {
-            float meters = vTerrainBaseY / 2.15;
+            float meters = vTerrainBaseY / max(uSeaExaggeration, 0.05);
+            float interval = uSeaExaggeration < 0.35 ? 50.0 : (uSeaExaggeration < 1.0 ? 20.0 : 5.0);
+            float majorInterval = interval * 3.0;
             float fw = max(fwidth(meters), 0.02);
-            float m5 = abs(fract(meters / 5.0 + 0.5) - 0.5) * 5.0;
+            float m5 = abs(fract(meters / interval + 0.5) - 0.5) * interval;
             float line5 = 1.0 - smoothstep(fw * 0.6, fw * 1.4, m5);
-            float m15 = abs(fract(meters / 15.0 + 0.5) - 0.5) * 15.0;
+            float m15 = abs(fract(meters / majorInterval + 0.5) - 0.5) * majorInterval;
             float line15 = 1.0 - smoothstep(fw * 0.7, fw * 1.6, m15);
-            float detailFade = 1.0 - smoothstep(1.2, 3.2, fw);
+            float detailFade = 1.0 - smoothstep(interval * 0.25, interval * 0.65, fw);
             float subMask = 1.0 - smoothstep(-0.4, 0.2, meters);
             diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.10, 0.14, 0.14), line5 * 0.18 * subMask * detailFade);
             diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.84, 0.75, 0.54), line15 * 0.28 * subMask * detailFade);
@@ -261,7 +266,7 @@ export function createTerrainMaterial() {
       );
   };
 
-  loadSatelliteTexture(material);
+  loadSatelliteTexture(material, satelliteUrl);
 
   return material;
 }
@@ -391,10 +396,12 @@ export function createGeologicalSkirtMaterial() {
   return material;
 }
 
-function loadSatelliteTexture(material) {
+function loadSatelliteTexture(material, url) {
+  if (!url) return;
   const loader = new THREE.TextureLoader();
+  loader.setCrossOrigin('anonymous');
   loader.load(
-    SATELLITE_ASSET_URL,
+    url,
     (texture) => {
       texture.colorSpace = THREE.SRGBColorSpace;
       texture.anisotropy = 8;

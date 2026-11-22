@@ -8,7 +8,11 @@ const PLACE_ACCENT = '#c4964f';
 
 const REEF_PALETTE = ['#668077', '#7f9389', '#8a7a5f', '#536862', '#9b8d72'];
 
-export function createMarkers(heightmap) {
+export function createMarkers(heightmap, sitesData = null) {
+  const reefsList = sitesData ? sitesData.reefs : REEFS;
+  const wrecksList = sitesData ? sitesData.wrecks : WRECKS;
+  const placesList = sitesData ? sitesData.places : PLACES;
+
   const group = new THREE.Group();
   group.name = 'markers';
 
@@ -46,17 +50,17 @@ export function createMarkers(heightmap) {
     });
   }
 
-  for (const reef of REEFS) {
+  for (const reef of reefsList) {
     const built = buildReef(reef, heightmap, labelEntries, animatedBeacons);
     reefsGroup.add(built.group);
     registerSite('reef', reef, built.group, built.baseGroundY, built.labelEntry, built.ringMesh);
   }
-  for (const wreck of WRECKS) {
+  for (const wreck of wrecksList) {
     const built = buildWreck(wreck, heightmap, labelEntries, animatedBeacons);
     wrecksGroup.add(built.group);
     registerSite('wreck', wreck, built.group, built.baseGroundY, built.labelEntry, built.ringMesh);
   }
-  for (const place of PLACES) {
+  for (const place of placesList) {
     const built = buildPlace(place, heightmap, labelEntries);
     placesGroup.add(built.group);
     registerSite('place', place, built.group, built.baseGroundY, built.labelEntry, null);
@@ -213,6 +217,16 @@ export function createMarkers(heightmap) {
     }
   }
 
+  function dispose() {
+    for (const item of labelEntries) {
+      if (item.sprite.material?.map) item.sprite.material.map.dispose();
+      if (item.sprite.material) item.sprite.material.dispose();
+    }
+    group.traverse((obj) => {
+      if (obj.geometry) obj.geometry.dispose();
+    });
+  }
+
   return {
     group,
     update,
@@ -232,6 +246,7 @@ export function createMarkers(heightmap) {
     setPlacesVisible(v) {
       placesGroup.visible = v;
     },
+    dispose,
   };
 }
 

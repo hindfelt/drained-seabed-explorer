@@ -25,7 +25,8 @@ Then open the URL Vite prints (default: http://localhost:5173).
 - **Scroll / pinch** — zoom in and out
 - **Click any wreck, shoal, or place** — fly smoothly to the site and open its historical dossier card
 - **Viewpoints bar** — quick-jump to Overview, Ven Island, S/S Robert (1905), Cimbria (1858), Johannes L (1979), Emil Retzlaff, and K7 Patrol
-- **Controls drawer** — toggle shipwrecks, boulder shoals, coastal places, site labels, Sentinel-2 satellite land overlay, bathymetric depth contours, lighting/atmosphere presets (*Archival*, *Golden Hour*, *Nordic Noon*, *Baltic Dusk*), 3D relief scale, sun azimuth, and continuous sea-level refill/drain (`−52 m` ↔ `0 m`)
+- **World Map** — zoom & pan anywhere on Earth over an interactive ocean-bathymetry atlas (with OpenSeaMap wreck/buoy overlays, place search, and famous wreck hotspots like Scapa Flow, Dover Strait, Normandy D-Day, Gibraltar, Geirangerfjord, and Truk Lagoon), choose a `15–100 km` capture window, and render a live 3D wreckmap from real EMODnet/GEBCO bathymetry + UKHO global shipwrecks (94,000+ wrecks worldwide)
+- **Controls drawer** — toggle shipwrecks, boulder shoals, coastal places, site labels, Sentinel-2 satellite land overlay, bathymetric depth contours, lighting/atmosphere presets (*Archival*, *Golden Hour*, *Nordic Noon*, *Baltic Dusk*), 3D relief scale (starts at `0.50×`, range `0.25×–2.20×`), sun azimuth, and continuous sea-level refill/drain (`−52 m` ↔ `0 m`)
 
 ## What's in the scene
 

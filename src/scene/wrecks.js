@@ -1249,6 +1249,119 @@ function buildTrawlerOrLandingCraft(rng, length, beam, height, isLandingCraft, m
   return g;
 }
 
+// 11. Submarine / U-Boat (global UKHO wrecks in North Sea, Channel, Scapa Flow, Pacific)
+function buildSubmarineWreck(rng, length, beam, height, mats) {
+  const g = new THREE.Group();
+  const radius = Math.max(height * 0.48, beam * 0.42);
+  // Cigar-shaped pressure hull tapered at bow & stern
+  const hullGeo = new THREE.CylinderGeometry(radius * 0.85, radius * 0.9, length * 0.84, 14, 6);
+  hullGeo.rotateZ(Math.PI / 2);
+  const pos = hullGeo.attributes.position;
+  for (let i = 0; i < pos.count; i++) {
+    const x = pos.getX(i);
+    const t = Math.abs(x) / (length * 0.42);
+    const taper = t > 0.55 ? 1 - Math.pow((t - 0.55) / 0.45, 1.7) * 0.72 : 1;
+    pos.setY(i, pos.getY(i) * taper * 0.9);
+    pos.setZ(i, pos.getZ(i) * taper * 0.85);
+  }
+  pos.needsUpdate = true;
+  hullGeo.computeVertexNormals();
+  const hull = new THREE.Mesh(hullGeo, mats.patrolSteel);
+  hull.castShadow = true;
+  g.add(hull);
+
+  // Flat wooden/iron casing deck along top
+  const deck = new THREE.Mesh(new THREE.BoxGeometry(length * 0.62, radius * 0.22, radius * 0.78), mats.ironDark);
+  deck.position.y = radius * 0.72;
+  g.add(deck);
+
+  // Conning tower + periscope + deck gun
+  const tower = new THREE.Mesh(
+    new THREE.CylinderGeometry(radius * 0.34, radius * 0.44, height * 0.95, 10),
+    mats.patrolSteel
+  );
+  tower.scale.set(1.85, 1, 0.82);
+  tower.position.set(length * 0.04, radius * 0.75 + height * 0.42, 0);
+  tower.castShadow = true;
+  g.add(tower);
+
+  const scope = new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.18, height * 0.85, 6), mats.ironDark);
+  scope.position.set(length * 0.06, radius * 0.75 + height * 1.15, 0);
+  g.add(scope);
+
+  const gun = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.16, length * 0.14, 6), mats.ironDark);
+  gun.rotation.z = Math.PI / 2 - 0.12;
+  gun.position.set(length * 0.2, radius * 0.95, 0);
+  g.add(gun);
+
+  return g;
+}
+
+// 12. Naval Destroyer / Warship / Cruiser (Scapa Flow High Seas Fleet, WWII Channel, Pacific)
+function buildNavalWarship(rng, length, beam, height, mats) {
+  const g = new THREE.Group();
+  const slimBeam = beam * 0.76;
+  const hull = buildHollowHullMesh(length, slimBeam, height, mats.patrolSteel, {
+    sternStyle: 'transom',
+    sheerBow: 0.48,
+    sheerStern: 0.12,
+    deckDrop: 0.2,
+  });
+  g.add(hull);
+  addHullPortholes(g, mats, length, slimBeam, height, 8, [-0.68, 0.62]);
+  addSternGear(g, mats, length, slimBeam, height);
+
+  const deckY = height * 0.28;
+  // Stepped forward bridge & fire-control tower
+  addWheelhouse(g, mats, {
+    x: length * 0.16,
+    y: deckY,
+    w: length * 0.15,
+    h: height * 0.95,
+    d: slimBeam * 0.64,
+    windows: 3,
+    portholes: 2,
+  });
+
+  // Twin raked naval funnels
+  for (const fx of [length * 0.01, -length * 0.12]) {
+    const f = new THREE.Mesh(
+      new THREE.CylinderGeometry(slimBeam * 0.13, slimBeam * 0.16, height * 1.15, 10),
+      mats.rustBright
+    );
+    f.position.set(fx, deckY + height * 0.65, 0);
+    f.rotation.z = 0.14;
+    f.castShadow = true;
+    g.add(f);
+  }
+
+  // Fore & aft armored gun turrets with twin barrels
+  for (const [tx, dir] of [[length * 0.34, 1], [-length * 0.32, -1]]) {
+    const turret = new THREE.Mesh(
+      new THREE.CylinderGeometry(slimBeam * 0.22, slimBeam * 0.25, height * 0.34, 8),
+      mats.ironDark
+    );
+    turret.position.set(tx, deckY + height * 0.18, 0);
+    g.add(turret);
+    const barrel = new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.18, length * 0.14, 6), mats.ironDark);
+    barrel.rotation.z = Math.PI / 2 - dir * 0.12;
+    barrel.position.set(tx + dir * length * 0.08, deckY + height * 0.28, 0);
+    g.add(barrel);
+  }
+
+  addDetailedMast(g, mats, {
+    x: length * 0.12,
+    y: deckY + height * 0.9,
+    h: height * 1.65,
+    rBase: slimBeam * 0.04,
+    tiltZ: 0.06,
+    yard: true,
+    riggingSpan: length * 0.22,
+  });
+
+  return g;
+}
+
 /**
  * Adds weathered hull debris planks, rusted plates, and mossy seabed boulders
  * nestled around every wreck's resting spot (just like the reference image!).
@@ -1332,16 +1445,30 @@ export function buildRealWreckAssembly(wreck, rng, length, beam, height) {
       break;
     default: {
       const t = (wreck.type || '').toLowerCase();
-      if (t.includes('concrete')) {
+      if (t.includes('sub') || t.includes('u-boat') || t.includes('uboat')) {
+        model = buildSubmarineWreck(rng, length * 1.25, beam * 1.0, height * 1.15, mats);
+        rollRad = THREE.MathUtils.degToRad(14 + rng() * 14) * (rng() < 0.5 ? -1 : 1);
+      } else if (
+        t.includes('destroyer') ||
+        t.includes('battleship') ||
+        t.includes('cruiser') ||
+        t.includes('warship') ||
+        t.includes('frigate') ||
+        t.includes('corvette') ||
+        t.includes('minesweeper') ||
+        t.includes('torpedo')
+      ) {
+        model = buildNavalWarship(rng, length * 1.32, beam * 1.15, height * 1.2, mats);
+      } else if (t.includes('concrete')) {
         model = buildConcreteCaisson(rng, length * 1.1, beam * 1.25, height * 1.1, mats);
         rollRad = THREE.MathUtils.degToRad(4 + rng() * 7) * (rng() < 0.5 ? -1 : 1);
-      } else if (t === 'landing craft') {
+      } else if (t === 'landing craft' || t.includes('landing')) {
         model = buildTrawlerOrLandingCraft(rng, length * 1.15, beam * 1.3, height * 1.05, true, mats);
         rollRad = THREE.MathUtils.degToRad(6);
-      } else if (t.includes('sailing') || t.includes('schooner') || t.includes('barque') || t.includes('galeas')) {
+      } else if (t.includes('sailing') || t.includes('schooner') || t.includes('barque') || t.includes('galeas') || t.includes('brig') || t.includes('ketch') || t.includes('cutter')) {
         model = buildWoodenSailingWreck(rng, length * 1.18, beam * 1.15, height * 1.18, wreck, mats);
         if (wreck.id === 'wreck-ceylon-af-bergkvara') rollRad = THREE.MathUtils.degToRad(4); // upright on keel
-      } else if (t.includes('steam') || t === 'cargo ship') {
+      } else if (t.includes('steam') || t.includes('cargo') || t.includes('freighter') || t.includes('tanker') || t.includes('merchant') || t.includes('liner') || t.includes('ship')) {
         model = buildDetailedSteamer(rng, length * 1.22, beam * 1.18, height * 1.18, mats);
       } else {
         model = buildTrawlerOrLandingCraft(rng, length * 1.18, beam * 1.18, height * 1.18, false, mats);

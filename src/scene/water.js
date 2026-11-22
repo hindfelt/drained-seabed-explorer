@@ -50,6 +50,9 @@ function createHeightDataTexture(heightmap) {
  */
 export function createWater(heightmap, { sunDirection, sunColor } = {}) {
   const size = heightmap.size;
+  const seaExag = heightmap.seaExaggeration || SEA_EXAGGERATION;
+  const minMeters = Math.min(-15, Math.floor((heightmap.minMeters ?? -50) * 1.06));
+  const maxMeters = MAX_METERS;
   const segments = 160;
   const geometry = new THREE.PlaneGeometry(size, size, segments, segments);
   geometry.rotateX(-Math.PI / 2);
@@ -223,30 +226,30 @@ export function createWater(heightmap, { sunDirection, sunColor } = {}) {
   const mesh = new THREE.Mesh(geometry, material);
   mesh.name = 'water';
   mesh.visible = false;
-  mesh.position.y = MIN_METERS * SEA_EXAGGERATION;
+  mesh.position.y = minMeters * seaExag;
   mesh.renderOrder = 1;
   mesh.castShadow = false;
   mesh.receiveShadow = false;
 
-  let currentMeters = MIN_METERS;
+  let currentMeters = minMeters;
   let reliefScale = 1.0;
   let lastElapsed = 0;
   let tweening = false;
-  let tweenFromM = MIN_METERS;
-  let tweenToM = MIN_METERS;
+  let tweenFromM = minMeters;
+  let tweenToM = minMeters;
   let tweenStartElapsed = 0;
   let onLevelChangeCb = null;
 
   function applyHeight() {
-    const worldY = currentMeters * SEA_EXAGGERATION * reliefScale;
+    const worldY = currentMeters * seaExag * reliefScale;
     mesh.position.y = worldY;
-    mesh.visible = currentMeters > MIN_METERS + 0.35;
+    mesh.visible = currentMeters > minMeters + Math.max(0.35, Math.abs(minMeters) * 0.008);
     if (onLevelChangeCb) onLevelChangeCb(currentMeters, worldY);
   }
 
   function setEnabled(visible) {
     tweenFromM = currentMeters;
-    tweenToM = visible ? MAX_METERS : MIN_METERS;
+    tweenToM = visible ? maxMeters : minMeters;
     tweenStartElapsed = lastElapsed;
     tweening = true;
     if (visible) mesh.visible = true;
@@ -254,7 +257,7 @@ export function createWater(heightmap, { sunDirection, sunColor } = {}) {
 
   function setTargetMeters(meters) {
     tweening = false;
-    currentMeters = THREE.MathUtils.clamp(meters, MIN_METERS, MAX_METERS);
+    currentMeters = THREE.MathUtils.clamp(meters, minMeters, maxMeters);
     applyHeight();
   }
 
@@ -269,7 +272,7 @@ export function createWater(heightmap, { sunDirection, sunColor } = {}) {
   }
 
   function getWorldY() {
-    return currentMeters * SEA_EXAGGERATION * reliefScale;
+    return currentMeters * seaExag * reliefScale;
   }
 
   function update(dt, elapsed) {
@@ -286,8 +289,16 @@ export function createWater(heightmap, { sunDirection, sunColor } = {}) {
     }
   }
 
+  function dispose() {
+    geometry.dispose();
+    material.dispose();
+    heightTex.dispose();
+  }
+
   return {
     mesh,
+    minMeters,
+    maxMeters,
     update,
     setEnabled,
     setTargetMeters,
@@ -295,5 +306,6 @@ export function createWater(heightmap, { sunDirection, sunColor } = {}) {
     onLevelChange,
     getWorldY,
     getCurrentMeters: () => currentMeters,
+    dispose,
   };
 }

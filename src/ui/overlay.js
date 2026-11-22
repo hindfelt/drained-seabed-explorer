@@ -1,10 +1,9 @@
 import { REEFS, WRECKS, PLACES } from '../data/sites.js';
-import { worldToGeo } from '../data/geo.js';
 import { LIGHTING_PRESETS } from '../scene/setup.js';
 
 const FALLBACK_ATTRIBUTION = 'Sentinel-2 © EOX';
 
-export const VIEWPOINTS = [
+export const DEFAULT_VIEWPOINTS = [
   { id: 'overview', label: 'Overview', position: [820, 440, 860], target: [0, -45, 0] },
   { id: 'ven', label: 'Ven Island', position: [145, 110, 310], target: [-60, -25, 130] },
   { id: 'robert', label: 'S/S Robert (1905)', siteId: 'wreck-s-s-robert' },
@@ -22,7 +21,7 @@ function formatDegMin(val, posHem, negHem) {
   return `${deg}° ${String(min).padStart(2, '0')}′ ${hem}`;
 }
 
-function creditsText(attribution) {
+function defaultCreditsText(attribution) {
   return `Bathymetry © EMODnet / GEBCO · Imagery: ${attribution} · Wrecks: oresundsdykning.se / vragguiden.dk / vrag.dk`;
 }
 
@@ -85,16 +84,8 @@ function syncSliderVars(slider, formatText) {
   }
 }
 
-/**
- * Editorial cartographic HUD matching the archival museum-print aesthetic:
- * - Top-left live WGS84 coordinate readout (`55° 58′ N` / `12° 41′ E`) + depth
- * - Right-margin elevation/bathymetry graduation ticks
- * - Bottom-left dark-slate `ÖRESUND` nameplate badge
- * - Top-right sleek collapsible Controls drawer (starts compact so the 3D sculpture owns the viewport)
- * - Bottom-center Viewpoints pill bar for instant close-ups of real Öresund wrecks
- * - Bottom-right animated Site Dossier Card on click
- */
 export function initOverlay({
+  onOpenWorldMap,
   onToggleReefs,
   onToggleWrecks,
   onTogglePlaces,
@@ -113,7 +104,7 @@ export function initOverlay({
   const root = document.getElementById('overlay-root');
   if (!root) return null;
 
-  // --- 1. Archival editorial coordinates (top-left, mirrors reference image) ---
+  // --- 1. Archival editorial coordinates (top-left) ---
   const coordBlock = document.createElement('div');
   coordBlock.className = 'archival-coords';
   coordBlock.innerHTML = `
@@ -122,7 +113,7 @@ export function initOverlay({
     <div class="archival-coords__depth" id="tel-depth">DRAINED SEABED &middot; 31 &times; 31 KM</div>
   `;
 
-  // --- 2. Right-edge cartographic scale ticks (mirrors reference image) ---
+  // --- 2. Right-edge cartographic scale ticks ---
   const ruler = document.createElement('div');
   ruler.className = 'archival-ruler';
   ruler.setAttribute('aria-hidden', 'true');
@@ -132,28 +123,34 @@ export function initOverlay({
     return `<span class="archival-ruler__tick${major}"></span>`;
   }).join('');
 
-  // --- 3. Bottom-left editorial ÖRESUND badge (mirrors reference image) ---
+  // --- 3. Bottom-left editorial region badge ---
   const titleBadge = document.createElement('div');
   titleBadge.className = 'archival-badge';
-  titleBadge.innerHTML = `<span class="archival-badge__name">&Ouml;RESUND</span>`;
+  titleBadge.innerHTML = `<span class="archival-badge__name" id="archival-region-badge">&Ouml;RESUND</span>`;
 
-  // --- 4. Top-right collapsible expedition Controls drawer ---
+  // --- 4. Top-right World Map button + collapsible Controls drawer ---
   const drawerWrap = document.createElement('section');
   drawerWrap.className = 'controls-wrap';
   drawerWrap.setAttribute('aria-label', 'Drained Seabed Explorer controls');
 
   drawerWrap.innerHTML = `
-    <button type="button" class="controls-trigger" id="controls-trigger" aria-expanded="false" aria-controls="controls-panel">
-      <span class="controls-trigger__dot" aria-hidden="true"></span>
-      <span>Controls</span>
-      <span class="controls-trigger__chev" aria-hidden="true">&#9662;</span>
-    </button>
+    <div class="controls-bar">
+      <button type="button" class="worldmap-trigger" id="worldmap-trigger" title="Choose any coast on Earth to render in 3D">
+        <span class="worldmap-trigger__icon" aria-hidden="true">&#9678;</span>
+        <span>World Map</span>
+      </button>
+      <button type="button" class="controls-trigger" id="controls-trigger" aria-expanded="false" aria-controls="controls-panel">
+        <span class="controls-trigger__dot" aria-hidden="true"></span>
+        <span>Controls</span>
+        <span class="controls-trigger__chev" aria-hidden="true">&#9662;</span>
+      </button>
+    </div>
 
     <div class="panel" id="controls-panel" hidden>
       <div class="panel__texture" aria-hidden="true"></div>
       <header class="panel__header">
-        <p class="panel__eyebrow">Bathymetric Diorama &middot; 56&deg;N</p>
-        <h1 class="panel__title">Drained Seabed Explorer</h1>
+        <p class="panel__eyebrow" id="panel-eyebrow">Bathymetric Diorama &middot; 56&deg;N</p>
+        <h1 class="panel__title" id="panel-title">Drained Seabed Explorer</h1>
       </header>
 
       <div class="panel__divider" aria-hidden="true"></div>
@@ -164,7 +161,7 @@ export function initOverlay({
         ${toggleRowMarkup({ id: 'places', label: 'Coastal places', subLabel: siteCountLabel(PLACES.length), accent: '--accent-place' })}
         ${toggleRowMarkup({ id: 'labels', label: 'Site labels', subLabel: 'Cartographic tags', accent: '--brass' })}
         ${toggleRowMarkup({ id: 'satellite', label: 'Satellite land', subLabel: 'Sentinel-2 overlay', accent: '--accent-reef', checked: false })}
-        ${toggleRowMarkup({ id: 'contours', label: 'Depth contours', subLabel: '5 m / 15 m lines', accent: '--brass', checked: false })}
+        ${toggleRowMarkup({ id: 'contours', label: 'Depth contours', subLabel: 'Bathymetric lines', accent: '--brass', checked: false })}
       </div>
 
       <div class="panel__divider" aria-hidden="true"></div>
@@ -193,9 +190,9 @@ export function initOverlay({
         <div class="slider-row">
           <div class="slider-row__head">
             <label class="slider-row__label" for="slider-relief">3D Relief</label>
-            <output class="slider-row__val" id="val-relief" for="slider-relief">1.00&times;</output>
+            <output class="slider-row__val" id="val-relief" for="slider-relief">0.50&times;</output>
           </div>
-          <input type="range" id="slider-relief" class="range-input" min="0.5" max="2.2" step="0.05" value="1" />
+          <input type="range" id="slider-relief" class="range-input" min="0.25" max="2.2" step="0.05" value="0.5" />
         </div>
 
         <div class="slider-row">
@@ -225,7 +222,7 @@ export function initOverlay({
         <span class="panel__footer-dot" aria-hidden="true">&middot;</span>
         <span>Scroll zoom</span>
       </footer>
-      <p class="panel__credits">${creditsText(FALLBACK_ATTRIBUTION)}</p>
+      <p class="panel__credits">${defaultCreditsText(FALLBACK_ATTRIBUTION)}</p>
     </div>
   `;
 
@@ -233,10 +230,6 @@ export function initOverlay({
   const navBar = document.createElement('nav');
   navBar.className = 'viewpoints';
   navBar.setAttribute('aria-label', 'Camera viewpoints');
-  navBar.innerHTML = VIEWPOINTS.map(
-    (vp, idx) =>
-      `<button type="button" class="viewpoints__btn${idx === 0 ? ' is-active' : ''}" data-viewpoint="${vp.id}">${vp.label}</button>`
-  ).join('');
 
   // --- 6. Animated Site Dossier Card (bottom-right) ---
   const card = document.createElement('aside');
@@ -258,7 +251,12 @@ export function initOverlay({
 
   root.append(coordBlock, ruler, titleBadge, drawerWrap, navBar, card);
 
-  // --- Wire drawer toggle ---
+  // --- Wire World Map button & drawer toggle ---
+  const worldMapBtn = drawerWrap.querySelector('#worldmap-trigger');
+  worldMapBtn.addEventListener('click', () => {
+    if (onOpenWorldMap) onOpenWorldMap();
+  });
+
   const triggerBtn = drawerWrap.querySelector('#controls-trigger');
   const panel = drawerWrap.querySelector('#controls-panel');
   let panelOpen = false;
@@ -290,13 +288,14 @@ export function initOverlay({
   // --- Wire sliders ---
   const seaLevelSlider = panel.querySelector('#slider-sealevel');
   const seaLevelOut = panel.querySelector('#val-sealevel');
-  const formatSeaLevel = (m) => (m <= -51.5 ? 'Drained' : `${m.toFixed(1)} m`);
+  let minSeaMeters = -52;
+  const formatSeaLevel = (m) => (m <= minSeaMeters + 0.5 ? 'Drained' : `${m.toFixed(1)} m`);
   syncSliderVars(seaLevelSlider, formatSeaLevel);
   seaLevelSlider.addEventListener('input', () => {
     const val = Number(seaLevelSlider.value);
     syncSliderVars(seaLevelSlider, formatSeaLevel);
     seaLevelOut.textContent = formatSeaLevel(val);
-    waterInput.checked = val > -51;
+    waterInput.checked = val > minSeaMeters + 1;
     onSeaLevelChange(val);
   });
 
@@ -342,16 +341,25 @@ export function initOverlay({
     });
   }
 
-  // --- Wire viewpoints ---
-  const vpBtns = Array.from(navBar.querySelectorAll('.viewpoints__btn'));
-  for (const btn of vpBtns) {
-    btn.addEventListener('click', () => {
-      const vp = VIEWPOINTS.find((v) => v.id === btn.dataset.viewpoint);
-      if (!vp) return;
-      for (const b of vpBtns) b.classList.toggle('is-active', b === btn);
-      onSelectViewpoint(vp);
-    });
+  // --- Dynamic viewpoints bar builder ---
+  function renderViewpoints(viewpoints) {
+    navBar.innerHTML = viewpoints
+      .map(
+        (vp, idx) =>
+          `<button type="button" class="viewpoints__btn${idx === 0 ? ' is-active' : ''}" data-vp-idx="${idx}">${vp.label}</button>`
+      )
+      .join('');
+    const btns = Array.from(navBar.querySelectorAll('.viewpoints__btn'));
+    for (const btn of btns) {
+      btn.addEventListener('click', () => {
+        const vp = viewpoints[Number(btn.dataset.vpIdx)];
+        if (!vp) return;
+        for (const b of btns) b.classList.toggle('is-active', b === btn);
+        onSelectViewpoint(vp);
+      });
+    }
   }
+  renderViewpoints(DEFAULT_VIEWPOINTS);
 
   // --- Wire Site Dossier Card ---
   let currentSiteId = null;
@@ -373,13 +381,22 @@ export function initOverlay({
   });
 
   const creditsEl = panel.querySelector('.panel__credits');
+  let bundledAttribution = FALLBACK_ATTRIBUTION;
   loadAttribution().then((attribution) => {
-    if (creditsEl) creditsEl.textContent = creditsText(attribution);
+    bundledAttribution = attribution;
+    if (creditsEl && !isCustomCredits) creditsEl.textContent = defaultCreditsText(attribution);
   });
 
+  let isCustomCredits = false;
   const telLat = coordBlock.querySelector('#tel-lat');
   const telLon = coordBlock.querySelector('#tel-lon');
   const telDepth = coordBlock.querySelector('#tel-depth');
+  const badgeEl = titleBadge.querySelector('#archival-region-badge');
+  const eyebrowEl = panel.querySelector('#panel-eyebrow');
+
+  const countWrecksEl = panel.querySelector('label[for="toggle-wrecks"] .toggle-row__count');
+  const countReefsEl = panel.querySelector('label[for="toggle-reefs"] .toggle-row__count');
+  const countPlacesEl = panel.querySelector('label[for="toggle-places"] .toggle-row__count');
 
   function updateTelemetry(lat, lon, meters) {
     if (lat == null) return;
@@ -398,7 +415,57 @@ export function initOverlay({
     }
   }
 
-  function showSiteCard(entry, depthMeters) {
+  function setRegionInfo({
+    name,
+    bbox,
+    widthKm,
+    heightKm,
+    wreckCount,
+    reefCount,
+    placeCount,
+    minMeters,
+    viewpoints,
+    credits,
+  }) {
+    const centerLat = (bbox.latMin + bbox.latMax) / 2;
+    const centerLon = (bbox.lonMin + bbox.lonMax) / 2;
+
+    badgeEl.textContent = name.toUpperCase();
+    telLat.textContent = formatDegMin(centerLat, 'N', 'S');
+    telLon.textContent = formatDegMin(centerLon, 'E', 'W');
+    telDepth.textContent = `DRAINED SEABED · ${widthKm} × ${heightKm} KM`;
+
+    const latHem = centerLat >= 0 ? 'N' : 'S';
+    eyebrowEl.textContent = `Bathymetric Diorama · ${Math.abs(Math.round(centerLat))}°${latHem}`;
+
+    if (countWrecksEl) countWrecksEl.textContent = `${siteCountLabel(wreckCount)} · Real models`;
+    if (countReefsEl) countReefsEl.textContent = siteCountLabel(reefCount);
+    if (countPlacesEl) countPlacesEl.textContent = siteCountLabel(placeCount);
+
+    minSeaMeters = minMeters;
+    seaLevelSlider.min = String(minMeters);
+    seaLevelSlider.step = Math.abs(minMeters) > 200 ? '5' : Math.abs(minMeters) > 80 ? '1' : '0.5';
+    seaLevelSlider.value = String(minMeters);
+    waterInput.checked = false;
+    syncSliderVars(seaLevelSlider, formatSeaLevel);
+    seaLevelOut.textContent = 'Drained';
+
+    renderViewpoints(viewpoints || DEFAULT_VIEWPOINTS);
+
+    if (credits) {
+      isCustomCredits = true;
+      creditsEl.textContent = credits;
+    } else {
+      isCustomCredits = false;
+      creditsEl.textContent = defaultCreditsText(bundledAttribution);
+    }
+
+    // Close any open site card from previous region
+    currentSiteId = null;
+    hideAnimated(card);
+  }
+
+  function showSiteCard(entry, depthMeters, worldToGeoFn) {
     if (!entry) {
       currentSiteId = null;
       hideAnimated(card);
@@ -406,7 +473,7 @@ export function initOverlay({
     }
     currentSiteId = entry.id;
     const { kind, data } = entry;
-    const [lat, lon] = worldToGeo(data.position[0], data.position[1]);
+    const [lat, lon] = data.latLon || (worldToGeoFn ? worldToGeoFn(data.position[0], data.position[1]) : [0, 0]);
 
     card.dataset.kind = kind;
     cardBadge.textContent =
@@ -424,7 +491,7 @@ export function initOverlay({
     if (kind === 'wreck') {
       if (data.type) metaItems.push(['Vessel', data.type]);
       if (data.sunkYear) metaItems.push(['Sunk', String(data.sunkYear)]);
-      if (data.length) metaItems.push(['Length', `~${data.length} m`]);
+      if (data.length) metaItems.push(['Length', `~${Math.round(data.length)} m`]);
     }
     if (typeof depthMeters === 'number') {
       metaItems.push([
@@ -439,15 +506,29 @@ export function initOverlay({
       .join('');
 
     cardDesc.textContent =
-      data.description || `Coastal landmark overlooking the drained northern Öresund strait.`;
+      data.description || `Coastal landmark overlooking the drained seabed diorama.`;
 
     showAnimated(card);
+  }
+
+  function getUiState() {
+    return {
+      reefs: reefsInput.checked,
+      wrecks: wrecksInput.checked,
+      places: placesInput.checked,
+      labels: labelsInput.checked,
+      satellite: satelliteInput.checked,
+      contours: contoursInput.checked,
+      reliefScale: Number(reliefSlider.value),
+    };
   }
 
   return {
     updateTelemetry,
     syncSeaLevelDisplay,
+    setRegionInfo,
     showSiteCard,
+    getUiState,
   };
 }
 

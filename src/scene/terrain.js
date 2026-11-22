@@ -295,7 +295,7 @@ function buildStudioShadowPlane(size) {
 /**
  * Builds the displaced, cavity-shaded, boulder-scattered 3D diorama terrain block.
  */
-export function createTerrain(heightmap) {
+export function createTerrain(heightmap, { satelliteUrl } = {}) {
   const group = new THREE.Group();
   group.name = 'terrain-block';
 
@@ -319,7 +319,10 @@ export function createTerrain(heightmap) {
   geometry.setAttribute('aCavity', computeCavityAttribute(heightmap));
   applyTerrainColors(geometry, heightmap);
 
-  const material = createTerrainMaterial();
+  const material = createTerrainMaterial({
+    satelliteUrl,
+    seaExaggeration: heightmap.seaExaggeration,
+  });
   const mesh = new THREE.Mesh(geometry, material);
   mesh.name = 'terrain';
   mesh.castShadow = true;
@@ -351,6 +354,18 @@ export function createTerrain(heightmap) {
     studioShadow.visible = visible;
   }
 
+  function dispose() {
+    group.traverse((obj) => {
+      if (obj.geometry) obj.geometry.dispose();
+      if (obj.material) {
+        if (obj.material.map) obj.material.map.dispose();
+        obj.material.dispose();
+      }
+    });
+    const satMap = material.userData?.satelliteUniforms?.uSatelliteMap?.value;
+    if (satMap) satMap.dispose();
+  }
+
   return {
     group,
     mesh,
@@ -361,5 +376,6 @@ export function createTerrain(heightmap) {
     setSatelliteVisible,
     setWaterLevel,
     setStudioShadowVisible,
+    dispose,
   };
 }
