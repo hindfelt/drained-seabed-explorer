@@ -6,7 +6,9 @@ narrows, over the tilted cliff-edged island of Ven, down the old shipping channe
 and among the real shipwrecks of the sound — stranded on a seabed of cracked mud,
 salt flats and boulder shoals.
 
-![Drained Seabed Explorer — archival 3D diorama of the drained Öresund strait](media/preview.jpg)
+![Drained Seabed Explorer — 360° orbit and water refill/drain animation of the Öresund diorama](media/demo.gif)
+
+*Higher resolution: [media/demo.mp4](media/demo.mp4) · Static archival print: [media/preview.jpg](media/preview.jpg)*
 
 ## Run it
 

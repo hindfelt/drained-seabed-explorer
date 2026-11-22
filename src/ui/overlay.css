@@ -876,6 +876,18 @@ body[data-backdrop='sky'] .archival-ruler__tick--major {
   opacity: 0.58;
 }
 
+@media (max-width: 1120px) {
+  .archival-badge {
+    bottom: 72px;
+    left: 24px;
+    padding: 8px 16px;
+  }
+
+  .viewpoints {
+    max-width: calc(100vw - 36px);
+  }
+}
+
 @media (max-width: 900px) {
   .archival-badge,
   .archival-ruler {
