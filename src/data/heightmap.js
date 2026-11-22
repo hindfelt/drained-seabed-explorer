@@ -2,32 +2,23 @@
 // the northern Öresund (EMODnet Bathymetry DTM 2024 for the sea floor, merged
 // with GEBCO 2020 for land and gaps — see build in bathymetry.json `source`).
 //
-// The real sound is only ~0–45 m deep over ~31 km — flat as a pancake at true
-// scale — so depths and heights are vertically exaggerated for drama, then a
-// whisper of seeded fBm is layered on for surface texture. Deterministic: same
-// seed → same terrain. Only two imports: the bathymetry grid and the geo frame.
-//
-// Elevation convention (y): y = 0 is the former waterline. Sea floor is negative
-// (down to ~-90 in the deep north), land positive (Swedish/Danish coasts and Ven
-// island), clamped to [-100, +35].
+// Sculpted geological relief layers ridged rock ribs, terraced sedimentary
+// benches on steep canyon/cliff walls, and current-swept seabed striations on
+// top of the real bathymetry so the 31×31 km strait reads as a tactile,
+// craggy 3D museum diorama while staying faithful to real Öresund geography.
 
 import bathymetry from './bathymetry.json' with { type: 'json' };
 import { TERRAIN_SIZE, worldToGeo, geoToWorld } from './geo.js';
 
-export { TERRAIN_SIZE, geoToWorld };
+export { TERRAIN_SIZE, geoToWorld, worldToGeo };
 export const TERRAIN_RESOLUTION = 512; // grid cells per side → (513)² samples
 
-// Vertical exaggeration (world units per metre) and surface-detail amplitude.
-export const SEA_EXAGGERATION = 1.8; // -50 m → -90 units
-export const LAND_EXAGGERATION = 0.9; // world units per metre of land, before tanh compression
-const DETAIL_AMPLITUDE = 1.5; // ± world units of fBm surface texture
-const ELEV_MIN = -100;
-const ELEV_MAX = 35;
-// Land is smoothly compressed toward this ceiling with tanh instead of a hard
-// clamp, so inland ridges (Glumslöv/Rydebäck ~40–90 m) keep visible relief
-// rather than flattening into a slab at +35. Kept a touch below ELEV_MAX so the
-// fBm detail on the highest ridges never re-creates a clamp plateau.
-const LAND_CEILING = 33.5;
+// Vertical exaggeration (world units per metre)
+export const SEA_EXAGGERATION = 2.15; // -50 m → -107.5 units
+export const LAND_EXAGGERATION = 1.25;
+const ELEV_MIN = -118;
+const ELEV_MAX = 48;
+const LAND_CEILING = 45;
 
 // ---------------------------------------------------------------------------
 // Small helpers
@@ -39,6 +30,11 @@ function clamp(v, lo, hi) {
 
 function lerp(a, b, t) {
   return a + (b - a) * t;
+}
+
+function smoothstep(edge0, edge1, x) {
+  const t = clamp((x - edge0) / (edge1 - edge0), 0, 1);
+  return t * t * (3 - 2 * t);
 }
 
 function mulberry32(seed) {
@@ -66,6 +62,7 @@ function makeNoise(rand) {
   function latticeValue(ix, iz) {
     return perm[(perm[ix & 255] + (iz & 255)) & 255] / 255;
   }
+
   function valueNoise(x, z) {
     const x0 = Math.floor(x);
     const z0 = Math.floor(z);
@@ -79,6 +76,7 @@ function makeNoise(rand) {
     const v11 = latticeValue(x0 + 1, z0 + 1);
     return lerp(lerp(v00, v10, u), lerp(v01, v11, u), v);
   }
+
   function fbm(x, z, octaves) {
     let amp = 1;
     let freq = 1;
@@ -88,11 +86,31 @@ function makeNoise(rand) {
       sum += amp * (valueNoise(x * freq, z * freq) * 2 - 1);
       norm += amp;
       amp *= 0.5;
-      freq *= 2;
+      freq *= 2.04;
     }
     return sum / norm;
   }
-  return { fbm };
+
+  // Sharp ridged multifractal noise for craggy sedimentary outcrops & rock ribs
+  function ridged(x, z, octaves) {
+    let amp = 1;
+    let freq = 1;
+    let sum = 0;
+    let norm = 0;
+    let weight = 1;
+    for (let o = 0; o < octaves; o++) {
+      const n = 1 - Math.abs(valueNoise(x * freq, z * freq) * 2 - 1);
+      const r = n * n * weight;
+      weight = clamp(r * 1.6, 0.25, 1);
+      sum += r * amp;
+      norm += amp;
+      amp *= 0.48;
+      freq *= 2.12;
+    }
+    return sum / norm;
+  }
+
+  return { fbm, ridged };
 }
 
 // ---------------------------------------------------------------------------
@@ -101,8 +119,6 @@ function makeNoise(rand) {
 
 const { latMin, latMax, lonMin, lonMax, nLat, nLon, elevations } = bathymetry;
 
-// Sample the real elevation grid (metres) at a lat/lon, bilinear, clamped to
-// the grid bounds. Row 0 = latMin (south), col 0 = lonMin (west), ascending.
 function sampleMeters(lat, lon) {
   const fLat =
     ((clamp(lat, latMin, latMax) - latMin) / (latMax - latMin)) * (nLat - 1);
@@ -125,17 +141,13 @@ function sampleMeters(lat, lon) {
   return top + (bot - top) * ti;
 }
 
-// Real metres → exaggerated world elevation (before surface detail / clamp).
-// Sea is a straight scale; land is tanh-compressed so ridges roll off smoothly
-// toward LAND_CEILING (tanh ≈ linear for the low beaches, coasts and towns, so
-// those elevations are essentially unchanged).
 function metersToWorld(m) {
   if (m < 0) return m * SEA_EXAGGERATION;
   return LAND_CEILING * Math.tanh((m * LAND_EXAGGERATION) / LAND_CEILING);
 }
 
 // ---------------------------------------------------------------------------
-// Heightmap generation
+// Heightmap generation with sculpted sedimentary ledges & craggy rock detail
 // ---------------------------------------------------------------------------
 
 export function generateHeightmap(seed = 1337) {
@@ -145,25 +157,65 @@ export function generateHeightmap(seed = 1337) {
   const half = size / 2;
 
   const rand = mulberry32(seed);
-  const { fbm } = makeNoise(rand);
+  const { fbm, ridged } = makeNoise(rand);
 
-  function elevationAt(x, z) {
-    const [lat, lon] = worldToGeo(x, z);
-    const base = metersToWorld(sampleMeters(lat, lon));
-    const detail = fbm(x * 0.02, z * 0.02, 4) * DETAIL_AMPLITUDE;
-    return clamp(base + detail, ELEV_MIN, ELEV_MAX);
+  // First pass: base real bathymetry on the grid so we can measure real slope
+  const baseHeights = new Float32Array(N * N);
+  for (let iz = 0; iz < N; iz++) {
+    const z = -half + (iz / resolution) * size;
+    for (let ix = 0; ix < N; ix++) {
+      const x = -half + (ix / resolution) * size;
+      const [lat, lon] = worldToGeo(x, z);
+      baseHeights[iz * N + ix] = metersToWorld(sampleMeters(lat, lon));
+    }
   }
 
   const heights = new Float32Array(N * N);
   let min = Infinity;
   let max = -Infinity;
+  const step = size / resolution;
 
   for (let iz = 0; iz < N; iz++) {
     const z = -half + (iz / resolution) * size;
+    const izPrev = iz > 0 ? iz - 1 : 0;
+    const izNext = iz < resolution ? iz + 1 : resolution;
+
     for (let ix = 0; ix < N; ix++) {
       const x = -half + (ix / resolution) * size;
-      heights[iz * N + ix] = elevationAt(x, z);
-      const y = heights[iz * N + ix];
+      const ixPrev = ix > 0 ? ix - 1 : 0;
+      const ixNext = ix < resolution ? ix + 1 : resolution;
+
+      const base = baseHeights[iz * N + ix];
+
+      // Local real bathymetric gradient (slope magnitude)
+      const dhdx = (baseHeights[iz * N + ixNext] - baseHeights[iz * N + ixPrev]) / (2 * step);
+      const dhdz = (baseHeights[izNext * N + ix] - baseHeights[izPrev * N + ix]) / (2 * step);
+      const slopeMag = Math.hypot(dhdx, dhdz);
+
+      // Weight craggy rocky sculpting strongly onto cliffs, canyon walls, Ven's
+      // Backafall slopes, and raised land ridges — while keeping deep basin
+      // valleys sweeping and open for shipwrecks.
+      const steepness = smoothstep(0.14, 0.72, slopeMag);
+      const landFactor = smoothstep(-2, 6, base);
+      const ridgeBoost = Math.max(steepness, landFactor * 0.48);
+
+      // Multi-scale ridged crags + finer rock fractures
+      const crag = (ridged(x * 0.018, z * 0.018, 4) - 0.42) * (2.6 + ridgeBoost * 9.5);
+      const fineRock = fbm(x * 0.055, z * 0.055, 3) * (1.25 + steepness * 3.4);
+
+      // Subtle terraced sedimentary rock benches along steep canyon & cliff walls
+      const terraceStep = 5.4;
+      const phase = (base + crag * 0.35) / terraceStep;
+      const frac = phase - Math.floor(phase);
+      // Soft step curve creates natural geological strata ledges without jagged aliasing
+      const terraceDelta = (smoothstep(0.18, 0.82, frac) - frac) * terraceStep * 0.52 * steepness;
+
+      // Sweeping N-S seabed current striations along the drained strait floor
+      const flowWarp = fbm(x * 0.012, z * 0.012, 2) * 24;
+      const flowGroove = Math.sin((x + flowWarp) * 0.16) * 0.65 * (1 - landFactor) * (1 - steepness * 0.7);
+
+      const y = clamp(base + crag + fineRock + terraceDelta + flowGroove, ELEV_MIN, ELEV_MAX);
+      heights[iz * N + ix] = y;
       if (y < min) min = y;
       if (y > max) max = y;
     }
@@ -191,5 +243,10 @@ export function generateHeightmap(seed = 1337) {
     return a + (b - a) * fz;
   }
 
-  return { size, resolution, heights, min, max, getHeightAt };
+  function getMetersAt(x, z) {
+    const [lat, lon] = worldToGeo(clamp(x, -half, half), clamp(z, -half, half));
+    return sampleMeters(lat, lon);
+  }
+
+  return { size, resolution, heights, min, max, getHeightAt, getMetersAt };
 }
