@@ -1,5 +1,6 @@
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import { buildLiveRegion as buildLiveRegionDirect } from '../data/liveRegion.js';
 
 export const WRECK_HOTSPOTS = [
   {
@@ -394,7 +395,7 @@ export function createWorldMapModal({ onRenderRegion, onSelectBundledOresund }) 
     dialog.close();
   });
 
-  // Nominatim place search
+  // Nominatim place search (uses local /api/geocode proxy, falls back directly to Nominatim CORS)
   searchForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const q = searchInput.value.trim();
@@ -402,8 +403,24 @@ export function createWorldMapModal({ onRenderRegion, onSelectBundledOresund }) 
     searchResultsEl.hidden = false;
     searchResultsEl.innerHTML = `<li class="atlas-search__status">Searching "${q}"...</li>`;
     try {
-      const res = await fetch(`/api/geocode?q=${encodeURIComponent(q)}`);
-      const items = res.ok ? await res.json() : [];
+      let items = [];
+      const proxyRes = await fetch(`/api/geocode?q=${encodeURIComponent(q)}`).catch(() => null);
+      if (proxyRes && proxyRes.ok && (proxyRes.headers.get('content-type') || '').includes('application/json')) {
+        items = await proxyRes.json();
+      } else {
+        const directRes = await fetch(
+          `https://nominatim.openstreetmap.org/search?format=json&limit=6&q=${encodeURIComponent(q)}`
+        );
+        if (directRes.ok) {
+          const rows = await directRes.json();
+          items = (Array.isArray(rows) ? rows : []).map((r) => ({
+            name: r.display_name,
+            shortName: r.name || r.display_name.split(',')[0],
+            lat: Number(r.lat),
+            lon: Number(r.lon),
+          }));
+        }
+      }
       if (!items.length) {
         searchResultsEl.innerHTML = `<li class="atlas-search__status">No coastal places found.</li>`;
         return;
@@ -430,7 +447,9 @@ export function createWorldMapModal({ onRenderRegion, onSelectBundledOresund }) 
     if (!searchInput.value.trim()) searchResultsEl.hidden = true;
   });
 
-  // Render live 3D wreckmap for selected bbox
+  // Render live 3D wreckmap: tries Vite /api/region proxy first, and seamlessly
+  // falls back to direct browser CORS fetch (EMODnet + UKHO + EOX) if running
+  // statically or on a dev server that wasn't restarted after adding vite.config.js.
   renderBtn.addEventListener('click', async () => {
     if (isLoading) return;
     setError('');
@@ -444,11 +463,27 @@ export function createWorldMapModal({ onRenderRegion, onSelectBundledOresund }) 
         lonMax: currentBbox.lonMax.toFixed(5),
         name: regionName,
       });
-      const res = await fetch(`/api/region?${params.toString()}`);
-      const payload = await res.json();
-      if (!res.ok) {
-        throw new Error(payload?.error || `Server error (${res.status})`);
+
+      let payload = null;
+      const proxyRes = await fetch(`/api/region?${params.toString()}`).catch(() => null);
+      const proxyContentType = proxyRes?.headers?.get('content-type') || '';
+
+      if (proxyRes && proxyContentType.includes('application/json')) {
+        const json = await proxyRes.json();
+        if (!proxyRes.ok) {
+          throw new Error(json?.error || `Server error (${proxyRes.status})`);
+        }
+        payload = json;
+      } else {
+        // Fallback: direct browser fetch via CORS-enabled EMODnet + UKHO endpoints
+        setLoading(true, `Fetching directly from EMODnet & UKHO for ${regionName}...`);
+        payload = await buildLiveRegionDirect({
+          ...currentBbox,
+          name: regionName,
+          browserMode: true,
+        });
       }
+
       setLoading(true, `Sculpting 3D diorama (${payload.wrecks.length} wrecks)...`);
       await onRenderRegion(payload);
       setLoading(false);
