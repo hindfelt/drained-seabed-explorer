@@ -6,11 +6,7 @@ narrows, over the tilted cliff-edged island of Ven, down the old shipping channe
 and among the real shipwrecks of the sound — stranded on a seabed of cracked mud,
 salt flats and boulder shoals.
 
-![Demo tour — orbit, wreck close-ups, marker toggles, and the water refilling to its former sea level](media/demo.gif)
-
-*Higher quality: [media/demo.mp4](media/demo.mp4) (the UI panel is DOM, so the
-scripted canvas capture shows the 3D scene only — markers blink and the water
-rises exactly when the toggles are clicked).*
+![Drained Seabed Explorer — archival 3D diorama of the drained Öresund strait](media/preview.jpg)
 
 ## Run it
 
@@ -23,11 +19,11 @@ Then open the URL Vite prints (default: http://localhost:5173).
 ## Controls
 
 - **Drag** — orbit the camera 360°
+- **Space + drag** (or **right-drag**) — pan across the map
 - **Scroll / pinch** — zoom in and out
-- **Right-drag** — pan across the map
-- **Overlay panel** — toggle shoal markers, shipwrecks, place names, and the
-  water itself: "Water" animates the sound refilling to its former sea level,
-  and drains it away again when switched off
+- **Click any wreck, shoal, or place** — fly smoothly to the site and open its historical dossier card
+- **Viewpoints bar** — quick-jump to Overview, Ven Island, S/S Robert (1905), Cimbria (1858), Johannes L (1979), Emil Retzlaff, and K7 Patrol
+- **Controls drawer** — toggle shipwrecks, boulder shoals, coastal places, site labels, Sentinel-2 satellite land overlay, bathymetric depth contours, lighting/atmosphere presets (*Archival*, *Golden Hour*, *Nordic Noon*, *Baltic Dusk*), 3D relief scale, sun azimuth, and continuous sea-level refill/drain (`−52 m` ↔ `0 m`)
 
 ## What's in the scene
 
