@@ -863,11 +863,44 @@ body[data-backdrop='sky'] .archival-ruler__tick--major {
 }
 
 .site-card__desc {
-  margin: 0 0 12px;
+  margin: 0 0 11px;
   font-family: 'Fraunces', Georgia, serif;
   font-size: 12.5px;
   line-height: 1.5;
   color: var(--ink-dim);
+}
+
+.site-card__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0 0 12px;
+}
+
+.site-card__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 4.5px 9px;
+  border-radius: 6px;
+  border: 1px solid rgba(238, 242, 240, 0.16);
+  background: rgba(238, 242, 240, 0.06);
+  color: #dcebe8;
+  font-size: 9.5px;
+  letter-spacing: 0.03em;
+  text-decoration: none;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.site-card__link:hover {
+  background: color-mix(in srgb, var(--accent-reef) 24%, transparent);
+  border-color: var(--accent-reef);
+  color: #ffffff;
+}
+
+.site-card__link:focus-visible {
+  outline: 2px solid var(--accent-reef);
+  outline-offset: 2px;
 }
 
 .site-card__actions {

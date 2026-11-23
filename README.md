@@ -23,9 +23,9 @@ Then open the URL Vite prints (default: http://localhost:5173).
 - **Drag** — orbit the camera 360°
 - **Space + drag** (or **right-drag**) — pan across the map
 - **Scroll / pinch** — zoom in and out
-- **Click any wreck, shoal, or place** — fly smoothly to the site and open its historical dossier card
-- **Viewpoints bar** — quick-jump to Overview, Ven Island, S/S Robert (1905), Cimbria (1858), Johannes L (1979), Emil Retzlaff, and K7 Patrol
-- **World Map** — zoom & pan anywhere on Earth over an interactive ocean-bathymetry atlas (with OpenSeaMap wreck/buoy overlays, place search, and famous wreck hotspots like Scapa Flow, Dover Strait, Normandy D-Day, Gibraltar, Geirangerfjord, and Truk Lagoon), choose a `15–100 km` capture window, and render a live 3D wreckmap from real EMODnet/GEBCO bathymetry + UKHO global shipwrecks (94,000+ wrecks worldwide)
+- **Click any wreck, shoal, or place** — fly smoothly to the site and open its historical dossier card with **clickable reference links** (Öresund dive archives, Wikipedia, Historic England / SHOM heritage records, Wrecksite.eu, UKHO ID search, and exact-coordinate OpenSeaMap chart links)
+- **Viewpoints bar** — quick-jump to Overview, Ven Island, S/S Robert (1905), Cimbria (1858), Johannes L (1979), Emil Retzlaff, and K7 Patrol (automatically populated with top historical wrecks for any live region)
+- **World Map** — zoom & pan anywhere on Earth over an interactive ocean-bathymetry atlas (with OpenSeaMap wreck/buoy overlays, place search, and 12 curated wreck hotspots including Scapa Flow, Normandy D-Day, Solent · Portsmouth, Dover · Goodwin Sands, Skagerrak, Gotland, Gallipoli, Gibraltar, Geirangerfjord, Truk Lagoon, and Outer Banks), choose a `15–100 km` capture window, and render a live 3D wreckmap fusing **EMODnet/GEBCO bathymetry** with **4 open wreck databases** (EMODnet Cultural Heritage, UKHO Global 94k+, Wikidata/Wikipedia, and OpenStreetMap)
 - **Controls drawer** — toggle shipwrecks, boulder shoals, coastal places, site labels, Sentinel-2 satellite land overlay, bathymetric depth contours, lighting/atmosphere presets (*Archival*, *Golden Hour*, *Nordic Noon*, *Baltic Dusk*), 3D relief scale (starts at `0.50×`, range `0.25×–2.20×`), sun azimuth, and continuous sea-level refill/drain (`−52 m` ↔ `0 m`)
 
 ## What's in the scene

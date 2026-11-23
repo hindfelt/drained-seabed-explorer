@@ -1,12 +1,14 @@
 // Isomorphic live open-data marine region builder (works identically in Node
 // via Vite's /api/region middleware AND directly in the browser as a CORS fallback).
 //
-// Sources:
-//   - EMODnet Bathymetry DTM 2024 (~115 m, Europe, CORS-enabled)
-//   - GEBCO 2020 (~450 m, Global, via Node proxy)
-//   - UKHO Global Shipwrecks via EMODnet WFS (94,000+ wrecks worldwide, CORS-enabled)
-//   - OpenStreetMap Overpass places & seamarks (via Node proxy / CORS-enabled)
-//   - EOX Sentinel-2 cloudless WMS (CORS-enabled)
+// Integrated Open Marine & Shipwreck Sources:
+//   1. EMODnet Bathymetry DTM 2024 (~115 m, Europe, CORS-enabled)
+//   2. GEBCO 2020 (~450 m, Global, via Node proxy)
+//   3. EMODnet Cultural Heritage Shipwrecks (`emodnet:heritageshipwrecks`, CORS-enabled —
+//      Historic England, SHOM France, Ireland National Monuments, Oxford Roman Economy Project)
+//   4. UKHO Global Shipwrecks (`emodnet:wwshipwrecks`, 94,000+ wrecks worldwide, CORS-enabled)
+//   5. Wikidata / Wikipedia geolocated shipwrecks (SPARQL, CORS-enabled — direct Wikipedia URLs!)
+//   6. OpenStreetMap Overpass places & seamark wrecks
 
 const regionCache = new Map();
 const CACHE_LIMIT = 24;
@@ -152,8 +154,16 @@ async function fetchEmodnet(bbox, isBrowser) {
 function cleanStr(val) {
   if (val == null) return null;
   const s = String(val).trim();
-  if (!s || /^n\/?a$/i.test(s) || /^unknown$/i.test(s) || /^none/i.test(s) || s === '-') return null;
+  if (!s || /^n\/?a$/i.test(s) || /^unknown$/i.test(s) || /^none/i.test(s) || s === '-' || s === '0') return null;
   return s;
+}
+
+function cleanUrl(val) {
+  const s = cleanStr(val);
+  if (!s) return null;
+  if (/^https?:\/\//i.test(s)) return s;
+  if (/^www\./i.test(s)) return `https://${s}`;
+  return null;
 }
 
 function parseNum(val) {
@@ -166,7 +176,7 @@ function parseNum(val) {
 function parseYear(val) {
   const s = cleanStr(val);
   if (!s) return null;
-  const m = s.match(/\b(1[4-9]\d\d|20[0-2]\d)\b/) || s.match(/^(1[4-9]\d\d|20[0-2]\d)/);
+  const m = s.match(/\b(1[3-9]\d\d|20[0-2]\d)\b/) || s.match(/^(1[3-9]\d\d|20[0-2]\d)/);
   return m ? Number(m[1]) : null;
 }
 
@@ -176,20 +186,57 @@ function titleCaseName(raw) {
     return raw
       .toLowerCase()
       .replace(/(^|[\s\-/.])([a-zåäöæø])/g, (_, sep, ch) => sep + ch.toUpperCase())
-      .replace(/\b(Ss|S\/S|Hms|Uss|Sms|Mv|Ms|Sv)\b/g, (m) => m.toUpperCase());
+      .replace(/\b(Ss|S\/S|Hms|Uss|Sms|Mv|Ms|Sv|Ub|Uc)\b/g, (m) => m.toUpperCase());
   }
   return raw;
 }
 
-async function fetchUkhoWrecks(bbox, maxCount = 48, isBrowser = false) {
+function buildLookupLinks({ name, hasRealName, ukhoId, lat, lon, extraLinks = [] }) {
+  const links = [];
+  const seen = new Set();
+  const addLink = (label, url) => {
+    if (!url || seen.has(url)) return;
+    seen.add(url);
+    links.push({ label, url });
+  };
+
+  for (const l of extraLinks) addLink(l.label, l.url);
+
+  if (hasRealName && name) {
+    const cleanQ = name.replace(/\s*\([^)]*\)\s*/g, ' ').trim();
+    addLink('Wrecksite.eu', `https://www.google.com/search?q=${encodeURIComponent(`site:wrecksite.eu "${cleanQ}"`)}`);
+    if (!links.some((l) => /wikipedia/i.test(l.label))) {
+      addLink('Wikipedia', `https://en.wikipedia.org/w/index.php?search=${encodeURIComponent(`${cleanQ} shipwreck`)}`);
+    }
+  } else if (ukhoId) {
+    addLink(
+      `UKHO #${ukhoId} Search`,
+      `https://www.google.com/search?q=${encodeURIComponent(`"${ukhoId}" wreck OR shipwreck UKHO`)}`
+    );
+    addLink('Wrecksite.eu', `https://www.google.com/search?q=${encodeURIComponent(`site:wrecksite.eu "${ukhoId}"`)}`);
+  }
+
+  // Always include an exact-coordinate OpenSeaMap nautical chart deep link
+  if (Number.isFinite(lat) && Number.isFinite(lon)) {
+    addLink('OpenSeaMap Chart', `https://map.openseamap.org/?zoom=15&lat=${lat.toFixed(5)}&lon=${lon.toFixed(5)}`);
+  }
+  return links;
+}
+
+/**
+ * 1. EMODnet Cultural Heritage Shipwrecks (Historic England, SHOM France,
+ * Ireland National Monuments, Oxford Roman Economy Project Mediterranean wrecks).
+ */
+async function fetchHeritageWrecks(bbox, isBrowser = false) {
+  if (!coversEurope(bbox)) return [];
   const bboxParam = `${bbox.lonMin.toFixed(5)},${bbox.latMin.toFixed(5)},${bbox.lonMax.toFixed(5)},${bbox.latMax.toFixed(5)},EPSG:4326`;
-  const url = `https://ows.emodnet-humanactivities.eu/wfs?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&typeNames=emodnet:wwshipwrecks&outputFormat=application/json&bbox=${bboxParam}&count=200`;
-  const res = await fetchWithTimeout(url, {}, 15000, isBrowser);
-  if (!res.ok) throw new Error(`UKHO WFS HTTP ${res.status}`);
+  const url = `https://ows.emodnet-humanactivities.eu/wfs?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&typeNames=emodnet:heritageshipwrecks&outputFormat=application/json&bbox=${bboxParam}&count=100`;
+  const res = await fetchWithTimeout(url, {}, 12000, isBrowser);
+  if (!res.ok) return [];
   const geo = await res.json();
   const features = Array.isArray(geo.features) ? geo.features : [];
 
-  const parsed = [];
+  const out = [];
   for (const f of features) {
     const coords = f.geometry?.coordinates;
     if (!Array.isArray(coords) || coords.length < 2) continue;
@@ -198,68 +245,230 @@ async function fetchUkhoWrecks(bbox, maxCount = 48, isBrowser = false) {
     const p = f.properties || {};
 
     const rawName = cleanStr(p.name);
+    const objType = cleanStr(p.obj_type) || cleanStr(p.ship_char) || 'heritage wreck';
+    const sunkYear = parseYear(p.sink_yr) || parseYear(p.dating);
+    const lengthMeters = parseNum(p.object_length);
+    const depthMeters = parseNum(p.least_depth) || parseNum(p.max_depth);
+    const sourceInf = cleanStr(p.source_inf) || 'EMODnet Heritage';
+    const period = cleanStr(p.period);
+    const context = cleanStr(p.sink_context);
+    const objDesc = cleanStr(p.obj_desc);
+    const artefacts = cleanStr(p.artefacts);
+
+    const id = `heritage-${p.source_id || f.id || hashString(`${lat},${lon}`)}`;
+    const hasRealName = Boolean(rawName);
+    const name = titleCaseName(rawName) || `${titleCaseName(objType)} (${sourceInf})`;
+
+    const storyBits = [];
+    if (context) storyBits.push(context);
+    if (objDesc && objDesc !== context) storyBits.push(objDesc);
+    if (artefacts) storyBits.push(`Artefacts: ${artefacts}`);
+    if (period && !sunkYear) storyBits.push(`Period: ${period}`);
+    if (depthMeters != null && depthMeters > 0) storyBits.push(`Charted least depth ~${depthMeters.toFixed(1)} m.`);
+    const fullDesc = storyBits.join(' ');
+
+    const extraLinks = [];
+    const w1 = cleanUrl(p.website1);
+    const w2 = cleanUrl(p.website2);
+    if (w1) extraLinks.push({ label: sourceInf, url: w1 });
+    if (w2) extraLinks.push({ label: 'Archive Record', url: w2 });
+
+    out.push({
+      id,
+      name,
+      hasRealName,
+      priority: 3, // rich heritage record
+      latLon: [lat, lon],
+      heading: ((hashString(id) % 3600) / 3600) * Math.PI * 2,
+      length: clamp(lengthMeters || 30, 18, 52),
+      type: objType,
+      sunkYear,
+      approximate: parseNum(p.loc_prec) > 250,
+      source: sourceInf,
+      description: fullDesc.length > 340 ? `${fullDesc.slice(0, 337)}…` : fullDesc || `Protected/recorded heritage shipwreck (${sourceInf}).`,
+      links: buildLookupLinks({ name, hasRealName, lat, lon, extraLinks }),
+      _depthSort: depthMeters || 0,
+    });
+  }
+  return out;
+}
+
+/**
+ * 2. UKHO Global Shipwrecks via EMODnet WFS (94,000+ wrecks worldwide).
+ */
+async function fetchUkhoWrecks(bbox, isBrowser = false) {
+  const bboxParam = `${bbox.lonMin.toFixed(5)},${bbox.latMin.toFixed(5)},${bbox.lonMax.toFixed(5)},${bbox.latMax.toFixed(5)},EPSG:4326`;
+  const url = `https://ows.emodnet-humanactivities.eu/wfs?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&typeNames=emodnet:wwshipwrecks&outputFormat=application/json&bbox=${bboxParam}&count=200`;
+  const res = await fetchWithTimeout(url, {}, 15000, isBrowser);
+  if (!res.ok) throw new Error(`UKHO WFS HTTP ${res.status}`);
+  const geo = await res.json();
+  const features = Array.isArray(geo.features) ? geo.features : [];
+
+  const out = [];
+  for (const f of features) {
+    const coords = f.geometry?.coordinates;
+    if (!Array.isArray(coords) || coords.length < 2) continue;
+    const [lon, lat] = coords;
+    if (!Number.isFinite(lat) || !Number.isFinite(lon)) continue;
+    const p = f.properties || {};
+
+    const ukhoId = cleanStr(p.wreck_id);
+    const rawName = cleanStr(p.name);
     const wreckType = cleanStr(p.type) || cleanStr(p.wreck_cate) || 'shipwreck';
     const sunkYear = parseYear(p.date_sunk) || parseYear(p.original_d);
     const lengthMeters = parseNum(p.length) || parseNum(p.sonar_leng);
+    const widthMeters = parseNum(p.width) || parseNum(p.sonar_widt);
     const depthMeters = parseNum(p.depth) || parseNum(p.water_dept);
     const orientDeg = parseNum(p.orientatio);
     const flag = cleanStr(p.flag);
     const cargo = cleanStr(p.cargo);
     const tonnage = parseNum(p.tonnage);
     const category = cleanStr(p.wreck_cate);
-    const story = cleanStr(p.circumstan) || cleanStr(p.surveying_);
+    const circumstan = cleanStr(p.circumstan);
+    const surveying = cleanStr(p.surveying_);
+    const general = cleanStr(p.general_co);
+    const debris = cleanStr(p.debris_fie);
+    const scour = cleanStr(p.scour_dime);
+    const bottom = cleanStr(p.bottom_tex);
+    const lastDetec = cleanStr(p.last_detec);
     const posMethod = cleanStr(p.position_m);
     const depthQual = cleanStr(p.depth_qual);
 
-    const id = `ukho-${p.wreck_id || f.id || hashString(`${lat},${lon}`)}`;
+    const id = `ukho-${ukhoId || f.id || hashString(`${lat},${lon}`)}`;
+    const hasRealName = Boolean(rawName);
     const name =
-      titleCaseName(rawName) || `${titleCaseName(wreckType) || 'Charted Wreck'} #${p.wreck_id || parsed.length + 1}`;
+      titleCaseName(rawName) || `${titleCaseName(wreckType) || 'Charted Wreck'} #${ukhoId || out.length + 1}`;
     const heading =
       orientDeg != null
         ? (orientDeg * Math.PI) / 180
         : ((hashString(id) % 3600) / 3600) * Math.PI * 2;
 
     const descParts = [];
-    if (story) {
-      descParts.push(story.length > 260 ? `${story.slice(0, 257)}…` : story);
-    } else {
-      const bits = [];
-      if (category) bits.push(category);
-      if (flag) bits.push(`Flag: ${flag}`);
-      if (tonnage) bits.push(`${tonnage} GT`);
-      if (cargo) bits.push(`Cargo: ${cargo}`);
-      if (depthMeters != null) bits.push(`Charted depth ~${Math.abs(depthMeters).toFixed(0)} m`);
-      descParts.push(bits.length ? `${bits.join(' · ')}.` : 'Charted seabed wreck from UKHO hydrographic records.');
-    }
+    if (circumstan) descParts.push(circumstan);
+    else if (general) descParts.push(general);
+    else if (surveying) descParts.push(surveying);
 
+    const facts = [];
+    if (category) facts.push(category);
+    if (flag) facts.push(`Flag: ${flag}`);
+    if (tonnage) facts.push(`${tonnage} GT`);
+    if (cargo) facts.push(`Cargo: ${cargo}`);
+    if (lengthMeters && widthMeters) facts.push(`Hull ${lengthMeters.toFixed(0)} × ${widthMeters.toFixed(0)} m`);
+    if (depthMeters != null) facts.push(`Charted depth ~${Math.abs(depthMeters).toFixed(1)} m`);
+    if (bottom) facts.push(`Seabed: ${bottom}`);
+    if (debris) facts.push(`Debris: ${debris}`);
+    if (scour) facts.push(`Scour: ${scour}`);
+    if (lastDetec) facts.push(`Last surveyed: ${lastDetec}`);
+
+    if (!descParts.length && facts.length) descParts.push(`${facts.join(' · ')}.`);
+    else if (descParts.length && facts.length) descParts.push(`(${facts.slice(0, 4).join(' · ')})`);
+
+    const fullDesc = descParts.join(' ');
     const approximate = !posMethod && (!depthQual || /unknown|unsurveyed/i.test(depthQual));
 
-    parsed.push({
+    out.push({
       id,
       name,
-      hasRealName: Boolean(rawName),
+      hasRealName,
+      priority: hasRealName ? 2 : 1,
       latLon: [lat, lon],
       heading,
       length: clamp(lengthMeters || 28, 18, 52),
       type: wreckType,
       sunkYear,
       approximate,
-      description: descParts.join(' '),
+      source: ukhoId ? `UKHO #${ukhoId}` : 'UKHO Global Wrecks',
+      description:
+        fullDesc.length > 340
+          ? `${fullDesc.slice(0, 337)}…`
+          : fullDesc || 'Charted hydrographic seabed wreck from UKHO records.',
+      links: buildLookupLinks({ name, hasRealName, ukhoId, lat, lon }),
       _depthSort: depthMeters != null ? Math.abs(depthMeters) : 0,
     });
   }
-
-  parsed.sort((a, b) => {
-    if (a.hasRealName !== b.hasRealName) return a.hasRealName ? -1 : 1;
-    if (Boolean(a.sunkYear) !== Boolean(b.sunkYear)) return a.sunkYear ? -1 : 1;
-    return b.length - a.length || b._depthSort - a._depthSort;
-  });
-
-  const totalFound = parsed.length;
-  const trimmed = parsed.slice(0, maxCount).map(({ hasRealName, _depthSort, ...rest }) => rest);
-  return { wrecks: trimmed, totalFound };
+  return out;
 }
 
+/**
+ * 3. Wikidata / Wikipedia geolocated shipwrecks (global, CORS-enabled, real Wikipedia URLs!).
+ */
+async function fetchWikidataWrecks(bbox, isBrowser = false) {
+  const sw = `Point(${bbox.lonMin.toFixed(4)} ${bbox.latMin.toFixed(4)})`;
+  const ne = `Point(${bbox.lonMax.toFixed(4)} ${bbox.latMax.toFixed(4)})`;
+  const sparql = `SELECT ?item ?itemLabel ?coord ?article ?desc ?date WHERE {
+    SERVICE wikibase:box {
+      ?item wdt:P625 ?coord .
+      bd:serviceParam wikibase:cornerWest "${sw}"^^geo:wktLiteral .
+      bd:serviceParam wikibase:cornerEast "${ne}"^^geo:wktLiteral .
+    }
+    ?item wdt:P31/wdt:P279* wd:Q852190 .
+    OPTIONAL { ?article schema:about ?item ; schema:isPartOf <https://en.wikipedia.org/> . }
+    OPTIONAL { ?item schema:description ?desc . FILTER(LANG(?desc)="en") }
+    OPTIONAL { ?item wdt:P585 ?date . }
+    SERVICE wikibase:label { bd:serviceParam wikibase:language "en,sv,da,de,fr". }
+  } LIMIT 40`;
+
+  const url = `https://query.wikidata.org/sparql?format=json&query=${encodeURIComponent(sparql)}`;
+  const res = await fetchWithTimeout(
+    url,
+    { headers: { Accept: 'application/sparql-results+json' } },
+    9000,
+    isBrowser
+  );
+  if (!res.ok) return [];
+  const data = await res.json();
+  const rows = data?.results?.bindings || [];
+
+  const out = [];
+  const seenIds = new Set();
+  for (const r of rows) {
+    const qUrl = r.item?.value;
+    const coordStr = r.coord?.value || '';
+    const m = coordStr.match(/Point\((-?\d+(?:\.\d+)?)\s+(-?\d+(?:\.\d+)?)\)/i);
+    if (!m || !qUrl || seenIds.has(qUrl)) continue;
+    seenIds.add(qUrl);
+
+    const lon = Number(m[1]);
+    const lat = Number(m[2]);
+    const rawName = r.itemLabel?.value;
+    if (!rawName || /^Q\d+$/.test(rawName)) continue;
+
+    const wikiUrl = r.article?.value || null;
+    const desc = r.desc?.value || 'Documented historic shipwreck recorded in Wikidata / Wikipedia.';
+    const sunkYear = parseYear(r.date?.value);
+    const qId = qUrl.split('/').pop();
+
+    const extraLinks = [];
+    if (wikiUrl) extraLinks.push({ label: 'Wikipedia', url: wikiUrl });
+    extraLinks.push({ label: 'Wikidata', url: qUrl });
+
+    out.push({
+      id: `wiki-${qId}`,
+      name: rawName,
+      hasRealName: true,
+      priority: wikiUrl ? 4 : 3, // Wikipedia-backed wrecks get highest priority!
+      latLon: [lat, lon],
+      heading: ((hashString(qId) % 3600) / 3600) * Math.PI * 2,
+      length: 34,
+      type: /sub|u-?boat/i.test(`${rawName} ${desc}`)
+        ? 'submarine'
+        : /destroyer|battleship|cruiser|hms|sms|uss/i.test(`${rawName} ${desc}`)
+          ? 'warship'
+          : 'shipwreck',
+      sunkYear,
+      approximate: false,
+      source: wikiUrl ? 'Wikipedia / Wikidata' : 'Wikidata',
+      description: desc.charAt(0).toUpperCase() + desc.slice(1) + (desc.endsWith('.') ? '' : '.'),
+      links: buildLookupLinks({ name: rawName, hasRealName: true, lat, lon, extraLinks }),
+      _depthSort: 25,
+    });
+  }
+  return out;
+}
+
+/**
+ * 4. OpenStreetMap Overpass: coastal places + OpenSeaMap wrecks (with wikipedia/website links).
+ */
 async function fetchOverpassPlacesAndWrecks(bbox, isBrowser = false) {
   const b = `${bbox.latMin.toFixed(4)},${bbox.lonMin.toFixed(4)},${bbox.latMax.toFixed(4)},${bbox.lonMax.toFixed(4)}`;
   const query = `[out:json][timeout:10];(node["place"~"^(city|town|village)$"](${b});node["seamark:type"="wreck"](${b});node["historic"="wreck"](${b}););out body 120;`;
@@ -295,19 +504,38 @@ async function fetchOverpassPlacesAndWrecks(bbox, isBrowser = false) {
         _pop: parseNum(tags.population) || 0,
       });
     } else if (tags['seamark:type'] === 'wreck' || tags.historic === 'wreck') {
-      const name = cleanStr(tags.name || tags['seamark:name']) || `OSM Wreck #${el.id}`;
+      const rawName = cleanStr(tags.name || tags['seamark:name']);
+      const hasRealName = Boolean(rawName);
+      const name = rawName || `OSM Wreck #${el.id}`;
+      const extraLinks = [];
+      if (tags.wikipedia) {
+        const [lang, ...rest] = tags.wikipedia.includes(':') ? tags.wikipedia.split(':') : ['en', tags.wikipedia];
+        extraLinks.push({
+          label: 'Wikipedia',
+          url: `https://${lang}.wikipedia.org/wiki/${encodeURIComponent(rest.join(':').replace(/ /g, '_'))}`,
+        });
+      }
+      const webUrl = cleanUrl(tags.website || tags.url);
+      if (webUrl) extraLinks.push({ label: 'Source Page', url: webUrl });
+      extraLinks.push({ label: 'OpenStreetMap', url: `https://www.openstreetmap.org/node/${el.id}` });
+
       osmWrecks.push({
         id: `osm-wreck-${el.id}`,
         name,
+        hasRealName,
+        priority: hasRealName ? 2 : 0,
         latLon: [el.lat, el.lon],
         heading: ((hashString(String(el.id)) % 3600) / 3600) * Math.PI * 2,
         length: clamp(parseNum(tags.length) || 26, 18, 45),
         type: cleanStr(tags['wreck:type'] || tags.ship_type) || 'shipwreck',
         sunkYear: parseYear(tags.start_date || tags.end_date || tags.date_sunk),
-        approximate: !tags.name,
+        approximate: !hasRealName,
+        source: 'OpenStreetMap',
         description:
           cleanStr(tags.description || tags.note) ||
           'OpenStreetMap / OpenSeaMap charted shipwreck location.',
+        links: buildLookupLinks({ name, hasRealName, lat: el.lat, lon: el.lon, extraLinks }),
+        _depthSort: parseNum(tags['seamark:wreck:depth']) || 0,
       });
     }
   }
@@ -333,6 +561,60 @@ async function fetchOverpassPlacesAndWrecks(bbox, isBrowser = false) {
   }
 
   return { places: selectedPlaces, osmWrecks };
+}
+
+/**
+ * Merges wrecks from Wikipedia/Wikidata, EMODnet Heritage, UKHO Global, and OSM:
+ * - When two sources refer to the same wreck (within ~350 m or matching name),
+ *   fuses their links, richer name, longer historical description, and metadata.
+ */
+function mergeAndEnrichWrecks(lists, maxCount = 52) {
+  const all = lists.flat();
+  // Highest-richness sources first (Wikipedia -> Heritage -> Named UKHO -> OSM -> Unnamed UKHO)
+  all.sort((a, b) => {
+    if (b.priority !== a.priority) return b.priority - a.priority;
+    if (a.hasRealName !== b.hasRealName) return a.hasRealName ? -1 : 1;
+    if (Boolean(a.sunkYear) !== Boolean(b.sunkYear)) return a.sunkYear ? -1 : 1;
+    return b.length - a.length || (b._depthSort || 0) - (a._depthSort || 0);
+  });
+
+  const merged = [];
+  for (const cand of all) {
+    const normCand = cand.hasRealName ? cand.name.toLowerCase().replace(/[^a-z0-9]/g, '') : '';
+    const existing = merged.find((m) => {
+      const d = Math.hypot(m.latLon[0] - cand.latLon[0], m.latLon[1] - cand.latLon[1]);
+      if (d < 0.0028) return true; // ~300 m proximity match
+      if (normCand && normCand.length >= 5 && m.hasRealName) {
+        const normM = m.name.toLowerCase().replace(/[^a-z0-9]/g, '');
+        if (normM === normCand && d < 0.03) return true;
+      }
+      return false;
+    });
+
+    if (existing) {
+      // Enrich existing record with any missing facts or links
+      if (!existing.sunkYear && cand.sunkYear) existing.sunkYear = cand.sunkYear;
+      if (cand.description && cand.description.length > existing.description.length + 25) {
+        existing.description = cand.description;
+      }
+      if (existing.type === 'shipwreck' && cand.type && cand.type !== 'shipwreck') {
+        existing.type = cand.type;
+      }
+      if (cand.links?.length) {
+        const haveUrls = new Set(existing.links.map((l) => l.url));
+        for (const l of cand.links) {
+          if (!haveUrls.has(l.url) && existing.links.length < 4) {
+            existing.links.push(l);
+            haveUrls.add(l.url);
+          }
+        }
+      }
+    } else {
+      merged.push({ ...cand, links: [...(cand.links || [])] });
+    }
+  }
+
+  return merged.slice(0, maxCount).map(({ hasRealName, priority, _depthSort, ...clean }) => clean);
 }
 
 function detectShoals(elevations, nLat, nLon, bbox, maxShoals = 4) {
@@ -425,18 +707,12 @@ function computeAutoScale(elevations) {
   };
 }
 
-/**
- * When running direct-from-browser without GEBCO (EMODnet returns NaN on land),
- * synthesize gentle rising coastal elevation from distance-to-shoreline so land
- * rises naturally above sea level instead of sitting flat at 0m.
- */
 function fillMissingLandElevation(elevations, nLat, nLon) {
   const dist = new Float32Array(nLat * nLon);
   const INF = 1e6;
   for (let k = 0; k < elevations.length; k++) {
     dist[k] = Number.isFinite(elevations[k]) ? 0 : INF;
   }
-  // Two-pass Chamfer distance transform
   for (let i = 0; i < nLat; i++) {
     for (let j = 0; j < nLon; j++) {
       const idx = i * nLon + j;
@@ -462,11 +738,6 @@ function fillMissingLandElevation(elevations, nLat, nLon) {
   }
 }
 
-/**
- * Builds a complete live 3D region payload for any coastal bounding box.
- * Works both on Node (with proxy satellite URL + GEBCO) and directly in browser
- * (CORS fallback using EMODnet + UKHO + EOX Sentinel-2).
- */
 export async function buildLiveRegion({
   latMin,
   latMax,
@@ -491,10 +762,13 @@ export async function buildLiveRegion({
     return { ...cached, meta: { ...cached.meta, name: name || cached.meta.name } };
   }
 
-  const [gebcoRes, emodRes, ukhoRes, osmRes] = await Promise.allSettled([
+  // Fetch bathymetry + ALL FOUR open wreck & heritage databases in parallel!
+  const [gebcoRes, emodRes, ukhoRes, heritageRes, wikiRes, osmRes] = await Promise.allSettled([
     browserMode ? Promise.reject(new Error('GEBCO requires server proxy')) : fetchGebco(bbox, false),
     fetchEmodnet(bbox, browserMode),
-    fetchUkhoWrecks(bbox, 48, browserMode),
+    fetchUkhoWrecks(bbox, browserMode),
+    fetchHeritageWrecks(bbox, browserMode),
+    fetchWikidataWrecks(bbox, browserMode),
     fetchOverpassPlacesAndWrecks(bbox, browserMode),
   ]);
 
@@ -504,7 +778,7 @@ export async function buildLiveRegion({
   if (!coarse && !fine) {
     if (browserMode && !coversEurope(bbox)) {
       throw new Error(
-        'Regions outside Europe use NOAA GEBCO, which requires restarting `npm run dev` so Vite loads the local proxy in vite.config.js.'
+        'Regions outside Europe use NOAA GEBCO, which requires restarting `npm run dev` so Vite loads vite.config.js.'
       );
     }
     throw new Error(`Could not fetch bathymetry (${gebcoRes.reason?.message || 'network timeout'})`);
@@ -542,17 +816,12 @@ export async function buildLiveRegion({
   const scale = computeAutoScale(elevations);
   const reefs = detectShoals(elevations, nLat, nLon, bbox, 4);
 
-  const ukhoData = ukhoRes.status === 'fulfilled' ? ukhoRes.value : { wrecks: [], totalFound: 0 };
+  const ukhoWrecks = ukhoRes.status === 'fulfilled' ? ukhoRes.value : [];
+  const heritageWrecks = heritageRes.status === 'fulfilled' ? heritageRes.value : [];
+  const wikiWrecks = wikiRes.status === 'fulfilled' ? wikiRes.value : [];
   const osmData = osmRes.status === 'fulfilled' ? osmRes.value : { places: [], osmWrecks: [] };
 
-  const wrecks = [...ukhoData.wrecks];
-  for (const ow of osmData.osmWrecks) {
-    if (wrecks.length >= 55) break;
-    const dup = wrecks.some(
-      (w) => Math.hypot(w.latLon[0] - ow.latLon[0], w.latLon[1] - ow.latLon[1]) < 0.003
-    );
-    if (!dup) wrecks.push(ow);
-  }
+  const wrecks = mergeAndEnrichWrecks([wikiWrecks, heritageWrecks, ukhoWrecks, osmData.osmWrecks], 52);
 
   const midLat = (bbox.latMin + bbox.latMax) / 2;
   const heightKm = Math.round((bbox.latMax - bbox.latMin) * 111.32);
@@ -561,8 +830,10 @@ export async function buildLiveRegion({
   const attributions = [];
   if (fine) attributions.push('EMODnet DTM 2024 (~115 m)');
   if (coarse) attributions.push('GEBCO 2020 (~450 m)');
-  if (ukhoData.wrecks.length > 0) attributions.push('Wrecks © UKHO via EMODnet (OGL)');
-  if (osmData.places.length > 0 || osmData.osmWrecks.length > 0) attributions.push('Places © OpenStreetMap');
+  if (heritageWrecks.length > 0) attributions.push('EMODnet Heritage (SHOM / Historic England)');
+  if (ukhoWrecks.length > 0) attributions.push('UKHO Global Wrecks (OGL)');
+  if (wikiWrecks.length > 0) attributions.push('Wikidata / Wikipedia');
+  if (osmData.places.length > 0 || osmData.osmWrecks.length > 0) attributions.push('OpenStreetMap');
 
   const warnings = [];
   if (!fine) warnings.push('GEBCO-only (~450 m) outside European EMODnet coverage');
@@ -582,7 +853,9 @@ export async function buildLiveRegion({
       heightKm,
       attributions,
       warnings,
-      totalUkhoWrecks: ukhoData.totalFound,
+      totalUkhoWrecks: ukhoWrecks.length,
+      totalHeritageWrecks: heritageWrecks.length,
+      totalWikiWrecks: wikiWrecks.length,
     },
     scale,
     bathymetry: {

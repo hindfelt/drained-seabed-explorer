@@ -21,28 +21,36 @@ export const WRECK_HOTSPOTS = [
     note: 'WWI German High Seas Fleet',
   },
   {
-    id: 'dover',
-    label: 'Dover Strait',
-    lat: 51.1,
-    lon: 1.42,
-    sizeKm: 30,
-    note: 'Dense Channel shipwrecks',
-  },
-  {
     id: 'normandy',
     label: 'Normandy D-Day',
     lat: 49.36,
     lon: -0.62,
     sizeKm: 30,
-    note: 'Arromanches & Mulberry harbors',
+    note: 'Arromanches, Mulberry harbors & SHOM heritage wrecks',
   },
   {
-    id: 'gibraltar',
-    label: 'Strait of Gibraltar',
-    lat: 35.97,
-    lon: -5.52,
-    sizeKm: 45,
-    note: 'Deep Atlantic–Med sill canyon',
+    id: 'solent',
+    label: 'Solent · Portsmouth',
+    lat: 50.76,
+    lon: -1.16,
+    sizeKm: 30,
+    note: 'Historic England wrecks (HMS Invincible, HMS/m A1, Mary Rose)',
+  },
+  {
+    id: 'dover',
+    label: 'Dover · Goodwin Sands',
+    lat: 51.22,
+    lon: 1.52,
+    sizeKm: 35,
+    note: 'Great Storm of 1703 warships & Channel wrecks',
+  },
+  {
+    id: 'skagerrak',
+    label: 'Skagerrak · Skagen',
+    lat: 57.76,
+    lon: 10.58,
+    sizeKm: 40,
+    note: 'Dense North Sea–Kattegat shipwreck graveyard',
   },
   {
     id: 'gotland',
@@ -51,6 +59,22 @@ export const WRECK_HOTSPOTS = [
     lon: 18.22,
     sizeKm: 35,
     note: 'Baltic limestone coast & wrecks',
+  },
+  {
+    id: 'gallipoli',
+    label: 'Gallipoli · Dardanelles',
+    lat: 40.14,
+    lon: 26.26,
+    sizeKm: 35,
+    note: 'WWI naval campaign wrecks',
+  },
+  {
+    id: 'gibraltar',
+    label: 'Strait of Gibraltar',
+    lat: 35.97,
+    lon: -5.52,
+    sizeKm: 45,
+    note: 'Deep Atlantic–Med sill canyon',
   },
   {
     id: 'geiranger',
@@ -66,7 +90,15 @@ export const WRECK_HOTSPOTS = [
     lat: 7.38,
     lon: 151.85,
     sizeKm: 45,
-    note: 'WWII Pacific fleet atoll',
+    note: 'WWII Pacific fleet atoll (Fujikawa Maru, 40+ wrecks)',
+  },
+  {
+    id: 'outer-banks',
+    label: 'Outer Banks, USA',
+    lat: 35.32,
+    lon: -75.46,
+    sizeKm: 60,
+    note: 'Graveyard of the Atlantic (Wikidata & U-boat wrecks)',
   },
 ];
 
@@ -113,7 +145,7 @@ export function createWorldMapModal({ onRenderRegion, onSelectBundledOresund }) 
     <div class="atlas-dialog__shell">
       <header class="atlas-header">
         <div class="atlas-header__title-group">
-          <p class="atlas-header__eyebrow">Global Bathymetry &middot; UKHO 94k+ Wrecks</p>
+          <p class="atlas-header__eyebrow">EMODnet &middot; UKHO 94k+ &middot; Heritage &middot; Wikidata</p>
           <h2 class="atlas-header__title" id="atlas-dialog-title">Select Any Coast to Drain &amp; Render</h2>
         </div>
 
@@ -274,8 +306,8 @@ export function createWorldMapModal({ onRenderRegion, onSelectBundledOresund }) 
     }
 
     const cov = coversEurope(currentBbox)
-      ? 'EMODnet 115 m + GEBCO + UKHO Global Wrecks'
-      : 'GEBCO 450 m Global + UKHO Global Wrecks';
+      ? 'EMODnet 115 m + Heritage + UKHO + Wikidata'
+      : 'GEBCO 450 m + UKHO + Wikidata';
     metaEl.textContent = `Center ${formatDegMin(center.lat, 'N', 'S')} · ${formatDegMin(center.lng, 'E', 'W')} · ${selectedSizeKm} × ${selectedSizeKm} km · ${cov}`;
   }
 

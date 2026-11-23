@@ -244,6 +244,7 @@ export function initOverlay({
     <h2 class="site-card__title" id="card-title"></h2>
     <dl class="site-card__meta" id="card-meta"></dl>
     <p class="site-card__desc" id="card-desc"></p>
+    <div class="site-card__links" id="card-links" hidden></div>
     <div class="site-card__actions">
       <button type="button" class="site-card__fly" id="card-fly">Focus camera</button>
     </div>
@@ -367,6 +368,7 @@ export function initOverlay({
   const cardTitle = card.querySelector('#card-title');
   const cardMeta = card.querySelector('#card-meta');
   const cardDesc = card.querySelector('#card-desc');
+  const cardLinks = card.querySelector('#card-links');
   const cardClose = card.querySelector('#card-close');
   const cardFly = card.querySelector('#card-fly');
 
@@ -492,6 +494,7 @@ export function initOverlay({
       if (data.type) metaItems.push(['Vessel', data.type]);
       if (data.sunkYear) metaItems.push(['Sunk', String(data.sunkYear)]);
       if (data.length) metaItems.push(['Length', `~${Math.round(data.length)} m`]);
+      if (data.source) metaItems.push(['Source', data.source]);
     }
     if (typeof depthMeters === 'number') {
       metaItems.push([
@@ -507,6 +510,46 @@ export function initOverlay({
 
     cardDesc.textContent =
       data.description || `Coastal landmark overlooking the drained seabed diorama.`;
+
+    // Render clickable "More info" reference links (verified dive/heritage/Wikipedia + chart links)
+    const links = Array.isArray(data.links) && data.links.length ? [...data.links] : [];
+    if (kind === 'wreck' && !links.some((l) => /openseamap/i.test(l.label)) && Number.isFinite(lat) && Number.isFinite(lon)) {
+      links.push({
+        label: 'OpenSeaMap Chart',
+        url: `https://map.openseamap.org/?zoom=15&lat=${lat.toFixed(5)}&lon=${lon.toFixed(5)}`,
+      });
+    } else if (kind !== 'wreck' && Number.isFinite(lat) && Number.isFinite(lon)) {
+      links.push({
+        label: 'Wikipedia',
+        url: `https://en.wikipedia.org/w/index.php?search=${encodeURIComponent(data.name)}`,
+      });
+      links.push({
+        label: 'OpenSeaMap',
+        url: `https://map.openseamap.org/?zoom=14&lat=${lat.toFixed(5)}&lon=${lon.toFixed(5)}`,
+      });
+    }
+
+    if (links.length) {
+      cardLinks.hidden = false;
+      cardLinks.replaceChildren(
+        ...links.slice(0, 4).map((item) => {
+          const a = document.createElement('a');
+          a.className = 'site-card__link';
+          a.href = item.url;
+          a.target = '_blank';
+          a.rel = 'noopener noreferrer';
+          a.textContent = item.label;
+          const arrow = document.createElement('span');
+          arrow.setAttribute('aria-hidden', 'true');
+          arrow.textContent = ' ↗';
+          a.appendChild(arrow);
+          return a;
+        })
+      );
+    } else {
+      cardLinks.hidden = true;
+      cardLinks.replaceChildren();
+    }
 
     showAnimated(card);
   }
